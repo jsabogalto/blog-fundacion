@@ -1,0 +1,46 @@
+# Dependencias
+node_modules/
+**/node_modules/
+
+# Variables de entorno (NUNCA subir - contienen claves secretas)
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+
+# Builds de Next.js
+.next/
+**/.next/
+out/
+**/out/
+build/
+**/build/
+dist/
+**/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+**/logs/
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Caché y temporales
+.cache/
+**/.cache/
+.turbo/
+**/.turbo/
+
+# Editor
+.vscode/
+.idea/
+
+# Archivos de PM2
+.pm2/
+ecosystem.config.js.bak
