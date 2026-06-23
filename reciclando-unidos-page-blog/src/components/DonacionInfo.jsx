@@ -115,7 +115,7 @@ function Feature({ icon, title, text }) {
 
 function Benefit({ title, text }) {
   return (
-    <div className="flex gap-4 rounded-lg bg-white/10 p-6 text-left">
+    <div className="flex gap-4 bg-white/10 p-6 text-left">
       <IconCheck />
       <div>
         <h3 className="paragraph">{title}</h3>

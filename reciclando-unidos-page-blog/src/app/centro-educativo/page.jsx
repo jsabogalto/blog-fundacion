@@ -120,7 +120,7 @@ export default function SolicitarEquipos() {
                 d: "Estudiantes y familias que necesitan un computador asequible para estudiar, trabajar o capacitarse.",
               },
             ].map((c) => (
-              <div key={c.t} className="rounded-lg bg-white/15 p-6 text-left">
+              <div key={c.t} className=" bg-white/15 p-6 text-left">
                 <h3 className="paragraph font-bold">{c.t}</h3>
                 <p className="paragraph mt-2 text-white">{c.d}</p>
               </div>
@@ -139,14 +139,14 @@ export default function SolicitarEquipos() {
           </p>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-lg bg-white/10 p-6 text-left">
+            <div className=" bg-white/10 p-6 text-left">
               <h3 className="paragraph font-bold">Computadores de escritorio</h3>
               <p className="paragraph mt-2 text-white">
                 Equipos de sobremesa ideales para aulas, salas de cómputo y
                 espacios de trabajo fijos.
               </p>
             </div>
-            <div className="rounded-lg bg-white/10 p-6 text-left">
+            <div className=" bg-white/10 p-6 text-left">
               <h3 className="paragraph font-bold">Computadores portátiles</h3>
               <p className="paragraph mt-2 text-white">
                 Equipos portátiles para quienes necesitan estudiar o trabajar
@@ -213,7 +213,7 @@ export default function SolicitarEquipos() {
                 d: "Al recibir un equipo reutilizado, también ayudas a reducir los residuos electrónicos.",
               },
             ].map((s) => (
-              <div key={s.t} className="rounded-lg bg-white/10 p-6 text-left">
+              <div key={s.t} className=" bg-white/10 p-6 text-left">
                 <h3 className="paragraph font-bold">{s.t}</h3>
                 <p className="paragraph mt-2 text-white">{s.d}</p>
               </div>
@@ -242,7 +242,7 @@ export default function SolicitarEquipos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={6} />
+        <LatestPosts limit={100} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

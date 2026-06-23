@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import axios from "axios";
 import Upload from "@/components/Upload";
 import SectionImageComponent from "@/components/SectionImageComponent";
+import { revalidatePosts } from "@/app/actions/revalidate";
+
 
 const QuillEditor = dynamic(() => import("../../components/QuillEditor"), {
   ssr: false,
@@ -38,9 +40,10 @@ const Write = () => {
       });
       return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success("Publicación creada exitosamente.");
-      router.push(`/posts/${data.slug}`);
+      await revalidatePosts();              // ← refresca home, donar-computadores, sitemap...
+      router.push(`/posts/${data.slug}`);   // y recién ahí navegas
     },
     onError: (error) => {
       toast.error(error.response?.data || error.message);
@@ -86,6 +89,7 @@ const Write = () => {
   const buttonText = () => {
     if (isUploading) return `subiendo imagen... ${progress}%`;
     if (mutation.isPending) return "publicando...";
+    
     return "publicar";
   };
 

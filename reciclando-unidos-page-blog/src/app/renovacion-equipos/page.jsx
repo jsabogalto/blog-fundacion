@@ -116,7 +116,7 @@ export default function RenovacionEquipos() {
                 d: "Identificar fraudes, proteger contraseñas y cuidar la información personal en línea.",
               },
             ].map((c) => (
-              <div key={c.t} className="rounded-lg bg-white/15 p-6 text-left">
+              <div key={c.t} className="bg-white/15 p-6 text-left">
                 <h3 className="paragraph font-bold">{c.t}</h3>
                 <p className="paragraph mt-2 text-white">{c.d}</p>
               </div>
@@ -238,7 +238,7 @@ export default function RenovacionEquipos() {
                 d: "El conocimiento se queda en el barrio: quienes se forman hoy enseñan y reparan mañana.",
               },
             ].map((s) => (
-              <div key={s.t} className="rounded-lg bg-white/10 p-6 text-left">
+              <div key={s.t} className=" bg-white/10 p-6 text-left">
                 <h3 className="paragraph font-bold">{s.t}</h3>
                 <p className="paragraph mt-2 text-white">{s.d}</p>
               </div>
@@ -279,7 +279,7 @@ export default function RenovacionEquipos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={6} />
+        <LatestPosts limit={100} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

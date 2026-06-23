@@ -22,6 +22,8 @@ const linkColumns = [
         links: [
             { label: "Contacto y dirección", href: "/contacto" },
             { label: "Dona tu computador", href: "/donar-computadores" },
+            { label: "Teléfono: 313 541 0348", href: "tel:+573135410348" },
+            { label: "Correo: ambiental@fundacionreciclandounidos.com", href: "mailto:ambiental@fundacionreciclandounidos.com" },
         ],
     },
     {

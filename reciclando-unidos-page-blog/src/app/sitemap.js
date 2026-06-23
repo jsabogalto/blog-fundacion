@@ -17,7 +17,7 @@ export default async function sitemap() {
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "weekly",
     priority: path === "" ? 1.0 : 0.8,
   }));
 

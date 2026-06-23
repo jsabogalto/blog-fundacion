@@ -29,4 +29,4 @@ async function LatestPosts({ limit = 5, columnsClassName = "grid-cols-1 sm:grid-
   );
 }
 
-export default LatestPosts; // 👈 ESTA LÍNEA es la clave
+export default LatestPosts; 

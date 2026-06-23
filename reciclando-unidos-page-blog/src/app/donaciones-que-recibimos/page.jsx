@@ -129,7 +129,7 @@ export default function DonacionesQueRecibimos() {
                 d: "Si tienes dispositivos electrónicos en desuso, escríbenos y te confirmamos si los recibimos.",
               },
             ].map((c) => (
-              <div key={c.t} className="rounded-lg bg-white/15 p-6 text-left">
+              <div key={c.t} className=" bg-white/15 p-6 text-left">
                 <h3 className="paragraph font-bold">{c.t}</h3>
                 <p className="paragraph mt-2 text-white">{c.d}</p>
               </div>
@@ -178,7 +178,7 @@ export default function DonacionesQueRecibimos() {
           </p>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-lg bg-white/10 p-6 text-left">
+            <div className=" bg-white/10 p-6 text-left">
               <h3 className="paragraph font-bold">Reciclaje con gestores autorizados</h3>
               <p className="paragraph mt-2 text-white">
                 Las partes que ya no funcionan las entregamos a recicladores
@@ -186,7 +186,7 @@ export default function DonacionesQueRecibimos() {
                 forma adecuada.
               </p>
             </div>
-            <div className="rounded-lg bg-white/10 p-6 text-left">
+            <div className=" bg-white/10 p-6 text-left">
               <h3 className="paragraph font-bold">Disposición final de contaminantes</h3>
               <p className="paragraph mt-2 text-white">
                 Los componentes contaminantes se entregan a empresas que cuentan
@@ -221,7 +221,7 @@ export default function DonacionesQueRecibimos() {
                 d: "Cada equipo es práctica real para los practicantes que se forman con nosotros.",
               },
             ].map((s) => (
-              <div key={s.t} className="rounded-lg bg-white/10 p-6 text-left">
+              <div key={s.t} className=" bg-white/10 p-6 text-left">
                 <h3 className="paragraph font-bold">{s.t}</h3>
                 <p className="paragraph mt-2 text-white">{s.d}</p>
               </div>
@@ -250,7 +250,7 @@ export default function DonacionesQueRecibimos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={6} />
+        <LatestPosts limit={100} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

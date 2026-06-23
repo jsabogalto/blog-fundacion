@@ -5,6 +5,7 @@ import ServicesComponent from "@/components/ServicesComponent";
 import DigitalEquity from "@/components/DigitalEquityComponent";
 import LatestPosts from "@/components/LatestPosts";
 import FaqSeo from "@/components/FaqSeo";
+import QueHacemos from "@/components/QueHacemos";
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
   title: "Donar computadores | Reciclando Unidos",
@@ -342,9 +343,10 @@ export default function Home() {
       <ServicesComponent />
       <DigitalEquity />
       <ImpactComponent />
+      <QueHacemos/>
       <div className="flex flex-col gap-8">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={50} />
+        <LatestPosts limit={300} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />   
     </div>

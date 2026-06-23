@@ -105,7 +105,7 @@ export default function FaqSeo({
           {visibleSections.map((section) => (
             <div
               key={section.id}
-              className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
+              className="overflow-hidden border border-gray-200 bg-white shadow-sm"
             >
               {/* Cabecera del panel */}
               <div className="border-b border-gray-200 bg-gray-50/70 px-6 py-8 md:px-8">
