@@ -5,6 +5,7 @@ import FooterComponent from "@/components/FooterComponent";
 import WhatsappWidget from "@/components/WhatsappWidget";
 import AiChatWidget from "@/components/AiChatWidget";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
@@ -75,11 +76,13 @@ export default function RootLayout({ children }) {
         <body className="min-h-full flex flex-col bg-white">
           <TanStackQueryProvider>
             <ToastContainer position="bottom-right" />
+	    <Suspense fallback={null}>
             <Navbar />
             {children}
             <WhatsappWidget phone="573135410348" />
             <AiChatWidget />
-            <FooterComponent />
+            <FooterComponent/>
+	 </Suspense>
           </TanStackQueryProvider>
         </body>
       </html>
