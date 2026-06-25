@@ -9,30 +9,56 @@ const IMG_BASE = process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
 // Salvaguarda alta (no un límite "real"): evita pedir infinito por error.
 // Súbela si algún día superas este número.
-const SAFETY_CAP = 1000;
+const SAFETY_CAP = 300;
 
 const CATEGORIES = {
-  proyectos: { title: "Proyectos", description: "Conoce los proyectos de Reciclando Unidos.", image: "1777396020675.jpeg" },
-  educacion: { title: "Educación", description: "Aprende sobre el manejo responsable de residuos electrónicos.", image: "fondo-educacion.webp" },
-  "reciclaje-electronico": { title: "Reciclaje Electrónico", description: "Cómo reciclamos tus dispositivos de forma responsable.", image: "reciclaje-electronico.webp" },
-  "donar-computadores": { title: "Donar Computadores", description: "Dale una segunda vida a tus equipos donándolos.", image: "bgdonar-computadores.webp" },
-  cursos: { title: "Cursos", description: "Hacemos partícipe a la comunidad en el debate tecnológico y damos nueva vida a los equipos informáticos donados.", image: "bg-cursos.webp" },
+  proyectos: {
+    title: "Proyectos",
+    description: "Conoce los proyectos sociales y ambientales de Reciclando Unidos.",
+    image: "1777396020675.jpeg",
+  },
+  educacion: {
+    title: "Educación Tecnológica",
+    description: "Aprende sobre el manejo responsable de residuos electrónicos y el acceso digital.",
+    image: "fondo-educacion.webp",
+  },
+  "reciclaje-electronico": {
+    title: "Reciclaje Electrónico",
+    description: "Cómo reciclamos tus dispositivos de forma responsable con gestores autorizados.",
+    image: "reciclaje-electronico.webp",
+  },
+  "donar-computadores": {
+    // 👇 ángulo editorial, ya no compite con la landing /
+    title: "Artículos sobre Donación de Computadores",
+    description: "Guías y consejos para donar tus computadores y darles una segunda vida.",
+    image: "bgdonar-computadores.webp",
+  },
+  cursos: {
+    title: "Cursos",
+    description: "Formación tecnológica para la comunidad y nueva vida a los equipos donados.",
+    image: "bg-cursos.webp",
+  },
 };
 
 const DEFAULT_CATEGORY = {
-  title: "Publicaciones recientes, proyectos y cursos de la Fundación Reciclando Unidos.",
-  description: "Conoce el proceso de donar computadores y dale una segunda vida a tus equipos.",
+  // title corto y con keyword; la descripción larga va en `description`
+  title: "Blog",
+  description:
+    "Publicaciones, proyectos y cursos de Reciclando Unidos. Conoce cómo donar computadores y darles una segunda vida.",
   image: "1777396020675.jpeg",
 };
 
-// ───────────── SEO ─────────────
+const FALLBACK_OG = "/imagepublic.jpg"; // 1200×630 del layout, por si una categoría no trae imagen
+
 export async function generateMetadata({ searchParams }) {
   const { cat } = await searchParams;
   const data = (cat && CATEGORIES[cat]) || DEFAULT_CATEGORY;
   const canonical = cat && CATEGORIES[cat] ? `/posts?cat=${cat}` : "/posts";
 
+  const ogImage = data.image ? `${IMG_BASE}/${data.image}` : FALLBACK_OG;
+
   return {
-    title: data.title,
+    title: data.title, // string → la plantilla añade la marca (queda bien por ser cortos)
     description: data.description,
     alternates: { canonical },
     openGraph: {
@@ -40,11 +66,16 @@ export async function generateMetadata({ searchParams }) {
       title: data.title,
       description: data.description,
       url: canonical,
-      images: data.image
-        ? [{ url: `${IMG_BASE}/${data.image}`, width: 1200, height: 630, alt: data.title }]
-        : [],
+      locale: "es_CO",
+      siteName: "Fundación Reciclando Unidos",
+      images: [{ url: ogImage, width: 1200, height: 630, alt: data.title }],
     },
-    twitter: { card: "summary_large_image", title: data.title, description: data.description },
+    twitter: {
+      card: "summary_large_image",
+      title: data.title,
+      description: data.description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -96,6 +127,8 @@ const PostListPage = async ({ searchParams }) => {
           alt={`${data.title} - Fundación Reciclando Unidos`}
           title={data.title}
           subtitle={data.description}
+          srcButton={"/"}
+          textButton={"Descubre la fundación"}
         />
       </div>
 

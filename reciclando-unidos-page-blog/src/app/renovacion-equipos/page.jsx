@@ -4,18 +4,43 @@ import FaqSeo from "@/components/FaqSeo";
 import LatestPosts from "@/components/LatestPosts";
 
 export const metadata = {
-  title: "Renovación de equipos y cursos de tecnología | Reciclando Unidos",
-  description:
-    "Reacondicionamos los computadores donados con practicantes y estudiantes del sector tecnológico, y ofrecemos cursos gratuitos para la comunidad.",
-  alternates: {
-    canonical: "/renovacion-equipos",
+  // `absolute` controla todo el title y evita la doble marca.
+  // Lidera con la intención que SÍ se busca.
+  title: {
+    absolute: "Cursos Gratuitos de Tecnología en Bogotá | Fundación Reciclando Unidos",
   },
+  description:
+    "Cursos gratuitos de tecnología para la comunidad y prácticas para estudiantes que reacondicionan los computadores donados. Conoce el programa y participa.",
+  keywords: [
+    "cursos gratuitos de tecnología Bogotá",
+    "cursos para reparar computadores",
+    "prácticas reacondicionamiento de computadores",
+    "voluntariado tecnológico Bogotá",
+  ],
+  alternates: { canonical: "/renovacion-equipos" },
   openGraph: {
-    title: "Renovación de equipos y cursos de tecnología | Reciclando Unidos",
+    title: "Cursos gratuitos de tecnología y prácticas en Bogotá",
     description:
-      "Practicantes y estudiantes ganan experiencia reacondicionando donaciones y dictando cursos gratuitos para la comunidad.",
+      "Estudiantes y practicantes ganan experiencia reacondicionando donaciones, y la comunidad accede a cursos gratuitos de tecnología.",
     type: "website",
     url: "/renovacion-equipos",
+    locale: "es_CO",
+    siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Cursos gratuitos de tecnología en Bogotá - Reciclando Unidos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cursos gratuitos de tecnología en Bogotá | Reciclando Unidos",
+    description:
+      "Cursos gratuitos para la comunidad y prácticas para estudiantes que reacondicionan computadores donados.",
+    images: ["/imagepublic.jpg"],
   },
 };
 const FAQ_SECTIONS = [{
@@ -279,7 +304,7 @@ export default function RenovacionEquipos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={100} />
+        <LatestPosts limit={15} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

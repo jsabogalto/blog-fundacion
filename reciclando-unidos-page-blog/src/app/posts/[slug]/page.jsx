@@ -4,8 +4,8 @@ import ImageComponent from "../../../components/ImageComponent";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Linkedin, Gmail } from "@thesvg/react";
-import FaqSeo from "@/components/FaqSeo";
 import LatestPosts from "@/components/LatestPosts";
+import ButtonComponent from "@/components/ButtonComponent";
 
 // En el servidor conviene una variable NO pública (API_URL).
 // Dejo el fallback a la pública para no romper tu setup actual.
@@ -61,6 +61,8 @@ export async function generateMetadata({ params }) {
       title: data.title,
       description,
       url: `/posts/${slug}`,
+      locale: "es_CO",    
+      siteName: "Fundación Reciclando Unidos",
       images: data.img
         ? [{ url: data.img, width: 1200, height: 630, alt: data.title }]
         : [],
@@ -113,55 +115,6 @@ const SinglePostPage = async ({ params }) => {
     },
   };
 
-  const FAQ_SECTIONS = [{
-  id: "donar",
-  eyebrow: "Donar computadores",
-  title: "Donar computadores usados: dale una segunda vida a tu equipo",
-  intro:
-    "¿Tienes un computador usado guardado sin usar? Dónalo y conviértelo en una herramienta de estudio y trabajo para quien más lo necesita. Aquí resolvemos las dudas más comunes para que donar sea fácil y seguro.",
-  items: [
-    {
-      q: "¿Dónde puedo donar computadores usados en Colombia?",
-      a: "Puedes donar tus computadores usados a la Fundación Reciclando Unidos, una organización sin ánimo de lucro en Colombia que repara y reacondiciona tecnología para entregarla a quienes más la necesitan. Recibimos tanto equipos de escritorio como portátiles, sin importar su antigüedad.",
-    },
-    {
-      q: "¿Cómo dono mi computador usado?",
-      a: "Donar tu computador usado es muy sencillo: nos cuentas qué equipo tienes, coordinamos la entrega o la recogida y nosotros nos encargamos del resto. Revisamos cada dispositivo, lo reparamos cuando es posible y lo entregamos a quien lo necesita; lo que no sirve, lo reciclamos de forma responsable.",
-    },
-    {
-      q: "¿Qué computadores usados puedo donar?",
-      a: "Puedes donar computadores de escritorio, portátiles, monitores y componentes, además de otros aparatos electrónicos. No importa si el equipo está algo viejo o lento: muchos se reacondicionan para volver a usarse y otros aportan piezas para reparar más dispositivos. Cada donación suma.",
-    },
-    {
-      q: "¿Puedo donar computadores usados que ya no funcionan?",
-      a: "Sí. Aunque tu computador usado no encienda o esté dañado, aún puede ser útil: aprovechamos sus piezas para reacondicionar otros equipos y reciclamos el resto de forma adecuada. Donar un equipo que ya no funciona siempre es mejor que dejarlo guardado acumulando polvo o botarlo a la basura.",
-    },
-    {
-      q: "¿Recogen los computadores usados a domicilio?",
-      a: "Sí, coordinamos la recogida de tus equipos para que donar sea lo más cómodo posible para ti. Cuéntanos cuántos computadores usados quieres donar y tu ubicación, y organizamos juntos la mejor forma de recibirlos.",
-    },
-    {
-      q: "¿Necesito borrar mis datos antes de donar mi computador usado?",
-      a: "Te recomendamos respaldar y borrar tu información antes de donar, por tu tranquilidad. De todas formas, antes de reacondicionar o reciclar cualquier equipo nos aseguramos de que los datos del dispositivo queden inaccesibles. Tu privacidad es parte importante del proceso.",
-    },
-    {
-      q: "¿Qué pasa con mi computador usado después de donarlo?",
-      a: "Después de donarlo, revisamos tu computador usado y le damos el mejor destino posible: si funciona o se puede reparar, lo reacondicionamos y lo entregamos a estudiantes, niños o comunidades con pocos recursos; si no, lo reciclamos por materiales. Así, tu equipo se transforma en impacto educativo, social y ambiental.",
-    },
-    {
-      q: "¿Las empresas pueden donar computadores usados en grandes cantidades?",
-      a: "Claro. Recibimos donaciones de computadores usados de empresas que renuevan su tecnología, dentro de sus programas de responsabilidad social. Coordinamos la recogida de varios equipos a la vez y les damos un destino útil y trazable, en lugar de que terminen almacenados o como basura electrónica.",
-    },
-    {
-      q: "¿Donar computadores usados tiene algún costo?",
-      a: "Donar no tiene costo para ti: solo necesitas contactarnos y coordinar la entrega o recogida de tus equipos. Tú liberas espacio y te despides de tu computador usado de la forma más responsable, y nosotros nos encargamos de aprovecharlo al máximo.",
-    },
-    {
-      q: "¿Por qué donar mi computador usado en vez de venderlo o guardarlo?",
-      a: "Donar tu computador usado le da un propósito real: en vez de venderlo por unos pocos pesos o dejarlo guardado sin uso, se convierte en una oportunidad de estudio y trabajo para alguien más. Además, evitas que termine como residuo contaminante. Es la opción que más beneficia a todos: a ti, a quien lo recibe y al medio ambiente.",
-    },
-  ],
-}]
   return (
     // overflow-x-clip: contiene el hero full-bleed SIN romper el sticky
     <article className="flex flex-col overflow-x-clip">
@@ -308,14 +261,27 @@ const SinglePostPage = async ({ params }) => {
                 [&_img]:object-cover [&_img]:shadow-sm"
               dangerouslySetInnerHTML={{ __html: data.content }}
             />
+            <div className="py-16 flex flex-col gap-4 sm:flex-row">
+              {/* → / : lleva la keyword + gancho de misión (esta es la que debe rankear) */}
+              <ButtonComponent
+                className="bg-green-ru text-white"
+                text="Dona computadores y transforma vidas"
+                link="/"
+              />
+              {/* → /donar-computadores : anchor de acción, sin el término cabeza */}
+              <ButtonComponent
+                className="bg-white text-green-ru border border-green-ru"
+                text="Agenda tu recogida gratis a domicilio"
+                link="/donar-computadores"
+              />
+            </div>
           </div>
         </div>
       </div>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Articulos relacionados</h2>
-        <LatestPosts limit={6} />
+        <LatestPosts limit={9} />
       </div>
-      <FaqSeo sections={FAQ_SECTIONS} />
     </article>
   );
 };

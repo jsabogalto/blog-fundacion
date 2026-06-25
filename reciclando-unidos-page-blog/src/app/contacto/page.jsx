@@ -2,17 +2,61 @@ import SectionImageComponent from "@/components/SectionImageComponent"
 import { HandHeart, Handshake, Clock, MapPin, MessageCircle, Mail } from "lucide-react";
 
 export const metadata = {
-  title: "Contacto",
+  title: "Contacto", // string → la plantilla añade la marca. Correcto aquí.
   description:
-    "Contáctanos para donaciones de computadores, residuos electrónicos y colaboraciones con la Fundación Reciclando Unidos. Horario de atención de lunes a viernes, 8:00 a.m. a 5:00 p.m. en Bogotá.",
+    "Contáctanos para donar computadores, gestionar residuos electrónicos o colaborar con la Fundación Reciclando Unidos en Bogotá. Atención de lunes a viernes, 8 a.m. a 5 p.m.",
   alternates: { canonical: "/contacto" },
   openGraph: {
     type: "website",
-    title: "Contacto | Reciclando Unidos",
+    title: "Contacto | Fundación Reciclando Unidos",
     description:
       "Escríbenos para donar computadores, colaborar o resolver tus dudas. Atención de lunes a viernes, 8 a.m. – 5 p.m.",
     url: "/contacto",
+    locale: "es_CO",
+    siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Contacto - Fundación Reciclando Unidos",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contacto | Fundación Reciclando Unidos",
+    description:
+      "Escríbenos para donar computadores o colaborar. Atención de lunes a viernes, 8 a.m. – 5 p.m.",
+    images: ["/imagepublic.jpg"],
+  },
+};
+
+// Señal local: refuerza tu relevancia en Bogotá para "donar computadores en Bogotá"
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "Fundación Reciclando Unidos",
+  url: "https://www.fundacionreciclandounidos.com",
+  telephone: "+57-313-541-0348",
+  email: "ambiental@fundacionreciclandounidos.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bogotá",
+    addressRegion: "Cundinamarca",
+    addressCountry: "CO",
+    // streetAddress: "añade la dirección física si la tienes pública",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "08:00",
+    closes: "17:00",
+  },
+  areaServed: [
+    { "@type": "City", name: "Bogotá" },
+    { "@type": "State", name: "Cundinamarca" },
+  ],
 };
 
 // --- Datos editables ---------------------------------------------------------
@@ -26,6 +70,10 @@ const MAPS_EMBED =
 export default function ContactoPage() {
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SectionImageComponent src={"/contacto-bg.webp"} w={3002} h={2100} alt={"prueba"} title={"Hablemos"} subtitle={"¿Quieres donar computadores, sumar a tu empresa o resolver una duda? Estamos para ayudarte. Escríbenos por el canal que prefieras y te responderemos lo antes posible."} className={"object-[center_40%] md:object-[center_60%]"} />
       <section className="mx-auto max-w-[1400px] px-8 py-16 md:px-12 md:py-24">
         {/* Encabezado */}

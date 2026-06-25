@@ -6,21 +6,46 @@ import DigitalEquity from "@/components/DigitalEquityComponent";
 import LatestPosts from "@/components/LatestPosts";
 import FaqSeo from "@/components/FaqSeo";
 import QueHacemos from "@/components/QueHacemos";
+import { Facebook } from "@thesvg/react";
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
-  title: "Donar computadores | Reciclando Unidos",
+  alternates: { canonical: "/" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "Fundación Reciclando Unidos",
+  url: "https://www.fundacionreciclandounidos.com",
+  logo: "https://www.fundacionreciclandounidos.com/logo-fundacion-ru.png",
   description:
-    "Fundación en Bogotá para donar computadores usados, tecnología y laptops. Brindamos acceso digital y educación a niños. ¡Recogemos tus equipos a domicilio!",
-  alternates: {
-    canonical: `/`,
+    "Fundación en Bogotá y Cundinamarca que recibe computadores usados en donación, los reacondiciona y los entrega para la educación de colegios, jardines y estudiantes.",
+  email: "ambiental@fundacionreciclandounidos.com",
+  telephone: "+57-313-541-0348",
+  areaServed: [
+    { "@type": "City", name: "Bogotá" },
+    { "@type": "State", name: "Cundinamarca" },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bogotá",
+    addressRegion: "Cundinamarca",
+    addressCountry: "CO",
   },
-  openGraph: {
-    title: "Fundación Reciclando Unidos",
-    description:
-      "Proceso de donación, beneficios y servicio de recogida a domicilio gratuito.",
-    type: "website",
-    url: `/`,
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+57-313-541-0348",
+    email: "ambiental@fundacionreciclandounidos.com",
+    contactType: "customer service",
+    areaServed: "CO",
+    availableLanguage: "Spanish",
   },
+  sameAs: [
+    "https://www.instagram.com/fundacionreciclandounidos/",
+    "https://www.tiktok.com/@reciclandounidos",
+    "https://www.linkedin.com/company/fundaci%C3%B3n-reciclando-unidos/",
+    "https://www.facebook.com/fundacionreciclandounidos",
+  ],
 };
 const FAQ_SECTIONS = [
   {
@@ -335,7 +360,12 @@ const FAQ_SECTIONS = [
 ];
 export default function Home() {
   return (
+
     <div className="flex flex-col space-y-16 md:space-y-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="flex flex-col justify-between gap-12">
         <HeroSection />
         <CarrouselProvidersComponent />
@@ -343,12 +373,12 @@ export default function Home() {
       <ServicesComponent />
       <DigitalEquity />
       <ImpactComponent />
-      <QueHacemos/>
+      <QueHacemos />
       <div className="flex flex-col gap-8">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={300} />
+        <LatestPosts limit={100} />
       </div>
-      <FaqSeo sections={FAQ_SECTIONS} />   
+      <FaqSeo sections={FAQ_SECTIONS} />
     </div>
   );
 }

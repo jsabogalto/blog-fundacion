@@ -24,44 +24,45 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Reciclando Unidos | Dona y recicla computadores en Colombia",
-    template: "%s | Reciclando Unidos",
+    // 👇 keyword al inicio + gancho educativo. Esto es lo que rankea y lo que se ve en el SERP.
+    default: "Donar Computadores usados para Colegios y Estudiantes | Fundación Reciclando Unidos",
+    template: "%s | Fundación Reciclando Unidos",
   },
   description:
-    "Fundación sin ánimo de lucro en Colombia. Reacondicionamos y donamos computadores, reciclamos residuos electrónicos y promovemos la educación tecnológica. Domicilio gratuito en Bogotá.",
-  // keywords reducido (opcional; Google lo ignora)
-  keywords: ["donar computadores en Colombia", "reciclaje electrónico", "fundación educación tecnológica"],
-  applicationName: "Reciclando Unidos",
+    "Dona computadores usados en Bogotá y Cundinamarca y apoya la educación de colegios, jardines y estudiantes. Recogida gratis a domicilio en Bogotá y certificado de donación DIAN - Tel: 313 541 03 48 - Correo: ambiental@fundacionreciclandounidos.com",
+  keywords: ["donar computadores", "donar computadores Bogotá", "reciclaje electrónico Bogotá y Cundinamarca"],
+  applicationName: "Fundación Reciclando Unidos",
   authors: [{ name: "Fundación Reciclando Unidos" }],
 
   openGraph: {
     type: "website",
     locale: "es_CO",
-    siteName: "Reciclando Unidos",
-    title: "Reciclando Unidos | Dona y recicla computadores en Colombia",
+    siteName: "Fundación Reciclando Unidos",
+    title: "Dona Computadores y Transforma la Educación en Bogotá y Cundinamarca | Fundación Reciclando Unidos",
     description:
-      "Reacondicionamos y donamos computadores, reciclamos residuos electrónicos y promovemos la educación tecnológica en Colombia.",
+      "Al donar computadores apoyas la educación de colegios, jardines y estudiantes. Reacondicionamos, donamos y reciclamos con recogida gratis en Bogotá.",
     url: "/",
     images: [
       {
-        url: "/imagepublic.jpeg", // 👈 versión 1200x630 horizontal
+        url: "/imagepublic.jpg", // versión 1200x630 horizontal
         width: 1200,
         height: 630,
-        alt: "Fundación Reciclando Unidos",
+        alt: "Donar computadores para la educación - Reciclando Unidos",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Reciclando Unidos | Dona y recicla computadores en Colombia",
-    description: "Dona computadores usados y apoya la educación tecnológica en Colombia.",
-    images: ["/og-reciclando-unidos.jpg"],
+    title: "Donar Computadores para la Educación | Fundación Reciclando Unidos",
+    description:
+      "Dona computadores usados y apoya la educación de colegios, jardines y estudiantes en Colombia.",
+    images: ["/imagepublic.jpg"],
   },
 
   icons: {
-    icon: "/icono-reciclano-unidos.png",
-    apple: "/icono-reciclano-unidos.png",
+    icon: "/logo-fundacion-ru.ico",
+    apple: "/logo-fundacion-ru.ico",
   },
 
   robots: { index: true, follow: true },
@@ -78,7 +79,7 @@ export default function RootLayout({ children }) {
             {children}
             <WhatsappWidget phone="573135410348" />
             <AiChatWidget />
-            <FooterComponent/>
+            <FooterComponent />
           </TanStackQueryProvider>
         </body>
       </html>

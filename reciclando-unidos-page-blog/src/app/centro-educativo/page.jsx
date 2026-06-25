@@ -4,18 +4,43 @@ import FaqSeo from "@/components/FaqSeo";
 import LatestPosts from "@/components/LatestPosts";
 
 export const metadata = {
-  title: "Prepara a tu organización para el mundo digital | Reciclando Unidos",
-  description:
-    "Proporcionamos computadores de escritorio y portátiles reacondicionados a organizaciones sin ánimo de lucro, centros educativos y personas de bajos ingresos de Cundinamarca que necesitan acceder a tecnología asequible. Conoce a continuación cómo solicitar los equipos reacondicionados.",
-  alternates: {
-    canonical: "/centro-educativo",
+  // `absolute` controla todo el title y evita la doble marca
+  title: {
+    absolute: "Computadores Reacondicionados para Centros Educativos | Fundación Reciclando Unidos",
   },
+  description:
+    "Entregamos computadores reacondicionados a centros educativos, fundaciones y organizaciones de Cundinamarca. Conoce los requisitos y cómo solicitar los equipos.",
+  keywords: [
+    "computadores reacondicionados",
+    "computadores para centros educativos",
+    "computadores para fundaciones",
+    "solicitar computadores reacondicionados",
+  ],
+  alternates: { canonical: "/centro-educativo" },
   openGraph: {
-    title: "Prepara a tu organización para el mundo digital | Reciclando Unidos",
-    description: "Tecnología asequible para organizaciones, centros educativos y personas de bajos ingresos. Aprende cómo solicitarla.",
+    title: "Computadores reacondicionados para centros educativos y fundaciones",
+    description:
+      "Tecnología asequible para organizaciones, centros educativos y comunidades de Cundinamarca. Conoce cómo solicitar los equipos.",
     type: "website",
     url: "/centro-educativo",
-  }
+    locale: "es_CO",
+    siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Computadores reacondicionados para centros educativos - Reciclando Unidos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Computadores reacondicionados para centros educativos | Reciclando Unidos",
+    description:
+      "Tecnología asequible para organizaciones y centros educativos de Cundinamarca. Aprende cómo solicitarla.",
+    images: ["/imagepublic.jpg"],
+  },
 };
 const FAQ_SECTIONS = [{
   id: "educacion",
@@ -242,7 +267,7 @@ export default function SolicitarEquipos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={100} />
+        <LatestPosts limit={15} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

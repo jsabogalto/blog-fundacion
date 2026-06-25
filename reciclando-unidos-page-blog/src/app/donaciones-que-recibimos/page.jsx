@@ -4,18 +4,34 @@ import FaqSeo from "@/components/FaqSeo";
 import LatestPosts from "@/components/LatestPosts";
 
 export const metadata = {
-  title: "¿Qué donaciones recibimos? | Reciclando Unidos",
+  // string normal → la plantilla añade la marca automáticamente. Sin marca manual.
+  title: "Qué computadores y equipos puedes donar",
   description:
-    "Recibimos todo tipo de material electrónico: computadores usados, dañados o en desuso. Reparamos lo aprovechable y reciclamos el resto con gestores autorizados. Aquí todo sirve.",
-  alternates: {
-    canonical: `/donaciones-que-recibimos`,
-  },
+    "Recibimos computadores usados, dañados o en desuso y todo tipo de material electrónico. Reparamos lo aprovechable y reciclamos el resto con gestores autorizados.",
+  alternates: { canonical: "/donaciones-que-recibimos" },
   openGraph: {
-    title: "¿Qué donaciones recibimos? | Reciclando Unidos",
+    title: "Qué computadores y equipos puedes donar | Reciclando Unidos",
     description:
       "Computadores y material electrónico usado, dañado o en desuso. Recolección, reparación y reciclaje responsable con gestores autorizados.",
     type: "website",
-    url: `/donaciones-que-recibimos`,
+    url: "/donaciones-que-recibimos",
+    locale: "es_CO",
+    siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Qué computadores y equipos puedes donar - Reciclando Unidos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Qué computadores y equipos puedes donar | Reciclando Unidos",
+    description:
+      "Recibimos computadores usados, dañados o en desuso. Reparamos lo aprovechable y reciclamos el resto de forma responsable.",
+    images: ["/imagepublic.jpg"],
   },
 };
 
@@ -250,7 +266,7 @@ export default function DonacionesQueRecibimos() {
       </section>
       <div className="flex flex-col gap-8 mt-14">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={100} />
+        <LatestPosts limit={15} />
       </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

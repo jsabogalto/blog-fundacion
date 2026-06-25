@@ -10,39 +10,44 @@ import QueHacemos from "@/components/QueHacemos";
 
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
-  title:
-    "Donar computadores en Bogotá con recogida a domicilio GRATIS | Reciclando Unidos",
-  description:
-    "¿Dónde donar computadores en Bogotá? Recogemos tus equipos usados o dañados a domicilio GRATIS en toda la ciudad. Recibe tu certificado de donación y apoya la educación con tecnología.",
-  keywords: [
-    "donar computadores",
-    "donar computadores Bogotá",
-    "dónde donar computadores",
-    "donar computadores usados",
-    "donación de computadores",
-    "reciclar computadores Bogotá",
-    "fundación donar computadores",
-    "recogida de computadores a domicilio",
-    "certificado de donación computadores",
-    "donar portátiles Bogotá",
-  ],
-  alternates: {
-    canonical: `/donar-computadores`,
+  // `absolute` controla el title completo y evita que la plantilla duplique la marca
+  title: {
+    absolute: "Como Donar Computadores Usados o Dañados en Bogotá | Recogida Gratis",
   },
+  description:
+    "Te explicamos cómo y dónde donar tus computadores usados o dañados en Bogotá: agenda la recogida gratis a domicilio, recibe tu certificado DIAN y borrado seguro de datos.",
+  // Intención propia de esta página (NO el término cabeza, que es de /)
+  keywords: [
+    "cómo donar computadores",
+    "dónde donar computadores Bogotá",
+    "recogida de computadores a domicilio",
+    "donar computadores usados o dañados",
+    "certificado de donación DIAN",
+  ],
+  alternates: { canonical: "/donar-computadores" },
   openGraph: {
-    title: "Donar computadores en Bogotá | Reciclando Unidos",
+    title: "Cómo donar computadores en Bogotá | Fundación Reciclando Unidos",
     description:
-      "Proceso de donación, beneficios y recogida a domicilio GRATIS de computadores usados o dañados en Bogotá. Recibe tu certificado de donación.",
+      "Agenda la recogida gratis a domicilio de tus computadores usados o dañados. Recibe tu certificado de donación y apoya la educación.",
     type: "website",
-    url: `/donar-computadores`,
+    url: "/donar-computadores",
     locale: "es_CO",
     siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Cómo donar computadores en Bogotá - Fundación Reciclando Unidos",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Donar computadores en Bogotá | Reciclando Unidos",
+    title: "Cómo donar computadores en Bogotá | Fundación Reciclando Unidos",
     description:
-      "Recogemos tus computadores usados o dañados a domicilio GRATIS en toda Bogotá. Recibe tu certificado de donación.",
+      "Recogida gratis a domicilio de tus computadores usados o dañados. Recibe tu certificado de donación.",
+    images: ["/imagepublic.jpg"], // 👈 antes faltaba
   },
 };
 
@@ -366,7 +371,7 @@ export default function DonarComputadoresPage() {
 
       <div className="flex flex-col gap-8 mt-8">
         <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={100} />
+        <LatestPosts limit={33} />
       </div>
 
       <FaqSeo sections={FAQ_SECTIONS} />
