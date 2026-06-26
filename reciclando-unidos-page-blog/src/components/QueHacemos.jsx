@@ -3,7 +3,7 @@ import ButtonComponent from "@/components/ButtonComponent";
 const DESTINOS = [
   {
     title: "Colegios y escuelas",
-    desc: "Entregamos computadores a instituciones educativas con pocos recursos para que monten salas de cómputo, dicten clases de tecnología y den acceso a herramientas digitales a cientos de estudiantes.",
+    desc: "Entregamos computadores donados a instituciones educativas de bajos recursos en Bogotá y Cundinamarca para que monten salas de cómputo, dicten clases de tecnología y den acceso a herramientas digitales a cientos de estudiantes.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7" aria-hidden="true">
         <path d="m4 6 8-3 8 3-8 3-8-3Z" />
@@ -15,7 +15,7 @@ const DESTINOS = [
   },
   {
     title: "Fundaciones y comunidades",
-    desc: "Apoyamos a otras fundaciones y organizaciones sociales con equipos reacondicionados, multiplicando el impacto de cada computador donado en programas educativos y comunitarios.",
+    desc: "Apoyamos a otras fundaciones y organizaciones sociales con computadores reacondicionados, multiplicando el impacto de cada equipo donado en programas educativos y comunitarios.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7" aria-hidden="true">
         <path d="M19.5 12.572 12 20l-7.5-7.428A5 5 0 1 1 12 6.006a5 5 0 1 1 7.5 6.566Z" />
@@ -24,7 +24,7 @@ const DESTINOS = [
   },
   {
     title: "Estudiantes rurales",
-    desc: "Llevamos computadores a niños y jóvenes de zonas rurales, donde el acceso a la tecnología es más difícil, para que estudien en igualdad de condiciones y no queden rezagados por la brecha digital.",
+    desc: "Llevamos computadores usados reacondicionados a niños y jóvenes de zonas rurales, donde el acceso a la tecnología es más difícil, para que estudien en igualdad de condiciones y no queden rezagados por la brecha digital.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7" aria-hidden="true">
         <path d="M12 22v-7" />
@@ -34,7 +34,7 @@ const DESTINOS = [
   },
   {
     title: "Personas en situación de vulnerabilidad",
-    desc: "Acercamos la tecnología a familias y personas en situación de vulnerabilidad, abriéndoles puertas para estudiar, capacitarse, buscar empleo y acceder a trámites y servicios en línea.",
+    desc: "Acercamos la tecnología a familias y personas en situación de vulnerabilidad con computadores donados, abriéndoles puertas para estudiar, capacitarse, buscar empleo y acceder a trámites y servicios en línea.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7" aria-hidden="true">
         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
@@ -57,13 +57,14 @@ export default function QueHacemos() {
           Nuestro impacto
         </p>
         <h2 id="que-hacemos-title" className="subtitle">
-          ¿Qué hacemos con los computadores donados?
+          ¿Qué hacemos con los computadores que donas en Bogotá?
         </h2>
         <p className="paragraph mt-4 leading-relaxed text-gray-600">
-          Cada computador que recibimos se repara y se reacondiciona para darle
-          una segunda vida con propósito. Después lo entregamos a quienes más lo
-          necesitan, asegurando que tu donación se convierta en oportunidades
-          educativas y sociales reales.
+          Cada computador usado que recibimos se repara y se reacondiciona para
+          darle una segunda vida con propósito. Después lo entregamos a quienes
+          más lo necesitan en Bogotá y Cundinamarca, asegurando que tu donación
+          de computadores se convierta en oportunidades educativas y sociales
+          reales.
         </p>
       </div>
 

@@ -4,10 +4,10 @@ import ButtonComponent from "./ButtonComponent";
 import { Laptop, User, Truck, School } from "lucide-react";
 
 const stats = [
-  { icon: Laptop, value: "62", label: "Computadores donados" },
+  { icon: Laptop, value: "62", label: "Computadores donados y reacondicionados" },
   { icon: School, value: "6", label: "Instituciones educativas equipadas con salas de cómputo" },
-  { icon: User, value: "14", label: "Estudiantes rurales beneficiados" },
-  { icon: Truck, value: "2", label: "Toneladas de desechos electrónicos reciclados" },
+  { icon: User, value: "14", label: "Estudiantes rurales beneficiados con tecnología" },
+  { icon: Truck, value: "2", label: "Toneladas de residuos electrónicos reciclados" },
 ];
 
 export default function ImpactComponent() {
@@ -23,7 +23,7 @@ export default function ImpactComponent() {
       <div className="relative z-10 w-full py-20 md:py-28">
         <div className="mx-auto max-w-[1400px] px-8 md:px-12">
           <h2 className="text-center subtitle text-white">
-            Impacto desde nuestra creación (2025)
+            El impacto de donar computadores en Bogotá desde 2025
           </h2>
 
           <div className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -50,17 +50,17 @@ export default function ImpactComponent() {
         <div className="mx-auto max-w-[1400px] px-8 text-center md:px-12">
           <div className="mx-auto max-w-2xl">
             <h2 className="subtitle text-white">
-              Nuestro Informe Anual de 2025 lo dice todo
+              Nuestro Informe Anual 2025 lo dice todo
             </h2>
             <p className="paragraph mt-5 text-white">
-              Descubre cómo Reciclando Unidos, sus donantes y sus socios
-              colaboraron para lograr un impacto real en las personas y el
-              planeta en 2024.
+              Descubre cómo en Reciclando Unidos, junto a nuestros donantes y
+              aliados, transformamos cada computador usado donado en un impacto
+              real para las personas y el planeta durante 2025.
             </p>
             <ButtonComponent
               link="/informes"
               className="bg-white text-green-ru mt-8"
-              text="Consulta aquí"
+              text="Consulta el informe"
             />
           </div>
         </div>
@@ -71,15 +71,15 @@ export default function ImpactComponent() {
         <div className="mx-auto max-w-[1400px] px-8 text-center md:px-12">
           <div className="mx-auto max-w-2xl">
             <h2 className="text-3xl font-bold leading-tight text-white md:text-4xl">
-              Convertir los residuos electrónicos en una oportunidad
+              Donar computadores usados convierte los residuos electrónicos en oportunidades
             </h2>
             <p className="paragraph mt-5 leading-relaxed text-white">
-              Los residuos electrónicos son uno de los flujos de residuos que
-              más rápido crecen a nivel mundial. En lugar de permitir que dañen
-              nuestro medio ambiente, reacondicionamos y redistribuimos los
-              dispositivos tecnológicos entre quienes los necesitan. Es una
-              situación en la que todos salen ganando: tanto las comunidades como
-              el planeta.
+              Los residuos electrónicos son uno de los flujos de desechos que más
+              rápido crecen en el mundo. En lugar de dejar que contaminen el medio
+              ambiente, reacondicionamos los computadores donados y los
+              redistribuimos entre colegios, fundaciones y familias de Bogotá y
+              Cundinamarca que los necesitan. Así, donar tu computador en desuso
+              es una decisión en la que ganan todos: las comunidades y el planeta.
             </p>
           </div>
         </div>

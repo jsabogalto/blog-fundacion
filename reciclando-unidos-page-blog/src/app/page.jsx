@@ -5,47 +5,28 @@ import ServicesComponent from "@/components/ServicesComponent";
 import DigitalEquity from "@/components/DigitalEquityComponent";
 import LatestPosts from "@/components/LatestPosts";
 import FaqSeo from "@/components/FaqSeo";
-import QueHacemos from "@/components/QueHacemos";
-import { Facebook } from "@thesvg/react";
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
-  alternates: { canonical: "/" },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "NGO",
-  name: "Fundación Reciclando Unidos",
-  url: "https://www.fundacionreciclandounidos.com",
-  logo: "https://www.fundacionreciclandounidos.com/logo-fundacion-ru.png",
+  title: "Reciclaje electrónico y donación de tecnología en Bogotá",
   description:
-    "Fundación en Bogotá y Cundinamarca que recibe computadores usados en donación, los reacondiciona y los entrega para la educación de colegios, jardines y estudiantes.",
-  email: "ambiental@fundacionreciclandounidos.com",
-  telephone: "+57-313-541-0348",
-  areaServed: [
-    { "@type": "City", name: "Bogotá" },
-    { "@type": "State", name: "Cundinamarca" },
-  ],
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Bogotá",
-    addressRegion: "Cundinamarca",
-    addressCountry: "CO",
+    "Reparamos, donamos y reciclamos computadores y tecnología en Bogotá y Cundinamarca para apoyar la educación. Recogida gratis a domicilio y certificado de donación.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    title: "Dona computadores y transforma la educación en Bogotá",
+    description:
+      "Al donar computadores apoyas la educación de colegios, jardines y estudiantes. Reacondicionamos, donamos y reciclamos con recogida gratis en Bogotá.",
+    url: "/",
+    images: [
+      {
+        url: "/imagepublic.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Donar computadores para la educación — Fundación Reciclando Unidos",
+      },
+    ],
   },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+57-313-541-0348",
-    email: "ambiental@fundacionreciclandounidos.com",
-    contactType: "customer service",
-    areaServed: "CO",
-    availableLanguage: "Spanish",
-  },
-  sameAs: [
-    "https://www.instagram.com/fundacionreciclandounidos/",
-    "https://www.tiktok.com/@reciclandounidos",
-    "https://www.linkedin.com/company/fundaci%C3%B3n-reciclando-unidos/",
-    "https://www.facebook.com/fundacionreciclandounidos",
-  ],
 };
 const FAQ_SECTIONS = [
   {
@@ -362,10 +343,6 @@ export default function Home() {
   return (
 
     <div className="flex flex-col space-y-16 md:space-y-24">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <div className="flex flex-col justify-between gap-12">
         <HeroSection />
         <CarrouselProvidersComponent />
@@ -373,11 +350,7 @@ export default function Home() {
       <ServicesComponent />
       <DigitalEquity />
       <ImpactComponent />
-      <QueHacemos />
-      <div className="flex flex-col gap-8">
-        <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={100} />
-      </div>
+      <LatestPosts limit={12} cat={"reciclaje-electronico"} title={"Reciclaje Electrónico"}/>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>
   );

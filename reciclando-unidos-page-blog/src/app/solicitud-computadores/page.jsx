@@ -3,21 +3,43 @@ import ButtonComponent from "@/components/ButtonComponent";
 import PdfViewer from "@/components/PdfViewer";
 import SectionImageComponent from "@/components/SectionImageComponent";
 
-
-// SEO: metadatos renderizados en el servidor
 export const metadata = {
-  title: "Solicitud de donación de computadores | Reciclando Unidos",
-  description:
-    "Solicita la donación de computadores a la Fundación Reciclando Unidos. Conoce los requisitos, el reglamento y los compromisos antes de continuar.",
-  alternates: {
-    canonical: `/solicitud-computadores`,
+  // `absolute` controla el title y evita la doble marca
+  title: {
+    absolute: "Cómo Solicitar un Computador Donado | Reciclando Unidos",
   },
+  description:
+    "Conoce los requisitos, el reglamento y los compromisos para solicitar la donación de un computador reacondicionado a la Fundación Reciclando Unidos.",
+  keywords: [
+    "cómo solicitar computador donado",
+    "requisitos para recibir computador donado",
+    "solicitar computador reacondicionado",
+    "donación de computadores para estudiantes",
+  ],
+  alternates: { canonical: "/solicitud-computadores" },
   openGraph: {
-    title: "Solicitud de donación de computadores | Reciclando Unidos",
+    title: "Cómo solicitar un computador donado | Fundación Reciclando Unidos",
     description:
-      "Conoce los requisitos y el reglamento para solicitar la donación de computadores.",
+      "Requisitos, reglamento y compromisos para solicitar la donación de un computador reacondicionado.",
     type: "website",
-    url: `/solicitud-computadores`,
+    url: "/solicitud-computadores",
+    locale: "es_CO",
+    siteName: "Fundación Reciclando Unidos",
+    images: [
+      {
+        url: "/imagepublic.jpg", // 1200×630
+        width: 1200,
+        height: 630,
+        alt: "Cómo solicitar un computador donado - Reciclando Unidos",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cómo solicitar un computador donado | Reciclando Unidos",
+    description:
+      "Requisitos, reglamento y compromisos para solicitar la donación de un computador reacondicionado.",
+    images: ["/imagepublic.jpg"],
   },
 };
 

@@ -25,37 +25,41 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    // 👇 keyword al inicio + gancho educativo. Esto es lo que rankea y lo que se ve en el SERP.
-    default: "Donar Computadores usados para Colegios y Estudiantes | Fundación Reciclando Unidos",
+    // Home = marca + misión. La keyword exacta "donar computadores" se la dejas a /donar-computadores.
+    default: "Fundación Reciclando Unidos | Donamos y reciclamos tecnología en Bogotá",
     template: "%s | Fundación Reciclando Unidos",
   },
   description:
-    "Dona computadores usados en Bogotá y Cundinamarca y apoya la educación de colegios, jardines y estudiantes. Recogida gratis a domicilio en Bogotá y certificado de donación DIAN - Tel: 313 541 03 48 - Correo: ambiental@fundacionreciclandounidos.com",
-  keywords: ["donar computadores", "donar computadores Bogotá", "reciclaje electrónico Bogotá y Cundinamarca"],
+    "Reparamos, donamos y reciclamos computadores y tecnología en Bogotá y Cundinamarca para apoyar la educación. Recogida gratis a domicilio y certificado de donación.",
+  keywords: ["donar computadores", "donar computadores Bogotá", "reciclaje electrónico Bogotá", "fundación reciclaje electrónico Cundinamarca"],
   applicationName: "Fundación Reciclando Unidos",
   authors: [{ name: "Fundación Reciclando Unidos" }],
+
+  alternates: {
+    canonical: "/",
+  },
 
   openGraph: {
     type: "website",
     locale: "es_CO",
     siteName: "Fundación Reciclando Unidos",
-    title: "Dona Computadores y Transforma la Educación en Bogotá y Cundinamarca | Fundación Reciclando Unidos",
+    title: "Dona computadores y transforma la educación en Bogotá",
     description:
       "Al donar computadores apoyas la educación de colegios, jardines y estudiantes. Reacondicionamos, donamos y reciclamos con recogida gratis en Bogotá.",
     url: "/",
     images: [
       {
-        url: "/imagepublic.jpg", // versión 1200x630 horizontal
+        url: "/imagepublic.jpg", // 1200x630
         width: 1200,
         height: 630,
-        alt: "Donar computadores para la educación - Reciclando Unidos",
+        alt: "Donar computadores para la educación — Fundación Reciclando Unidos",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Donar Computadores para la Educación | Fundación Reciclando Unidos",
+    title: "Donamos y reciclamos tecnología en Bogotá | Reciclando Unidos",
     description:
       "Dona computadores usados y apoya la educación de colegios, jardines y estudiantes en Colombia.",
     images: ["/imagepublic.jpg"],
@@ -69,11 +73,50 @@ export const metadata = {
   robots: { index: true, follow: true },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "Fundación Reciclando Unidos",
+  url: "https://www.fundacionreciclandounidos.com",
+  logo: "https://www.fundacionreciclandounidos.com/logo-fundacion-ru.ico",
+  description:
+    "Fundación en Bogotá y Cundinamarca que recibe computadores usados en donación, los reacondiciona y los entrega para la educación de colegios, jardines y estudiantes.",
+  email: "ambiental@fundacionreciclandounidos.com",
+  telephone: "+57-313-541-0348",
+  areaServed: [
+    { "@type": "City", name: "Bogotá" },
+    { "@type": "State", name: "Cundinamarca" },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bogotá",
+    addressRegion: "Cundinamarca",
+    addressCountry: "CO",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+57-313-541-0348",
+    email: "ambiental@fundacionreciclandounidos.com",
+    contactType: "customer service",
+    areaServed: "CO",
+    availableLanguage: "Spanish",
+  },
+  sameAs: [
+    "https://www.instagram.com/fundacionreciclandounidos/",
+    "https://www.tiktok.com/@reciclandounidos",
+    "https://www.linkedin.com/company/fundaci%C3%B3n-reciclando-unidos/",
+    "https://www.facebook.com/fundacionreciclandounidos",
+  ],
+};
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <html lang="es" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col bg-white">
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
           <TanStackQueryProvider>
             <ToastContainer position="bottom-right" />
 	    <Suspense fallback={null}>

@@ -9,7 +9,7 @@ export default function DonacionInfo() {
       <section className="relative left-1/2 w-screen -translate-x-1/2 bg-green-600 text-white">
         <div className="mx-auto max-w-[1400px] px-8 py-16 text-center md:px-12">
           <h2 className="subtitle">
-            ¿Por qué donar tu computador?
+            ¿Por qué donar computadores?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl paragraph text-white">
             Cada equipo que ya no usas puede cambiar una vida. Donarlo evita que
@@ -41,7 +41,7 @@ export default function DonacionInfo() {
       <section className="relative left-1/2 w-screen -translate-x-1/2 bg-teal-700 text-white">
         <div className="mx-auto max-w-[1400px] px-8 py-16 md:px-12">
           <h2 className="text-center subtitle">
-            Beneficios de donar con Reciclando Unidos
+            Beneficios por donar computadores con Reciclando Unidos
           </h2>
           <p className="mx-auto mt-4 paragraph max-w-2xl text-center">
             Donar con nosotros no solo ayuda a otros: también te trae
@@ -73,7 +73,7 @@ export default function DonacionInfo() {
       <section className="relative left-1/2 w-screen -translate-x-1/2 bg-green-600 text-white">
         <div className="mx-auto max-w-3xl px-8 py-20 text-center md:px-12">
           <h2 className="subtitle">
-            Recogemos tu donación a domicilio en Bogotá, gratis
+            Con nostros donar computadores en Bogotá es a domicilio y gratis
           </h2>
           <p className="mx-auto paragraph mt-5 max-w-2xl text-white">
             No tienes que desplazarte ni cargar nada. Vamos hasta la puerta de tu

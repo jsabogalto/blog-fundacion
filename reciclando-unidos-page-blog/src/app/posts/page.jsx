@@ -23,16 +23,15 @@ const CATEGORIES = {
     image: "fondo-educacion.webp",
   },
   "reciclaje-electronico": {
-    title: "Reciclaje Electrónico",
-    description: "Cómo reciclamos tus dispositivos de forma responsable con gestores autorizados.",
-    image: "reciclaje-electronico.webp",
-  },
+  title: "Reciclaje Electrónico en Bogotá",
+  description: "Cómo reciclamos tus computadores y dispositivos de forma responsable con gestores autorizados en Bogotá y Cundinamarca.",
+  image: "reciclaje-electronico.webp",
+},
   "donar-computadores": {
-    // 👇 ángulo editorial, ya no compite con la landing /
-    title: "Artículos sobre Donación de Computadores",
-    description: "Guías y consejos para donar tus computadores y darles una segunda vida.",
-    image: "bgdonar-computadores.webp",
-  },
+  title: "Artículos sobre Donar Computadores en Bogotá",
+  description: "Guías y consejos para donar tus computadores usados en Bogotá y Cundinamarca, y darles una segunda vida con impacto social.",
+  image: "bgdonar-computadores.webp",
+},
   cursos: {
     title: "Cursos",
     description: "Formación tecnológica para la comunidad y nueva vida a los equipos donados.",

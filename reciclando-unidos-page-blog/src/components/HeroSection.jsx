@@ -33,11 +33,11 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-end px-8 md:px-12">
         <div className="mb-12 max-w-2xl">
           <h1 className="title mt-16 text-white">
-            Dona computadores y devuelve la vida a la tecnología y a los sueños
+            Transformar vidas con tecnología
           </h1>
 
           <p className="paragraph mt-6 max-w-lg text-white/90">
-            Desde los residuos electrónicos hasta la igualdad, transformamos los
+            Desde los residuos electrónicos hasta la igualdad, convertimos los
             dispositivos desechados en oportunidades digitales para todos.
           </p>
 

@@ -1,8 +1,51 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* ── Tokens del proyecto (v4 = CSS-first, reemplaza a tailwind.config.js) ── */
+@theme {
+  --color-bg: #f4f7f2;
+  --color-ink: #15241c;
+  --color-pine: #14492f;
+  --color-leaf: #2fbf71;
+  --color-leaf-soft: #9ff0c4;
+  --color-mint: #dceae0;
+  --color-line: #c9dccf;
+  --color-muted: #5a6b60;
+  --color-green-ru: #25d366;
+
+  /* Fuentes inyectadas por next/font (ver app/layout.jsx) */
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --shadow-card: 0 1px 0 #ffffff inset, 0 18px 40px -24px rgb(20 73 47 / 0.35);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-bg text-ink font-sans;
+  }
+  /* Foco visible accesible */
+  :focus-visible {
+    outline: 2px solid var(--color-leaf);
+    outline-offset: 2px;
+  }
+}
 
 @layer components {
+  /* Campos del formulario */
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-ink
+           placeholder:text-muted/60 transition
+           focus:border-leaf focus:ring-4 focus:ring-leaf/15 outline-none;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+
+  /* ── Tus utilidades de marca ── */
   .title {
     @apply tracking-tight text-3xl md:text-5xl leading-tight;
   }
@@ -12,19 +55,27 @@
   }
 
   .subtitle {
-    @apply text-3xl md:text-4xl font-bold leading-tight
+    @apply text-3xl md:text-4xl font-bold leading-tight;
   }
 
   .bg-green-ru {
-    @apply bg-[#25D366]
+    @apply bg-[#25D366];
   }
 
   .text-green-ru {
-    @apply text-[#25D366]
+    @apply text-[#25D366];
   }
 
   .post-body :is(ul, ol) {
     padding-inline-start: 2.5rem !important;
     margin-inline-start: 0.5rem !important;
+  }
+}
+
+/* Respeta a quien reduce el movimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,5 +1,4 @@
-import ButtonComponent from "@/components/ButtonComponent";
-import PdfViewer from "@/components/PdfViewer";
+import DonacionInfoExtra from "@/components/DonacionInfoExtra";
 import DonacionInfo from "@/components/DonacionInfo";
 import SectionImageComponent from "@/components/SectionImageComponent";
 import FaqSeo from "@/components/FaqSeo";
@@ -7,16 +6,15 @@ import LatestPosts from "@/components/LatestPosts";
 import ProcesoDonacion from "@/components/ProcesoDonacion";
 import BeneficiosUnesco from "@/components/BeneficiosUnesco";
 import QueHacemos from "@/components/QueHacemos";
+import DonationForm from "@/components/DonationForm";
 
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
-  // `absolute` controla el title completo y evita que la plantilla duplique la marca
   title: {
-    absolute: "Como Donar Computadores Usados o Dañados en Bogotá | Recogida Gratis",
+    absolute: "Cómo donar computadores usados en Bogotá | Recogida gratis",
   },
   description:
-    "Te explicamos cómo y dónde donar tus computadores usados o dañados en Bogotá: agenda la recogida gratis a domicilio, recibe tu certificado DIAN y borrado seguro de datos.",
-  // Intención propia de esta página (NO el término cabeza, que es de /)
+    "Dónde donar computadores usados en Bogotá: llena el formulario en 1 minuto y recogemos gratis a domicilio en Bogotá. Apoya a colegios y estudiantes rurales y universitarios.",
   keywords: [
     "cómo donar computadores",
     "dónde donar computadores Bogotá",
@@ -35,7 +33,7 @@ export const metadata = {
     siteName: "Fundación Reciclando Unidos",
     images: [
       {
-        url: "/imagepublic.jpg", // 1200×630
+        url: "/imagepublic.jpg",
         width: 1200,
         height: 630,
         alt: "Cómo donar computadores en Bogotá - Fundación Reciclando Unidos",
@@ -47,7 +45,7 @@ export const metadata = {
     title: "Cómo donar computadores en Bogotá | Fundación Reciclando Unidos",
     description:
       "Recogida gratis a domicilio de tus computadores usados o dañados. Recibe tu certificado de donación.",
-    images: ["/imagepublic.jpg"], // 👈 antes faltaba
+    images: ["/imagepublic.jpg"],
   },
 };
 
@@ -319,25 +317,20 @@ const faqJsonLd = {
 export default function DonarComputadoresPage() {
   return (
     <div className="flex flex-col overflow-x-clip">
-      {/* Datos estructurados para SEO (no visibles) */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
       <SectionImageComponent
         src={"/portada-solicitar-computador.webp"}
         w={3002}
         h={2100}
         alt={"Donar computadores en Bogotá con recogida a domicilio gratis"}
-        title={"¿Tienes un computador que ya no usas? Dónalo"}
+        title={"Donar computadores en Bogotá"}
         subtitle={
-          "Recibimos computadores usados, dañados o en desuso para darles una segunda vida. Recogida a domicilio GRATIS en toda Bogotá."
+          "¿Tienes un computador que ya no usas? Dónalo"
         }
         className={"object-[center_40%] md:object-[center_60%]"}
       />
-
+      <DonationForm />
       <DonacionInfo />
+
 
       {/* Proceso de donación paso a paso */}
       <ProcesoDonacion />
@@ -346,33 +339,9 @@ export default function DonarComputadoresPage() {
 
       <QueHacemos />
 
-      {/* SERVICIO A DOMICILIO */}
-      <div className="mx-auto grid max-w-[1400px] gap-14 px-8 py-16 md:grid-cols-2 md:px-12">
-        <div className="text-gray-600">
-          <p className="paragraph leading-relaxed">
-            Para que esta donación sea un verdadero paso hacia el cambio,
-            queremos que conozcas los detalles de cómo trabajamos en Reciclando
-            Unidos. Lee el documento de la derecha, donde encontrarás toda la
-            información sobre requisitos, procedimiento y compromisos. Cuando
-            estés listo, haz clic en 'Continuar'.
-          </p>
+      <DonacionInfoExtra />
 
-          <ButtonComponent
-            className="bg-green-ru text-white mt-8"
-            text="Continuar"
-            link="https://docs.google.com/forms/d/e/1FAIpQLScmZNIxjs8Y73kafAdJ_0Bxp9L-P8w3txfekwrRnmJG9D-6Bw/viewform?usp=dialog"
-          />
-        </div>
-
-        <div className="h-full w-full">
-          <PdfViewer file="https://drive.google.com/file/d/1NLBLxKzqdrNODzydpTJbB4e-qQZmE5_W/view?usp=drive_link" />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-8 mt-8">
-        <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={33} />
-      </div>
+      <LatestPosts limit={9} cat="proyectos" title="Últimos Proyectos" />
 
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>

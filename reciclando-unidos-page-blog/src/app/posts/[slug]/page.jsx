@@ -7,6 +7,7 @@ import { Linkedin, Gmail } from "@thesvg/react";
 import LatestPosts from "@/components/LatestPosts";
 import ButtonComponent from "@/components/ButtonComponent";
 
+
 // En el servidor conviene una variable NO pública (API_URL).
 // Dejo el fallback a la pública para no romper tu setup actual.
 const API = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }) {
       title: data.title,
       description,
       url: `/posts/${slug}`,
-      locale: "es_CO",    
+      locale: "es_CO",
       siteName: "Fundación Reciclando Unidos",
       images: data.img
         ? [{ url: data.img, width: 1200, height: 630, alt: data.title }]
@@ -278,10 +279,7 @@ const SinglePostPage = async ({ params }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-8 mt-14">
-        <h2 className="subtitle text-center">Articulos relacionados</h2>
-        <LatestPosts limit={9} />
-      </div>
+      <LatestPosts limit={6} cat={data.category} title={"Artículos Relacionados"} />
     </article>
   );
 };

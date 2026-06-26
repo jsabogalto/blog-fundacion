@@ -264,10 +264,6 @@ export default function DonacionesQueRecibimos() {
           </div>
         </div>
       </section>
-      <div className="flex flex-col gap-8 mt-14">
-        <h2 className="subtitle text-center">Ultimas novedades</h2>
-        <LatestPosts limit={15} />
-      </div>
       <FaqSeo sections={FAQ_SECTIONS} />
     </div>
   );

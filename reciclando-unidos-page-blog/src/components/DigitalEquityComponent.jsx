@@ -5,19 +5,19 @@ import ButtonComponent from "./ButtonComponent";
 const videos = [
   {
     src: "/domiclio.mp4",
-    caption: "Recogemos tus donaciones a domicilio gratis en Bogotá",
+    caption: "Recogemos tus donaciones de computadores gratis a domicilio en Bogotá",
   },
   {
     src: "/reparacion-equipos.mp4",
-    caption: "Damos nueva vida a computadores con mantenimiento y reparación",
+    caption: "Reacondicionamos los computadores donados con mantenimiento y reparación",
   },
   {
     src: "/entregamos-mejores-manos.mp4",
-    caption: "Llevamos tecnología a colegios públicos y fundaciones",
+    caption: "Entregamos computadores reacondicionados a colegios públicos y fundaciones",
   },
   {
     src: "/educacion.mp4",
-    caption: "Enseñamos programación y arquitectura de computadores",
+    caption: "Formamos en programación y arquitectura de computadores",
   },
 ];
 
@@ -33,12 +33,13 @@ export default function DigitalEquity() {
         {/* Texto */}
         <div className="max-w-2xl">
           <h2 className="subtitle">
-            El futuro se construye gracias a la tecnología, pero empieza por ti.
+            Donar computadores en Bogotá transforma el futuro de quienes más lo necesitan.
           </h2>
           <p className="paragraph mt-6 text-gray-600">
-            Nuestros donantes ahorran gracias a las deducciones fiscales en el
-            impuesto a la renta, y con ese monto es suficiente para dotar de
-            computadores aulas escolares llenas de personas y familias enteras.
+            Al donar tus computadores usados recibes un certificado de donación con
+            beneficio tributario en tu declaración de renta. Con ese mismo gesto ayudas a
+            dotar de tecnología aulas escolares, fundaciones y familias enteras en Bogotá
+            y Cundinamarca.
           </p>
         </div>
 
@@ -59,7 +60,7 @@ export default function DigitalEquity() {
                   className="absolute inset-0 h-full w-full object-cover pointer-events-none"
                 />
               </div>
-              <p className="text-md mt-3 text-gray-600">{v.caption}</p>
+              <h3 className="text-md mt-3 text-gray-600">{v.caption}</h3>
             </div>
           ))}
         </div>
