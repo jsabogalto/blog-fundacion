@@ -102,9 +102,8 @@ function SelectField({ label, value, onChange, options, placeholder }) {
                       onChange(o.value);
                       setOpen(false);
                     }}
-                    className={`block w-full px-4 py-2.5 text-left text-sm transition hover:bg-mint ${
-                      active ? "bg-leaf/10 font-medium text-pine" : "text-ink"
-                    }`}
+                    className={`block w-full px-4 py-2.5 text-left text-sm transition hover:bg-mint ${active ? "bg-leaf/10 font-medium text-pine" : "text-ink"
+                      }`}
                   >
                     {o.label}
                   </button>
@@ -135,8 +134,8 @@ export function IntroStep() {
   return (
     <div className="text-center">
       <p className="py-6 text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
-          Formulario de donacion de equipos
-        </p>
+        Formulario de donacion de equipos
+      </p>
       <h2 className="subtitle leading-tight">
         Donar Computadores es Rápido y Gratis: Hazlo en 1 Minuto
       </h2>
@@ -344,10 +343,7 @@ export function PhotoStep({ form, set }) {
 
   const onFile = (file) => {
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      alert("La imagen supera 5 MB. Elige una más liviana.");
-      return;
-    }
+    // ❌ Quita el bloque que hacía: if (file.size > 5 * 1024 * 1024) { ... return; }
     const reader = new FileReader();
     reader.onload = () =>
       set("foto", { name: file.name, type: file.type, dataUrl: reader.result });

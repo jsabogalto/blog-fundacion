@@ -1,7 +1,5 @@
 "use server";
 
-// Este archivo corre SIEMPRE del lado servidor (Next.js Server Action).
-// Las credenciales viven en .env.local y NUNCA llegan al navegador.
 import nodemailer from "nodemailer";
 import { buildDonationEmail } from "./emailTemplate";
 
@@ -13,32 +11,53 @@ function getTransporter() {
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
-    family: 4, // 👈 fuerza IPv4 — evita el ENETUNREACH por IPv6
+    family: 4,
+    // Subir timeouts: los adjuntos grandes tardan más en enviarse.
+    connectionTimeout: 20000,
+    greetingTimeout: 20000,
+    socketTimeout: 120000,
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
     },
   });
 }
-/**
- * Recibe el payload del formulario (incluida la foto en base64),
- * arma el correo y lo envía a la fundación. Devuelve { ok, error? }.
- */
+
+// Traduce el error técnico en un mensaje que puedas leer en el celular.
+function describeMailError(err) {
+  const code = err?.code;
+  const rc = err?.responseCode;
+  const msg = err?.message || "";
+
+  if (code === "EAUTH" || rc === 535)
+    return "Error de autenticación con Gmail (EAUTH). Revisa MAIL_USER y la contraseña de aplicación.";
+  if (code === "ETIMEDOUT" || code === "ESOCKET" || code === "ECONNECTION")
+    return `No se pudo conectar al correo (${code}). Posible bloqueo de SMTP o red.`;
+  if (code === "ENETUNREACH")
+    return "Sin salida de red hacia Gmail (ENETUNREACH).";
+  if (rc === 552 || /size|large|exceed|too big/i.test(msg))
+    return "La imagen es demasiado pesada (Gmail acepta hasta ~25 MB por correo).";
+  if (code === "EENVELOPE")
+    return "Dirección de correo inválida (EENVELOPE).";
+  return `No se pudo enviar la donación (${code || rc || "desconocido"}).`;
+}
+
 export async function submitDonation(payload) {
   if (!payload?.tipo || !payload?.correo) {
     return { ok: false, error: "Faltan datos obligatorios (tipo y correo)." };
   }
 
-  // Foto → adjunto del correo
+  // Foto → adjunto, cualquier formato (usa el tipo y nombre originales)
   let attachments;
   if (payload.foto?.dataUrl) {
     const base64 = payload.foto.dataUrl.split(",")[1] || "";
     attachments = [
       {
-        filename: payload.foto.name || "donacion.jpg",
+        filename: payload.foto.name || "donacion",
         content: base64,
         encoding: "base64",
-        contentType: payload.foto.type || "image/jpeg",
+        // Sin forzar JPG: respeta el formato real (png, heic, webp, pdf, etc.)
+        contentType: payload.foto.type || "application/octet-stream",
       },
     ];
   }
@@ -52,7 +71,7 @@ export async function submitDonation(payload) {
     await getTransporter().sendMail({
       from: `"Reciclando Unidos" <${process.env.MAIL_USER}>`,
       to: FOUNDATION_EMAIL,
-      replyTo: payload.correo, // para responderle al donante
+      replyTo: payload.correo,
       subject: `Nueva donación (${payload.tipo}) — ${nombreRef || payload.correo}`,
       html: buildDonationEmail(payload),
       attachments,
@@ -60,6 +79,6 @@ export async function submitDonation(payload) {
     return { ok: true };
   } catch (err) {
     console.error("Error enviando donación:", err);
-    return { ok: false, error: "No se pudo enviar la donación. Intenta de nuevo." };
+    return { ok: false, error: describeMailError(err) }; // 👈 mensaje identificable
   }
 }
