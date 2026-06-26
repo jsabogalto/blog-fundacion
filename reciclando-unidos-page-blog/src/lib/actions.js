@@ -10,14 +10,16 @@ const FOUNDATION_EMAIL =
 
 function getTransporter() {
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    family: 4, // 👈 fuerza IPv4 — evita el ENETUNREACH por IPv6
     auth: {
-      user: process.env.MAIL_USER, // cuenta Gmail emisora
-      pass: process.env.MAIL_PASS, // contraseña de aplicación de Gmail
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
     },
   });
 }
-
 /**
  * Recibe el payload del formulario (incluida la foto en base64),
  * arma el correo y lo envía a la fundación. Devuelve { ok, error? }.

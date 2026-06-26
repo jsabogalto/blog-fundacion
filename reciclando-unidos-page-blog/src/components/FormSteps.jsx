@@ -246,7 +246,10 @@ export function ItemsStep({ form, set }) {
         title="¿Qué vas a donar?"
         subtitle="Selecciona todos los que apliquen."
       />
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+
+      {/* Móvil: tope de altura + scroll interno para no desbordar el panel.
+          sm+ : sin límite, comportamiento normal. */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 max-h-[32vh] overflow-y-auto overscroll-contain pr-1 sm:max-h-none sm:overflow-visible sm:pr-0">
         {ITEMS.map(({ id, label }) => {
           const Icon = ITEM_ICONS[id];
           const active = !!form.items[id];
@@ -256,7 +259,7 @@ export function ItemsStep({ form, set }) {
               type="button"
               onClick={() => toggle(id)}
               className={[
-                "flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition",
+                "flex flex-col items-center gap-2 rounded-xl border p-3 text-center transition sm:p-4",
                 active
                   ? "border-leaf bg-leaf/10 ring-4 ring-leaf/15"
                   : "border-line bg-white hover:border-leaf/60",
@@ -264,11 +267,11 @@ export function ItemsStep({ form, set }) {
             >
               <span
                 className={[
-                  "grid h-11 w-11 place-items-center rounded-lg",
+                  "grid h-9 w-9 place-items-center rounded-lg sm:h-11 sm:w-11",
                   active ? "bg-pine text-leaf-soft" : "bg-mint text-pine",
                 ].join(" ")}
               >
-                <Icon size={22} />
+                <Icon size={20} />
               </span>
               <span className="text-xs font-medium leading-tight text-ink">{label}</span>
             </button>
