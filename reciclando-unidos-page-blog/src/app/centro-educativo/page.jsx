@@ -226,7 +226,7 @@ export default function SolicitarEquipos() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                t: "Tecnología asequible",
+                t: "Tecnología reacondicionada",
                 d: "Accede a computadores en buen estado, donados para fines academicos.",
               },
               {
@@ -253,7 +253,7 @@ export default function SolicitarEquipos() {
           <h2 className="subtitle">Solicita tus computadores reacondicionados</h2>
           <p className="paragraph mx-auto mt-5 max-w-2xl text-white">
             ¿Tu organización, centro educativo o tú necesitan acceder a
-            tecnología asequible? Llena el formulario y demos el
+            tecnología? Llena el formulario y demos el
             primer paso juntos.
           </p>
           <div className="mt-10 flex justify-center">

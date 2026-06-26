@@ -80,20 +80,24 @@ export async function generateMetadata({ searchParams }) {
 
 // Trae TODOS los posts recorriendo páginas hasta que el backend diga "no hay más".
 // Así funciona aunque tu API tope el limit por petición (p. ej. máx 10 o 20).
-async function getAllPosts(cat) {
+async function getAllPosts({ cat, search }) {
   const all = [];
   let page = 1;
-  const PER_REQUEST = 50; // cuántos pedir por llamada (ajústalo al máximo que acepte tu API)
+  const PER_REQUEST = 50;
 
   while (all.length < SAFETY_CAP) {
     const res = await axios.get(`${API}/posts`, {
-      params: { page, limit: PER_REQUEST, ...(cat ? { cat } : {}) },
+      params: {
+        page,
+        limit: PER_REQUEST,
+        ...(cat ? { cat } : {}),
+        ...(search ? { search } : {}), // 👈 ahora sí se envía
+      },
     });
 
     const batch = res.data?.posts ?? [];
     all.push(...batch);
 
-    // Paramos si el backend dice que no hay más, o si devolvió menos de lo pedido.
     const hasMore = res.data?.hasMore;
     if (!hasMore || batch.length === 0 || batch.length < PER_REQUEST) break;
 
@@ -103,21 +107,43 @@ async function getAllPosts(cat) {
   return all;
 }
 
-// ───────────── Página (Server Component) ─────────────
+const normalize = (s = "") =>
+  s.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+function postMatchesSearch(post, search) {
+  if (!search) return true;
+
+  const words = normalize(search).split(/\s+/).filter(Boolean);
+
+  // ⚠️ Junta TODOS los campos de texto que devuelva tu post.
+  // Ajusta esta lista a los nombres reales de tu schema.
+  const haystack = normalize(
+    [post.title, post.desc, post.description, post.content, post.excerpt, post.slug, post.category]
+      .filter(Boolean)
+      .join(" ")
+  );
+
+  return words.every((w) => haystack.includes(w));
+}
+
 const PostListPage = async ({ searchParams }) => {
-  const { cat } = await searchParams;
+  const { cat, search } = await searchParams;
   const data = (cat && CATEGORIES[cat]) || DEFAULT_CATEGORY;
 
-  const rawPosts = await getAllPosts(cat);
+  const rawPosts = await getAllPosts({ cat, search });
 
-  // Deduplicamos por _id por si alguna página se solapa.
-  const posts = Array.from(
+  // Deduplicamos por _id
+  const deduped = Array.from(
     new Map(rawPosts.filter(Boolean).map((p) => [p._id, p])).values()
   );
 
+  // Filtro estricto: solo los que realmente contienen la búsqueda
+  const posts = search
+    ? deduped.filter((p) => postMatchesSearch(p, search))
+    : deduped;
+
   return (
     <div className="flex flex-col overflow-x-clip">
-      {/* HERO */}
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
         <SectionImageComponent
           src={data.image}
@@ -131,10 +157,13 @@ const PostListPage = async ({ searchParams }) => {
         />
       </div>
 
-      {/* LISTA: TODOS los posts, renderizados en servidor (HTML indexable) */}
       <div className="mx-auto w-full max-w-[1400px] px-8 py-8 md:px-12">
         {posts.length === 0 ? (
-          <p className="py-8 text-center text-gray-500">No hay publicaciones todavía.</p>
+          <p className="py-8 text-center text-gray-500">
+            {search
+              ? `No se encontró ninguna publicación para “${search}”.`
+              : "No hay publicaciones todavía."}
+          </p>
         ) : (
           <div className="grid gap-x-8 gap-y-12 grid-cols-1 lg:grid-cols-3">
             {posts.map((post) => (
