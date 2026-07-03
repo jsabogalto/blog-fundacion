@@ -56,7 +56,7 @@ export default function Navbar() {
         <div className="max-w-layer mx-auto px-4 md:px-12">
           <div className="h-12 flex items-center justify-between text-xs">
             <a
-              href="tel:+4588779090"
+              href="tel:+573135410348"
               className="flex items-center gap-2 hover:text-white transition-colors"
             >
               < Phone className="h-3 w-3" />

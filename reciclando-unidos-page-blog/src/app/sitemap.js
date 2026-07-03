@@ -11,7 +11,7 @@ export default async function sitemap() {
     "/solicitud-computadores",
     "/contacto",
     "/posts",
-    "nuevas-iniciativas"
+    "/nuevas-iniciativas"
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: new Date(),
