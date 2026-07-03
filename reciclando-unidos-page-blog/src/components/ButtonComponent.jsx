@@ -1,10 +1,12 @@
+import {ArrowRight} from 'lucide-react'
+
 const ButtonComponent = ({link, className, text}) => {
     return (
         <a
             href={link}
-            className={`inline-flex items-center justify-center px-8 py-4  text-sm font-semibold rounded-lg shadow-lg transition-all duration-300 hover:bg-green-light hover:scale-[1.03] ${className}`}
+            className={`inline-flex items-center justify-center px-8 py-4  text-xs font-semibold rounded-full shadow-lg ${className} gap-2`}
         >
-            {text}
+            {text} <ArrowRight className="h-4 w-4" />
         </a>
     )
 }

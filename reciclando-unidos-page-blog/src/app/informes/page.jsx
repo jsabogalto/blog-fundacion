@@ -1,8 +1,6 @@
 // SIN "use client". Server Component: Google ve el HTML completo.
-import PdfViewer from "@/components/PdfViewer";
 import SectionImageComponent from "@/components/SectionImageComponent";
-
-const API = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+import { FileDown } from "lucide-react";
 
 export const metadata = {
   title: { absolute: "Transparencia y Documentos Legales | Fundación Reciclando Unidos" },
@@ -27,54 +25,47 @@ export const metadata = {
   },
 };
 
-// Fetch en el servidor → el contenido textual queda en el HTML inicial
-async function getFiles() {
-  try {
-    const res = await fetch(`${API}/files`, { next: { revalidate: 300 } });
-    if (!res.ok) return [];
-    return res.json();
-  } catch {
-    return [];
-  }
-}
+const informes = [
+  { title: "Informe de gestión 2025", url: "https://drive.google.com/file/d/1863Kz-UsjMM3a3kXyY0CVWshVWT6LmTA/view?usp=drive_link" },
+  { title: "Estados financieros FE 2025", url: "https://drive.google.com/file/d/1K0kKerIanOosuCjL27WkKc8-pV0EvLXv/view?usp=drive_link" },
+  { title: "Certificado cumplimiento requisitos 2025", url: "https://drive.google.com/file/d/1ll8e6VbxFWRpr5L_9O8uJdiOC9q18u81/view?usp=drive_link" },
+  { title: "Certificado antecedentes 2025", url: "https://drive.google.com/file/d/12ol6U3ZZCGI8DiczX5kLy6MmvPAs8SW7/view?usp=drive_link" }
+];
 
-export default async function InformesPage() {
-  const files = await getFiles();
-
+export default function InformesPage() {
   return (
-    <div className="flex flex-col overflow-x-clip">
-       <SectionImageComponent
+    <section className="flex flex-col overflow-x-clip">
+      <SectionImageComponent
         src="/fondo-registro-web-dian.webp"
         w={740}
         h={431}
         alt="Renovación de equipos"
-        title="Informe de gestion y registro web DIAN"
-        subtitle="Actualización Registro WEB (Art.364-5 Estatuto Tributario)
-                  Aquí se encuentra los documentos requeridos por la Dian para la actualización de la información en el registro WEB."
-        className=""
+        title="Registro WEB (Art.364-5 Estatuto Tributario)"
       />
-      {files.length === 0 ? (
-        <p className="mx-auto max-w-[1400px] px-8 py-20 text-center text-gray-500 md:px-12">
-          Aún no hay documentos publicados.
-        </p>
-      ) : (
-        files.map((doc, index) => (
-          <div
-            key={doc._id ?? index}
-            className="mx-auto grid w-full max-w-[1400px] gap-14 px-8 py-16 md:grid-cols-2 md:px-12 border-b border-gray-200"
-          >
-            <div className={index % 2 !== 0 ? "md:order-2" : "md:order-1"}>
-              {/* h2 + p en el HTML del servidor → Google los lee */}
-              <h2 className="mb-3 text-2xl font-semibold text-gray-800">{doc.title}</h2>
-              <p className="paragraph leading-relaxed text-gray-600">{doc.desc}</p>
-            </div>
-            {/* Solo el visor es cliente */}
-            <div className={index % 2 !== 0 ? "md:order-1" : "md:order-2"}>
-              <PdfViewer file={doc.url} />
-            </div>
-          </div>
-        ))
-      )}
-    </div>
+
+      {/* ───────────── Grilla de informes ───────────── */}
+      <div className="mx-auto w-full max-w-layer px-5 py-16 md:px-12 md:py-24">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
+          {informes.map((informe) => (
+            <a
+              key={informe.url}
+              href={informe.url}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="green-ru-div group flex items-start gap-3 rounded-2xl p-5 transition hover:bg-green-ru/30"
+            >
+              <FileDown
+                className="mt-0.5 h-5 w-5 shrink-0 text-[#053215] transition-transform group-hover:translate-y-0.5"
+                strokeWidth={2}
+              />
+              <span className="paragraph-posts-item text-[#053215]">
+                {informe.title}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

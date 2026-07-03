@@ -1,5 +1,6 @@
 "use client";
 
+import ImageComponent from "./ImageComponent";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Send, Loader2, RotateCcw } from "lucide-react";
@@ -124,15 +125,28 @@ export default function DonationForm() {
 
   return (
     <section
-      className="relative flex h-screen flex-col"
+      className="relative flex h-screen flex-col bg-green-ru/5 scroll-mt-30"
+      id="formulario-donacion"
     >
-      
-      <NavbarForm stepKey={stepKey} />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="sticky top-0 h-screen w-full">
+          <ImageComponent
+            src="/apoya-talento-ru_pWfC-MFol.webp"
+            alt="Solicitar computador — Reciclando Unidos"
+            width={4032}
+            height={3024}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-[#053215]/80 via-[#053215]/10 to-transparent" />
+            <div className="absolute inset-0 bg-black/30" />
+        </div>
+      </div>
 
-      <div className="flex flex-1 items-center justify-center px-4 py-8">
+      <div className="flex flex-1 items-center justify-center py-8">
         <div className="w-full max-w-xl px-4">
-          
-          <div className="relative overflow-hidden border border-line bg-white p-8 shadow-card sm:p-8">
+
+          <div className="relative overflow-hidden border border-gray-100 rounded-3xl bg-white/80 p-6 shadow-card">
             {/* Lienzo animado: cada paso entra/sale en horizontal */}
             <AnimatePresence mode="wait" custom={dir} initial={false}>
               <motion.div
@@ -159,7 +173,7 @@ export default function DonationForm() {
                   <button
                     type="button"
                     onClick={goBack}
-                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-medium text-muted transition hover:text-pine"
+                    className="flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-medium transition hover:text-pine"
                   >
                     <ArrowLeft size={16} /> Atrás
                   </button>
@@ -196,7 +210,7 @@ export default function DonationForm() {
                 <button
                   type="button"
                   onClick={reset}
-                  className="inline-flex items-center gap-2 rounded-xl border border-line px-4 py-2.5 text-sm font-medium text-pine transition hover:bg-mint"
+                  className="inline-flex items-center gap-2 bg-green-ru rounded-xl border border-line px-4 py-2.5 text-sm font-medium text-white"
                 >
                   <RotateCcw size={15} /> Hacer otra donación
                 </button>

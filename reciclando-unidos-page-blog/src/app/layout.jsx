@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import TanStackQueryProvider from "../providers/TansTackQuery";
 import FooterComponent from "@/components/FooterComponent";
@@ -9,7 +9,6 @@ import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 import "./globals.css";
 
-// 👇 debe empezar con NEXT_PUBLIC_ para estar disponible en el navegador
 const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
@@ -19,13 +18,14 @@ if (!PUBLISHABLE_KEY) {
 // Fallback para que el build no falle si la env no está definida
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.fundacionreciclandounidos.com";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    // Home = marca + misión. La keyword exacta "donar computadores" se la dejas a /donar-computadores.
     default: "Fundación Reciclando Unidos | Donamos y reciclamos tecnología en Bogotá",
     template: "%s | Fundación Reciclando Unidos",
   },
@@ -34,10 +34,6 @@ export const metadata = {
   keywords: ["donar computadores", "donar computadores Bogotá", "reciclaje electrónico Bogotá", "fundación reciclaje electrónico Cundinamarca"],
   applicationName: "Fundación Reciclando Unidos",
   authors: [{ name: "Fundación Reciclando Unidos" }],
-
-  alternates: {
-    canonical: "/",
-  },
 
   openGraph: {
     type: "website",
@@ -72,7 +68,13 @@ export const metadata = {
 
   robots: { index: true, follow: true },
 };
-
+const webSiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Fundación Reciclando Unidos",
+  alternateName: "Reciclando Unidos",
+  url: SITE_URL,
+};
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "NGO",
@@ -111,7 +113,7 @@ const jsonLd = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <html lang="es" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <html lang="es" className={`${inter.variable} h-full antialiased`}>
         <body className="min-h-full flex flex-col bg-white">
           <script
             type="application/ld+json"
@@ -119,13 +121,15 @@ export default function RootLayout({ children }) {
           />
           <TanStackQueryProvider>
             <ToastContainer position="bottom-right" />
-	    <Suspense fallback={null}>
-            <Navbar />
-            {children}
-            <WhatsappWidget phone="573135410348" />
-            <AiChatWidget />
-            <FooterComponent/>
-	 </Suspense>
+            <Suspense fallback={null}>
+              <Navbar />
+              <main className="">
+                {children}
+              </main>
+              <WhatsappWidget phone="573135410348" />
+              <AiChatWidget />
+              <FooterComponent />
+            </Suspense>
           </TanStackQueryProvider>
         </body>
       </html>

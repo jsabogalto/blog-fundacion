@@ -8,12 +8,10 @@ export default async function sitemap() {
   const staticPages = [
     "",                          // home
     "/donar-computadores",
-    "/donaciones-que-recibimos",
-    "/centro-educativo",
-    "/renovacion-equipos",
     "/solicitud-computadores",
     "/contacto",
     "/posts",
+    "nuevas-iniciativas"
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: new Date(),

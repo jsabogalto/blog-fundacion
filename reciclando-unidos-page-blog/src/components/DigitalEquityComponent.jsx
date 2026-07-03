@@ -1,6 +1,6 @@
 "use client";
 import { Video } from "@imagekit/react";
-import ButtonComponent from "./ButtonComponent";
+import HeadSectionComponent from "./HeadSectionComponent";
 
 const videos = [
   {
@@ -17,7 +17,7 @@ const videos = [
   },
   {
     src: "/educacion.mp4",
-    caption: "Formamos en programación y arquitectura de computadores",
+    caption: "Donar computadores para nuestros talleres de alfabetización digital",
   },
 ];
 
@@ -26,28 +26,20 @@ export default function DigitalEquity() {
 
   return (
     <section
-      id="equidad"
-      className="mx-auto w-full max-w-[1400px] px-8 py-16 md:px-12"
+      id="proceso-donacion"
+      className=""
     >
-      <div className="mx-auto">
-        {/* Texto */}
-        <div className="max-w-2xl">
-          <h2 className="subtitle">
-            Donar computadores en Bogotá transforma el futuro de quienes más lo necesitan.
-          </h2>
-          <p className="paragraph mt-6 text-gray-600">
-            Al donar tus computadores usados recibes un certificado de donación con
-            beneficio tributario en tu declaración de renta. Con ese mismo gesto ayudas a
-            dotar de tecnología aulas escolares, fundaciones y familias enteras en Bogotá
-            y Cundinamarca.
-          </p>
-        </div>
+      <div className="mx-auto w-full max-w-layer px-5 py-8 md:px-12 md:py-14">
+        <HeadSectionComponent title="Donar computadores en Bogotá: transforma el futuro de quienes más lo necesitan"
+        text={"Cuando donas tus computadores usados ayudas a dotar de tecnología aulas escolares, fundaciones y familias en Bogotá y Cundinamarca. Nosotros los recogemos gratis en tu casa u oficina y te entregamos tu certificado de donación."
+        }
+        classNameHeadSection={"bg-green-ru/20 p-8 rounded-3xl"}/>
 
         {/* Videos */}
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
           {videos.map((v, i) => (
             <div key={i}>
-              <div className="relative aspect-[4/5] overflow-hidden">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
                 <Video
                   urlEndpoint={urlEndpoint}
                   src={v.src}
@@ -60,11 +52,12 @@ export default function DigitalEquity() {
                   className="absolute inset-0 h-full w-full object-cover pointer-events-none"
                 />
               </div>
-              <h3 className="text-md mt-3 text-gray-600">{v.caption}</h3>
+              <h3 className="paragraph text-sm mt-4 text-gray-600">{v.caption}</h3>
             </div>
           ))}
         </div>
       </div>
+      {/* Texto */}
     </section>
   );
 }

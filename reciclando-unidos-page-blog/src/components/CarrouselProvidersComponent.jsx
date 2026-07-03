@@ -35,17 +35,17 @@ function LogoItem({ donor, hidden }) {
       src={donor.img}
       alt={donor.name || "Donador"}
       draggable="false"
-      width={160}
-      height={80}
+      width={180}
+      height={100}
       loading="lazy"
-      className="h-20 w-auto max-w-[200px] object-contain grayscale brightness-[0.55] contrast-[0.9] transition md:h-24"
+      className="h-24 w-auto max-w-[240px] object-contain grayscale brightness-[0.65] contrast-[0.9] transition md:h-28"
     />
   );
 
   return (
     <div
       aria-hidden={hidden}
-      className="mr-16 flex h-16 flex-none items-center justify-center opacity-75 transition-opacity duration-200 hover:opacity-100 md:mr-28"
+      className="mr-16 flex h-28 flex-none items-center justify-center opacity-75 transition-opacity duration-200 hover:opacity-100 md:mr-28"
     >
       {donor.url ? (
         <a
@@ -69,7 +69,7 @@ function LogoItem({ donor, hidden }) {
 export default function CarrouselProvidersComponent({
   title = "Aliados que creen en la educación. El siguiente lugar puede ser para tu empresa.",
   donors: donorsProp, // opcional: pasar donadores ya cargados (omitir para usar el backend)
-  speed = 40,
+  speed = 44,
   pauseOnHover = true,
 }) {
   const viewportRef = useRef(null);
@@ -129,7 +129,7 @@ export default function CarrouselProvidersComponent({
 
   return (
     <section aria-label="Logos de donadores" className="w-full overflow-hidden">
-      <h2 className="mx-auto mb-8 flex h-full max-w-[1400px] flex-col justify-center px-8 text-center text-md leading-tight text-black md:mb-12 md:px-12 md:text-2xl">
+      <h2 className="mx-auto mb-8 flex h-full max-w-[1400px] flex-col justify-center px-6 text-center paragraph md:mb-12 md:px-12 md:text-2xl">
         {title}
       </h2>
 

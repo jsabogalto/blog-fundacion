@@ -1,9 +1,6 @@
 // Sin "use client": es solo presentación, funciona como Server Component.
 import ImageComponent from "./ImageComponent";
-
-const ACCENT = {
-  link: "text-emerald-700 hover:text-emerald-800",
-};
+import LinkComponent from "./LinkComponent";
 
 const formatDate = (value) => {
   if (!value) return "";
@@ -24,7 +21,7 @@ const PostListItem = ({ post }) => {
 
   return (
     <article className="group flex flex-col">
-      <a href={href} className="relative block aspect-[420/260] w-full overflow-hidden">
+      <a href={href} className="relative block aspect-[420/260] w-full overflow-hidden rounded-3xl">
         {img && (
           <ImageComponent
             src={img}
@@ -41,24 +38,24 @@ const PostListItem = ({ post }) => {
         )}
       </a>
 
-      <div className="px-8 mt-4">
-        <h2 className="mt-4 text-2xl font-semibold leading-snug text-gray-900">
+      <div className=" mt-4">
+        <h2 className="mt-4 title-posts-item">
           <a href={href} className="line-clamp-3 hover:underline">
             {title}
           </a>
         </h2>
 
-        <div className="mt-2 text-sm text-gray-500">
+        <div className="mt-2 text-xs text-gray-500">
           {createdAt && <time dateTime={createdAt}>{formatDate(createdAt)}</time>}
         </div>
 
         {desc && (
-          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-gray-600">{desc}</p>
+          <p className="mt-3 line-clamp-3 paragraph-posts-item text-gray-600">{desc}</p>
         )}
 
-        <a href={href} className={`mt-4 inline-block text-sm font-semibold ${ACCENT.link}`}>
-          Leer más &gt;
-        </a>
+        <div className="py-4">
+          <LinkComponent link={href} text={"Leer más"} className="text-green-ru"/>
+        </div>
       </div>
     </article>
   );

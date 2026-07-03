@@ -51,9 +51,9 @@ export default function EstatutosPage() {
 
 
       {/* CONTENIDO */}
-      <div className="mx-auto grid w-full max-w-[1400px] gap-14 px-8 py-16 md:grid-cols-2 md:px-12">
-        <div className="text-gray-600">
-          <p className="paragraph leading-relaxed">
+      <div className="mx-auto grid w-full max-w-layer gap-14 px-5 py-14 md:grid-cols-2 md:px-12">
+        <div className="">
+          <p className="paragraph">
             Antes de continuar, te pedimos leer el documento que aparece a la
             derecha. Es importante que entiendas cómo funciona Reciclando
             Unidos, los requisitos de participación y los compromisos que asumes

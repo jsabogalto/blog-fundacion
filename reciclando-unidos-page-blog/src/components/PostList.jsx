@@ -53,7 +53,7 @@ const PostList = ({ cat, initialHasMore = true, columnsClassName = "grid-cols-1 
       next={fetchNextPage}
       hasMore={!!hasNextPage}
       loader={<h4 className="col-span-full py-8 text-center text-gray-500">Cargando más posts...</h4>}
-      className={`mt-12 grid gap-x-8 gap-y-12 mx-auto max-w-[1400px] flex-col px-8 md:px-12 py-8 mb-12 ${columnsClassName}`}
+      className={`mt-12 grid gap-x-8 gap-y-12 mx-auto max-w-[1400px] flex-col px-5 md:px-12 py-8 mb-12 ${columnsClassName}`}
       style={{ overflow: "visible" }}
     >
       {extraPosts.map((post) => (

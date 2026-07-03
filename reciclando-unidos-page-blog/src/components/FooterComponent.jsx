@@ -1,11 +1,7 @@
 "use client";
 import ImageComponent from './ImageComponent';
 import { Linkedin } from '@thesvg/react';
-import { Facebook } from '@thesvg/react';
-import { Instagram } from '@thesvg/react';
-import { Tiktok } from '@thesvg/react';
 import { Show, UserButton, useAuth } from "@clerk/nextjs";
-import { span } from 'motion/react-client';
 
 
 const linkColumns = [
@@ -33,16 +29,14 @@ const linkColumns = [
 ];
 
 const socials = [
-    { icon: <Linkedin className="h-8 w-8" />, href: "https://www.linkedin.com/company/fundaci%C3%B3n-reciclando-unidos/", label: "LinkedIn" },
-    { icon: <Instagram className="h-8 w-8" />, href: "https://www.instagram.com/fundacionreciclandounidos/", label: "Instagram" },
-    { icon: <Tiktok className="h-8 w-8 fill-black text-black" />, href: "https://www.tiktok.com/@reciclandounidos?is_from_webapp=1&sender_device=pc", label: "Tiktok" }
+    { icon:  <Linkedin className="h-6 w-6 [&_path]:fill-black" />, href: "https://www.linkedin.com/company/fundaci%C3%B3n-reciclando-unidos/", label: "LinkedIn" },
 ]
 
 
 export default function FooterComponent() {
     return (
-        <footer id="contacto" className="w-full bg-white border-t border-gray-200">
-            <div className="mx-auto px-8 py-14 md:py-20 max-w-[1400px] lg:gap-12 md:px-12">
+        <footer id="contacto" className="w-full bg-gray-100 border-t border-gray-200">
+            <div className="mx-auto px-5 py-14 md:py-20 max-w-layer lg:gap-12 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 ">
                     {/* Marca */}
                     <div className="max-w-md">

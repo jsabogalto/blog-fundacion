@@ -9,7 +9,7 @@ export default function HeroSection() {
   return (
     <section
       id="inicio"
-      className="relative h-screen max-h-[660px] w-full overflow-hidden"
+      className="relative h-screen w-full overflow-hidden"
     >
       {/* Video de fondo (ImageKit) */}
       <div className="absolute inset-0 h-full w-full overflow-hidden pointer-events-none shadow-2xl">
@@ -22,7 +22,7 @@ export default function HeroSection() {
           playsInline
           controls={false}
           preload="auto"
-          className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover object-[center_50%]"
+          className="absolute top-1/2 left-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover"
         />
       </div>
 
@@ -30,27 +30,28 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/30" />
 
       {/* Contenido */}
-      <div className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-end px-8 md:px-12">
-        <div className="mb-12 max-w-2xl">
-          <h1 className="title mt-16 text-white">
-            Transformar vidas con tecnología
+      <div className="relative z-10 mx-auto flex h-full max-w-layer flex-col justify-end px-5 md:px-12">
+        <div className="mb-14 max-w-2xl md:h-1/2 md:mb-30">
+          <h1 className="title text-white">
+            Transformando vidas con tecnología
           </h1>
 
-          <p className="paragraph mt-6 max-w-lg text-white/90">
+          <p className="paragraph mt-4 max-w-[55ch] text-white/90">
             Desde los residuos electrónicos hasta la igualdad, convertimos los
-            dispositivos desechados en oportunidades digitales para todos.
+            computadores desechados en oportunidades digitales para todos.
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+            
             <ButtonComponent
-              className="bg-white text-green-ru"
-              text="Solicitar computadores"
-              link="/solicitud-computadores"
+              className="bg-white text-green-ru w-auto"
+              text="DONAR COMPUTADORES"
+              link="/donar-computadores"
             />
             <ButtonComponent
-              className="bg-white text-green-ru"
-              text="Donar computadores"
-              link="/donar-computadores"
+              className="bg-white text-green-ru w-auto"
+              text="SOLICITAR COMPUTADORES"
+              link="/solicitud-computadores"
             />
           </div>
         </div>

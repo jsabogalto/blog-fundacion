@@ -5,7 +5,7 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/dashboard/", "/admin/", "/sign-in", "/sign-up"],
+      disallow: ["/api/", "/dashboard/", "/admin/", "/sign-in", "/sign-up", "/posts?cat=donar-computadores"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

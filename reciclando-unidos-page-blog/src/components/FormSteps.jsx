@@ -28,12 +28,12 @@ export function StepHeading({ eyebrow, title, subtitle }) {
   return (
     <div className="mb-4">
       {eyebrow && (
-        <p className="py-4 text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
+        <p className="py-4 text-sm font-semibold uppercase tracking-[0.18em] text-leaf">
           {eyebrow}
         </p>
       )}
       <h2 className="subtitle">{title}</h2>
-      {subtitle && <p className="py-2 max-w-md paragraph text-muted">{subtitle}</p>}
+      {subtitle && <p className="py-2 max-w-md paragraph">{subtitle}</p>}
     </div>
   );
 }
@@ -133,8 +133,8 @@ const ITEM_ICONS = {
 export function IntroStep() {
   return (
     <div className="text-center">
-      <p className="py-6 text-xs font-semibold uppercase tracking-[0.18em] text-leaf">
-        Formulario de donacion de equipos
+      <p className="py-6 text-sm font-semibold uppercase tracking-[0.18em] text-leaf">
+        Formulario de donación de equipos
       </p>
       <h2 className="subtitle leading-tight">
         Donar Computadores es Rápido y Gratis: Hazlo en 1 Minuto
@@ -182,7 +182,7 @@ export function TypeStep({ form, set }) {
               </span>
               <span>
                 <span className="block font-display font-semibold text-pine">{label}</span>
-                <span className="text-sm text-muted">{desc}</span>
+                <span className="text-sm ">{desc}</span>
               </span>
             </button>
           );
@@ -248,7 +248,7 @@ export function ItemsStep({ form, set }) {
 
       {/* Móvil: tope de altura + scroll interno para no desbordar el panel.
           sm+ : sin límite, comportamiento normal. */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 max-h-[32vh] overflow-y-auto overscroll-contain pr-1 sm:max-h-none sm:overflow-visible sm:pr-0">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 max-h-[42vh] overflow-y-auto overscroll-contain pr-1 sm:max-h-none sm:overflow-visible sm:pr-0">
         {ITEMS.map(({ id, label }) => {
           const Icon = ITEM_ICONS[id];
           const active = !!form.items[id];
@@ -446,12 +446,12 @@ export function SuccessStep() {
   return (
     <div className="py-6 text-center">
       <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full bg-leaf/15">
-        <CheckCircle2 size={56} className="text-leaf" strokeWidth={1.75} />
+        <CheckCircle2 size={56} className="text-pine" strokeWidth={1.75} />
       </div>
       <h2 className="font-display text-2xl font-bold text-pine sm:text-3xl">
         ¡Gracias por tu donación!
       </h2>
-      <p className="mx-auto mt-3 max-w-sm text-sm text-muted sm:text-base">
+      <p className="mx-auto mt-3 max-w-sm text-sm sm:text-base">
         Recibimos tu información. Muy pronto el equipo de Reciclando Unidos te contactará
         para coordinar la recolección de tus equipos.
       </p>
