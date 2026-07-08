@@ -257,7 +257,7 @@ export default function Home() {
       <div className="sections-py">
         <DonationForm />
       </div>
-      <ServicesComponent sections={sections} spanTitle={"DONA TU COMPUTADOR VIEJO O EN DESUSO"}/>
+      <ServicesComponent sections={sections} spanTitle={"DONA TU COMPUTADOR VIEJO O EN DESUSO"} />
       <MaterialsComponent materials={materials} title="¿Qué hacemos con los computadores que donas en Bogotá?" text="Cada computador que recibimos se evalúa: los que funcionan o se pueden reparar los reacondicionamos para darles una segunda vida con propósito, y los que no, se reciclan responsablemente como material electrónico. Después entregamos los equipos a estudiantes, colegios y fundaciones que los necesitan, para que tu donación se convierta en oportunidades educativas reales." textLink={"Ver todas las donaciones"} link={"#proyectos"} />
 
       <AboutComponent cards={cards2} title="¿Cómo ayuda tu donación a la educación?"
@@ -272,14 +272,15 @@ export default function Home() {
         spanTitleColor={"text-stone-800"}
         id={"beneficios"}
         className={"bg-stone-100"} />
-      <ServicesComponent sections={cards4} spanTitle={"NUEVAS INICIATIVAS"}/>
+      <ServicesComponent sections={cards4} spanTitle={"NUEVAS INICIATIVAS"} />
       <ImpactComponent />
       <AboutComponent cards={cards} title="¿Quiénes somos y hacia dónde vamos?" text="En Reciclando Unidos damos una segunda vida a la tecnología en desuso. Recuperamos equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital."
         spanTitle={"OBJETIVO, MISIóN Y VISIóN"}
         spanTitleColor={"text-stone-800"} />
 
       <LatestPosts limit={6} cat={"reciclaje-electronico"} title={"Fundacion Reciclando Unidos y el reciclaje electrónico"} desc={`En Reciclando Unidos damos una segunda vida a la tecnología en desuso. s equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital`} spanTitle={"LECTURAS DE INTERÉS"} spanTextColor={"text-stone-800"} />
-      <LatestPosts limit={3} cat={"proyectos"} title={"Fundacion Reciclando Unidos y el reciclaje electrónico"} desc={`En Reciclando Unidos damos una segunda vida a la tecnología en desuso. s equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital`} spanTitle={"LECTURAS RECOMENDADAS"} spanTextColor={"text-stone-800"} />
+      <LatestPosts limit={3} cat={"proyectos"} title={"Proyectos con impacto: computadores donados que cierran la brecha digital"}
+        desc={`Conoce las entregas de computadores reacondicionados a colegios, jardines y estudiantes de Bogotá y Cundinamarca. Cada proyecto muestra cómo tu donación se convierte en oportunidades educativas reales y en menos residuos electrónicos.`} spanTitle={"LECTURAS RECOMENDADAS"} spanTextColor={"text-stone-800"} />
       <FaqSeo
         sections={FAQ_SECTIONS}
         heading="Preguntas frecuentes sobre reciclaje electrónico"
