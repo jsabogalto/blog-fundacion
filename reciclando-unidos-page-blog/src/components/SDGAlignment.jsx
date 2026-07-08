@@ -1,13 +1,14 @@
-"use client";
-
-import { useState } from "react";
+import { motion } from "framer-motion";
 import HeadSectionComponent from "./HeadSectionComponent";
+import SpanTextComponent from "./SpanTextComponent";
 
 /**
  * SDGAlignment
  * ------------------------------------------------------------------
  * Muestra los 17 Objetivos de Desarrollo Sostenible resaltando los
  * alineados (a color) y atenuando el resto (gris + opacidad).
+ * Es solo informativo: no se pueden seleccionar/deseleccionar,
+ * simplemente se muestran los que cumplimos.
  *
  * Iconos: se cargan por URL desde el proyecto open-source
  * `open-sdg/sdg-translations` (GitHub Pages), que sirve los iconos
@@ -58,49 +59,50 @@ function CheckIcon({ className = "" }) {
   );
 }
 
+const tileVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, delay: (i % 10) * 0.04, ease: [0.43, 0.13, 0.23, 0.96] },
+  }),
+};
+
 export default function ({
   aligned = [4, 5, 8, 9, 12, 13],
-  interactive = true,
-  title = "Cuando donas computadores con Reciclando Unidos ayudas a complir con la Agenda 2030 de la UNESCO",
-  subtitle = "Cundo donas tus computadores usados recibes un beneficio tributario en tu declaración de renta. Con ese mismo gesto ayudas a dotar de tecnología aulas escolares, fundaciones y familias enteras en Bogotá y Cundinamarca.",
-  onChange,
+  title = "Donar computadores usados: nuestro compromiso con la Agenda 2030 y los Objetivos de Desarrollo Sostenible",
+  subtitle = "Cada computador que donas y reacondicionamos contribuye directamente a varios Objetivos de Desarrollo Sostenible de la ONU: educación de calidad, reducción de las desigualdades, acción por el clima y alianzas para lograr los objetivos. Así, tu donación de computadores usados en Bogotá y Cundinamarca no solo transforma vidas hoy, sino que aporta a un compromiso global con la Agenda 2030.",
 }) {
-  const [selected, setSelected] = useState(() => new Set(aligned));
-
-  const toggle = (n) => {
-    if (!interactive) return;
-    setSelected((prev) => {
-      const next = new Set(prev);
-      next.has(n) ? next.delete(n) : next.add(n);
-      onChange?.([...next].sort((a, b) => a - b));
-      return next;
-    });
-  };
+  // Set fijo, ya no hay estado ni interacción: solo se marca lo que
+  // realmente cumplimos (viene del prop `aligned`).
+  const alignedSet = new Set(aligned);
 
   return (
-    <section className="mx-auto w-full max-w-layer px-5 p-5 sm:p-6 md:px-12 pt-18 md:pt-20 h-full">
-      
-      <HeadSectionComponent title={title} text={subtitle}/>
+    <section className="mx-auto w-full max-w-layer px-5 p-5 sm:p-6 md:px-12 pt-18 md:pt-20 h-full sections-py" >
+      <SpanTextComponent title={"OBJETIVOS DE DESARROLLO SOSTENIBLE"} textColor={"text-stone-800"}/>
+      <HeadSectionComponent
+        title={title}
+        text={subtitle}
+      />
 
-      <ul role="list" className="grid grid-cols-4 gap-2 md:grid-cols-5 py-12 pt-10 md:py-16">
-        {SDGS.map((sdg) => {
-          const on = selected.has(sdg.n);
-          const Tag = interactive ? "button" : "div";
+      <ul role="list" className="grid grid-cols-5 gap-2 md:grid-cols-10 py-8">
+        {SDGS.map((sdg, i) => {
+          const on = alignedSet.has(sdg.n);
           return (
-            <li key={sdg.n}>
-              <Tag
-                {...(interactive
-                  ? {
-                    type: "button",
-                    onClick: () => toggle(sdg.n),
-                    "aria-pressed": on,
-                    "aria-label": `ODS ${sdg.n}: ${sdg.name}. ${on ? "Alineado" : "No alineado"
-                      }`,
-                  }
-                  : { "aria-label": `ODS ${sdg.n}: ${sdg.name}` })}
+            <motion.li
+              key={sdg.n}
+              custom={i}
+              variants={tileVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <div
+                aria-label={`ODS ${sdg.n}: ${sdg.name}. ${on ? "Alineado" : "No alineado"}`}
                 title={`ODS ${sdg.n} - ${sdg.name}`}
-                className={`group relative block aspect-square w-full overflow-hidden rounded-xl bg-neutral-50 transition duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 dark:bg-neutral-800 dark:focus-visible:ring-neutral-100 ${interactive ? "motion-safe:hover:-translate-y-0.5 cursor-pointer" : ""
-                  }`}
+                className={`group relative block aspect-square w-full overflow-hidden border border-transparent bg-neutral-50 shadow-sm transition duration-300 ease-out dark:bg-neutral-800 ${
+                  on ? "border-black/5" : ""
+                }`}
               >
                 <img
                   src={iconUrl(sdg.n)}
@@ -108,9 +110,17 @@ export default function ({
                   loading="lazy"
                   width={256}
                   height={256}
-                  className={`h-full w-full object-cover transition duration-200 ease-out ${on ? "opacity-100" : "opacity-40 grayscale group-hover:opacity-70"
-                    }`}
+                  className={`h-full w-full object-cover transition duration-300 ease-out ${
+                    on ? "opacity-100" : "opacity-40 grayscale"
+                  }`}
                 />
+lassName={"bg-stone-100"} 
+                {/* Nombre del ODS, revelado sobre un degradado negro al hover */}
+                <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="p-1.5 text-[9px] font-medium uppercase leading-tight tracking-wide text-white sm:p-2 sm:text-[10px]">
+                    {sdg.name}
+                  </span>
+                </div>
 
                 {on && (
                   <span
@@ -120,8 +130,8 @@ export default function ({
                     <CheckIcon className="h-3.5 w-3.5" />
                   </span>
                 )}
-              </Tag>
-            </li>
+              </div>
+            </motion.li>
           );
         })}
       </ul>

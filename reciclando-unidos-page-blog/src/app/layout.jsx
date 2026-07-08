@@ -78,6 +78,7 @@ const webSiteJsonLd = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "NGO",
+  "@id": `${SITE_URL}/#organization`,
   name: "Fundación Reciclando Unidos",
   url: "https://www.fundacionreciclandounidos.com",
   logo: "https://www.fundacionreciclandounidos.com/logo-fundacion-ru.ico",
@@ -117,7 +118,7 @@ export default function RootLayout({ children }) {
         <body className="min-h-full flex flex-col bg-white">
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
           />
           <TanStackQueryProvider>
             <ToastContainer position="bottom-right" />

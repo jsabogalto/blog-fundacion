@@ -2,33 +2,35 @@
 import ImageComponent from "./ImageComponent";
 import LinkComponent from "./LinkComponent";
 
-const formatDate = (value) => {
-  if (!value) return "";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "";
-  return new Intl.DateTimeFormat("es-CO", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-};
-
-const PostListItem = ({ post }) => {
+/**
+ * PostListItem
+ * variant="featured": tarjeta grande (columna izquierda/derecha del bloque),
+ *   ocupa toda la altura de su celda de grid, solo imagen + título (sin "Leer más"),
+ *   igual al post grande de la sección "Explore the latest from Elements magazine" de Aramco.
+ * variant="compact" (por defecto): tarjeta pequeña, imagen + título + "Leer más".
+ */
+const PostListItem = ({ post, variant = "compact" }) => {
   if (!post || !post.slug) return null; // 👈 sin slug, no renderizamos (evita href="#")
 
-  const { title, slug, img, desc, category, createdAt } = post;
+  const { title, slug, img, category } = post;
   const href = `/posts/${slug}`;
+  const isFeatured = variant === "featured";
 
   return (
-    <article className="group flex flex-col">
-      <a href={href} className="relative block aspect-[420/260] w-full overflow-hidden rounded-3xl">
+    <article className={`group flex flex-col ${isFeatured ? "h-full" : ""}`}>
+      <a
+        href={href}
+        className={`relative block w-full overflow-hidden rounded-2xl ${
+          isFeatured ? "flex-1 min-h-[280px]" : "aspect-[420/260]"
+        }`}
+      >
         {img && (
           <ImageComponent
             src={img}
             alt={title ? `${title} - Reciclando Unidos` : "Publicación de Reciclando Unidos"}
-            width={600}
-            height={372}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            width={isFeatured ? 800 : 600}
+            height={isFeatured ? 1000 : 372}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         )}
         {category && (
@@ -38,24 +40,18 @@ const PostListItem = ({ post }) => {
         )}
       </a>
 
-      <div className=" mt-4">
-        <h2 className="mt-4 title-posts-item">
+      <div className="mt-4">
+        <h2 className={isFeatured ? "title-posts-item text-xl md:text-2xl" : "title-posts-item"}>
           <a href={href} className="line-clamp-3 hover:underline">
             {title}
           </a>
         </h2>
 
-        <div className="mt-2 text-xs text-gray-500">
-          {createdAt && <time dateTime={createdAt}>{formatDate(createdAt)}</time>}
-        </div>
-
-        {desc && (
-          <p className="mt-3 line-clamp-3 paragraph-posts-item text-gray-600">{desc}</p>
+        {!isFeatured && (
+          <div className="pt-3">
+            <LinkComponent link={href} text="Leer más" className="text-green-ru" />
+          </div>
         )}
-
-        <div className="py-4">
-          <LinkComponent link={href} text={"Leer más"} className="text-green-ru"/>
-        </div>
       </div>
     </article>
   );

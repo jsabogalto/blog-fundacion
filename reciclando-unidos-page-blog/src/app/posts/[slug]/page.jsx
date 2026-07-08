@@ -143,8 +143,12 @@ const SinglePostPage = async ({ params }) => {
     image: data.img ? [data.img] : undefined,
     datePublished: data.createdAt,
     dateModified: data.updatedAt || data.createdAt,
+    // 👇 corregido: @type debe ser un tipo de Schema.org (Organization/Person),
+    // no el nombre. Antes decía { "@type": "Fundación Reciclando Unidos" },
+    // lo cual es JSON-LD inválido y Google lo ignora silenciosamente.
     author: {
-      "@type": "Fundación Reciclando Unidos",
+      "@type": "Organization",
+      name: "Fundación Reciclando Unidos",
     },
     publisher: {
       "@type": "Organization",
@@ -159,6 +163,8 @@ const SinglePostPage = async ({ params }) => {
       "@id": `${SITE_URL}/posts/${slug}`,
     },
   };
+
+  const publishedLabel = formatDate(data.createdAt);
 
   return (
     <article className="flex flex-col overflow-x-clip">
@@ -192,61 +198,82 @@ const SinglePostPage = async ({ params }) => {
 
           {/* CENTRO: artículo */}
           <div className="order-1 min-w-0 flex-1">
+            {/* Meta: fecha + línea acento, estilo Aramco */}
+            {publishedLabel && (
+              <div className="mb-5 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-gray-500">
+                <span className="h-px w-8 bg-gradient-to-r from-[#139fa7] to-[#6dd063]" />
+                <time dateTime={data.createdAt}>{publishedLabel}</time>
+              </div>
+            )}
+
             {data.desc && (
-              <p className="paragraph">
+              <p className="paragraph font-light">
                 {data.desc}
               </p>
             )}
 
             <div
-  className="prose post-body prose-lg max-w-none break-words
-    [--tw-prose-bullets:var(--color-emerald-500)] [--tw-prose-counters:var(--color-emerald-600)]
+              className="prose post-body prose-lg mt-8 max-w-none break-words
+                [--tw-prose-bullets:var(--color-emerald-500)] [--tw-prose-counters:var(--color-emerald-600)]
 
-    prose-headings:tracking-tight
+                prose-headings:tracking-tight
 
-    prose-h1:text-[#053215] prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:font-semibold prose-h1:leading-tight prose-h1:mb-6
+                prose-h1:text-[#053215] prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:font-medium prose-h1:leading-tight prose-h1:mb-6
 
-    prose-h2:scroll-mt-28 prose-h2:text-[#053215] prose-h2:text-2xl md:prose-h2:text-4xl
-    prose-h2:font-semibold prose-h2:leading-tight prose-h2:tracking-tight prose-h2:mt-14 prose-h2:mb-5
+                prose-h2:scroll-mt-28 prose-h2:text-2xl md:prose-h2:text-4xl
+                prose-h2:font-medium prose-h2:leading-tight prose-h2:tracking-tight prose-h2:mt-14 prose-h2:mb-5
+                prose-h2:bg-gradient-to-r prose-h2:from-[#139fa7] prose-h2:to-[#6dd063]
+                prose-h2:bg-clip-text prose-h2:text-transparent
 
-    prose-h3:scroll-mt-28 prose-h3:text-[#053215] prose-h3:text-xl md:prose-h3:text-2xl
-    prose-h3:font-semibold prose-h3:mt-10 prose-h3:mb-3
+                prose-h3:scroll-mt-28 prose-h3:text-[#053215] prose-h3:text-xl md:prose-h3:text-2xl
+                prose-h3:font-medium prose-h3:mt-10 prose-h3:mb-3
 
-    [&_p]:!text-sm md:[&_p]:!text-xl [&_p]:tracking-tight
+                [&_p]:!text-sm md:[&_p]:!text-xl [&_p]:tracking-tight [&_p]:font-light
 
-    prose-a:font-medium prose-a:text-[#25D366] prose-a:no-underline hover:prose-a:text-emerald-700
-    [&_u:has(a)]:no-underline
-    prose-strong:text-gray-900 prose-strong:font-semibold
+                prose-a:bg-gradient-to-r prose-h2:from-[#139fa7] prose-h2:to-[#6dd063]
+                prose-a:bg-clip-text prose-h2:text-transparent
+                [&_u:has(a)]:no-underline
+                prose-strong:text-gray-900 prose-strong:font-semibold
 
-    prose-blockquote:border-l-4 prose-blockquote:border-[#25D366] prose-blockquote:bg-emerald-50/60
-    prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:py-1 prose-blockquote:px-5
-    prose-blockquote:font-normal prose-blockquote:text-gray-600
+                prose-blockquote:border-l-4 prose-blockquote:border-[#25D366] prose-blockquote:bg-emerald-50/60
+                prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:py-1 prose-blockquote:px-5
+                prose-blockquote:font-normal prose-blockquote:text-gray-600
 
-    prose-ul:my-6 prose-ol:my-6 prose-li:my-1.5 prose-li:pl-1
-    [&_ul]:!ps-10 [&_ol]:!ps-10 [&_ul]:!ms-2 [&_ol]:!ms-2
-    [&_li]:!text-sm md:[&_li]:!text-xl [&_li]:tracking-tight [&_li]:text-gray-600
+                prose-ul:my-6 prose-ol:my-6 prose-li:my-1.5 prose-li:pl-1
+                [&_ul]:!ps-10 [&_ol]:!ps-10 [&_ul]:!ms-2 [&_ol]:!ms-2
+                [&_li]:!text-sm md:[&_li]:!text-xl [&_li]:tracking-tight [&_li]:text-gray-600 [&_li]:font-light
 
-    prose-hr:my-12 prose-hr:border-gray-100
+                prose-hr:my-12 prose-hr:border-gray-100
 
-    prose-code:rounded-md prose-code:bg-emerald-50 prose-code:px-1.5 prose-code:py-0.5
-    prose-code:font-medium prose-code:text-[#25D366]
-    prose-code:before:content-none prose-code:after:content-none
-    prose-pre:rounded-xl prose-pre:bg-gray-900 prose-pre:shadow-sm
+                prose-code:rounded-md prose-code:bg-emerald-50 prose-code:px-1.5 prose-code:py-0.5
+                prose-code:font-medium prose-code:text-[#25D366]
+                prose-code:before:content-none prose-code:after:content-none
+                prose-pre:rounded-xl prose-pre:bg-gray-900 prose-pre:shadow-sm
 
-    [&_p:has(img)]:my-10 [&_p:has(img)]:w-full
-    [&_img]:!my-0 [&_img]:w-full [&_img]:h-56 md:[&_img]:h-100 [&_img]:rounded-3xl
-    [&_img]:object-cover [&_img]:shadow-sm"
-  dangerouslySetInnerHTML={{ __html: contentHtml }}
-/>
-<div className="flex justify-center items-center py-10">
-  <LinkComponent link={"/donar-computadores"} text={"agendar recolección gratuita"} className="text-[#25D366]"/>
-</div>
+                [&_p:has(img)]:my-10 [&_p:has(img)]:w-full
+                [&_img]:!my-0 [&_img]:w-full [&_img]:h-56 md:[&_img]:h-100 [&_img]:rounded-2xl
+                [&_img]:object-cover [&_img]:shadow-sm"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+
+            {/* CTA final, estilo Aramco: línea acento + texto + link con flecha */}
+            <div className="mt-16 border-t border-gray-100 pt-10">
+              <span className="mb-3 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-gray-500">
+                <span className="h-px w-8 bg-gradient-to-r from-[#139fa7] to-[#6dd063]" />
+                ¿Tienes computadores en desuso?
+              </span>
+              <p className="paragraph mb-5 max-w-[55ch] font-light text-gray-600">
+                Recogemos tus equipos gratis en Bogotá y Cundinamarca y te damos tu certificado de donación.
+              </p>
+              <LinkComponent
+                link={"/"}
+                text={"Agendar recolección gratuita"}
+                className="text-[#25D366]"
+              />
+            </div>
           </div>
-          
         </div>
-        
       </div>
-      
     </article>
   );
 };

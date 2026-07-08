@@ -6,8 +6,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.fundacionrecic
 export default async function sitemap() {
   // 1. Páginas estáticas (las 7 que me diste + la home)
   const staticPages = [
-    "",                          // home
-    "/donar-computadores",
+    "/",                          // home
     "/solicitud-computadores",
     "/contacto",
     "/posts",

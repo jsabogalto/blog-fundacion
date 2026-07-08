@@ -4,26 +4,29 @@ import CarrouselProvidersComponent from "@/components/CarrouselProvidersComponen
 import LatestPosts from "@/components/LatestPosts";
 import FaqSeo from "@/components/FaqSeo";
 import AboutComponent from "@/components/AboutComponent";
+import DonationForm from "@/components/DonationForm";
+import ImageGalleryComponent from "@/components/ImageGalleryComponent";
+import DigitalEquity from "@/components/DigitalEquityComponent";
+import MaterialsComponent from "@/components/MaterialsComponent";
+import ServicesComponent from "@/components/ServicesComponent";
+import ReciclyItems from "@/components/ReciclyItems";
+import OdsComponent from "@/components/OdsComponent";
+
 // SEO: metadatos renderizados en el servidor
 export const metadata = {
-  title: "Reciclaje electrónico en Bogotá y Cundinamarca",
-  description: "Fundación de reciclaje electrónico en Bogotá y Cundinamarca. Recibimos, reacondicionamos y reciclamos tecnología de forma responsable para apoyar la educación.",
+  title: "Donar computadores en Bogotá: fácil, gratis y a domicilio",
+  description:
+    "Dona tus computadores en Bogotá: recolección gratuita a domicilio, borrado seguro de datos y certificado de donación. Reciclaje electrónico que apoya la educación.",
   alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
-    locale: "es_CO",
-    title: "Fundación Reciclando Unidos | Reciclaje electrónico en Bogotá",
+    title: "Donación de Computadores en Bogotá | Recolección Gratis a Domicilio",
     description:
-      "Fundación de reciclaje electrónico en Bogotá y Cundinamarca. Recibimos, reacondicionamos y reciclamos tecnología de forma responsable para apoyar la educación.",
+      "Recolección gratuita a domicilio en Bogotá y Cundinamarca. Borrado seguro de datos, certificado de donación y reciclaje responsable.",
     url: "/",
-    images: [
-      {
-        url: "/imagepublic.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Fundación Reciclando Unidos | Reciclaje electrónico en Bogotá",
-      },
-    ],
+    images: [{
+      url: "/imagepublic.jpg", width: 1200, height: 630,
+      alt: "Donación de computadores en Bogotá - Fundación Reciclando Unidos"
+    }],
   },
 };
 const FAQ_SECTIONS = [
@@ -110,21 +113,178 @@ const cards = [
   },
 ];
 
+const materials = [
+  {
+    id: "universitarios",
+    title: "Estudiantes universitarios",
+    image: "donacion-emanuel_KOxpCa8Bt.webp",
+    alt: "Estudiante universitario recibiendo un computador donado por la Fundación Reciclando Unidos",
+  },
+  {
+    id: "rurales",
+    title: "Estudiantes de zonas rurales",
+    image: "estudiantes-rurales_velqXRFFp.webp",
+    alt: "Estudiantes rurales de Cundinamarca usando computadores donados",
+  },
+  {
+    id: "colegios",
+    title: "Colegios y jardines",
+    image: "3_OwdeL5Q5i.webp",
+    alt: "Entrega de computadores donados a un colegio en Bogotá",
+  },
+  {
+    id: "fundaciones",
+    title: "Fundaciones aliadas",
+    image: "portada-donar-computadores_NOTCD-CFJ.png",
+    alt: "Computadores reacondicionados entregados a una fundación",
+  },
+];
+const sections = [
+  {
+    id: "por-que-donar",
+    overlayTitle: "¿Por qué donar computadores?",
+    heading: "¿Por qué donar computadores?",
+    text: "Cada equipo que ya no usas puede cambiar una vida. Donarlo evita que termine como basura electrónica y le da una segunda oportunidad como herramienta de estudio y trabajo.",
+    cta: { label: "Conócenos", href: "#impacto" },
+    image: "https://ik.imagekit.io/2g4mlp2dp/colegio-viota.jpg",
+    alt: "Estudiantes del colegio de Viotá con computadores donados por la Fundación Reciclando Unidos",
+    reverse: false,
+  },
+  {
+    id: "beneficios-donantes",
+    overlayTitle: "Ventajas para ti como donante",
+    heading: "Beneficios de donar con Reciclando Unidos",
+    text: "Donar con nosotros no solo ayuda a otros: también te da tranquilidad y ventajas concretas. Hacemos borrado seguro de tus datos, no te cuesta nada, recibes tu certificado de donación y puedes ver el impacto real de tu aporte.",
+    cta: { label: "Saber más", href: "#beneficios" },
+    image: "https://ik.imagekit.io/2g4mlp2dp/lenovo.webp",
+    alt: "Computador portátil reacondicionado listo para entregar",
+    reverse: true,
+  },
+  {
+    id: "recogida-domicilio",
+    overlayTitle: "Recogida a domicilio y gratis en Bogotá",
+    heading: "Donar computadores en Bogotá es a domicilio y gratis",
+    text: "No tienes que desplazarte ni cargar nada. Vamos hasta la puerta de tu casa u oficina en cualquier zona de Bogotá, en el día y la hora que acordemos contigo, sin ningún costo. Solo agenda tu solicitud y nosotros nos encargamos del resto.",
+    cta: { label: "Agendar recolección gratuita", href: "#formulario-donacion" },
+    image: "https://ik.imagekit.io/2g4mlp2dp/recoleccion-gratuita.JPG",
+    alt: "Recolección gratuita de computadores a domicilio en Bogotá",
+    reverse: false,
+  },
+];
+const cards2 = [
+  {
+    id: "sin-computador",
+    title: "826 millones de estudiantes en el mundo no tienen computador en casa (UNESCO, 2020)",
+    image: "sin-internet.webp",
+    alt: "Estudiante haciendo tareas sin acceso a un computador",
+  },
+  {
+    id: "sin-internet-hogar",
+    title: "El 43% de los estudiantes —706 millones— no cuenta con internet en el hogar (UNESCO, 2020)",
+    image:
+      "escuela-sin-computadores.webp",
+    alt: "Familia en un hogar sin conexión a internet",
+  },
+  {
+    id: "poblacion-sin-internet",
+    title: "2.600 millones de personas, un tercio de la población mundial, aún no tiene acceso a internet (UIT, 2023)",
+    image:
+      "brecha-digitla.webp",
+    alt: "Comunidad afectada por la brecha digital en zonas rurales",
+  },
+  {
+    id: "escuelas-sin-conexion",
+    title: "Cerca del 60% de las escuelas primarias del mundo no está conectado a internet (UNICEF-UIT)",
+    image: "fondo-centro-educativo-page.webp",
+    alt: "Escuela rural sin conexión a internet",
+  },
+];
+
+const cards3 = [
+  {
+    id: "beneficios-tributarios",
+    title: "Tributarios",
+    text: "Recibes un certificado de donación que respalda formalmente tu aporte. En Colombia, las donaciones a entidades sin ánimo de lucro pueden generar beneficios en tu declaración de renta según tu caso: valídalo con tu contador.",
+    image: "beneficios-tributarios.webp",
+    alt: "beneficios tributarios por donar computadores",
+  },
+  {
+    id: "Seguridad-de-tus-datos",
+    title: "Seguridad de tus datos",
+    text: "Hacemos borrado seguro de la información de todos los equipos donados y, si lo solicitas, destruimos físicamente los discos. Tu información personal o empresarial nunca queda expuesta.",
+    image:
+      "seguridad-datos.webp",
+    alt: "borrado seguro de datos por donar computadores",
+  },
+  {
+    id: "Ambientales",
+    title: "Ambientales",
+    text: "Los equipos aptos se reacondicionan, los que no, aportan repuestos, y lo que no se puede aprovechar se entrega a un gestor ambiental autorizado. Ningún componente termina contaminando.",
+    image:
+      "ambientales.webp",
+    alt: "beneficios ambientales por donar computadores",
+  },
+  {
+    id: "Educativos",
+    title: "Educativos",
+    text: "Tu equipo llega reacondicionado a colegios, estudiantes universitarios y rurales, y fundaciones aliadas, convirtiéndose en una herramienta real de aprendizaje.",
+    image: "holasoyportada_HRJ-llO9RD.webp",
+    alt: "beneficios educativos por donar computadores",
+  },
+];
+
+const cards4 = [
+  {
+    id: "nuevas-iniciativas",
+    overlayTitle: "Tu donación también enseña: talleres de alfabetización digital",
+    heading: "Tu donación también enseña: talleres de alfabetización digital",
+    text: "Los computadores donados no solo se entregan: también equipan nuestros talleres gratuitos de alfabetización digital, donde niños, jóvenes y adultos aprenden a usar la tecnología para estudiar, trabajar y emprender. Cada equipo que donas multiplica su impacto formando a más personas.",
+    cta: { label: "Talleres de alfabetización digital", href: "/nuevas-iniciativas" },
+    image: "https://ik.imagekit.io/2g4mlp2dp/3_kQv_ss_L4.webp?updatedAt=1782318361765",
+    alt: "Recolección gratuita de computadores a domicilio en Bogotá",
+    reverse: false,
+  },
+];
+
 export default function Home() {
   return (
 
     <div className="flex flex-col">
-      <div className="flex flex-col justify-between gap-12">
-        <HeroSection />
-        <CarrouselProvidersComponent />
+      <HeroSection />
+      <CarrouselProvidersComponent />
+      <ImageGalleryComponent />
+      <DigitalEquity />
+      <div className="sections-py">
+        <DonationForm />
       </div>
+      <ServicesComponent sections={sections} spanTitle={"DONA TU COMPUTADOR VIEJO O EN DESUSO"}/>
+      <MaterialsComponent materials={materials} title="¿Qué hacemos con los computadores que donas en Bogotá?" text="Cada computador que recibimos se evalúa: los que funcionan o se pueden reparar los reacondicionamos para darles una segunda vida con propósito, y los que no, se reciclan responsablemente como material electrónico. Después entregamos los equipos a estudiantes, colegios y fundaciones que los necesitan, para que tu donación se convierta en oportunidades educativas reales." textLink={"Ver todas las donaciones"} link={"#proyectos"} />
+
+      <AboutComponent cards={cards2} title="¿Cómo ayuda tu donación a la educación?"
+        text="Cifras de la UNESCO y la UIT muestran que el acceso a la tecnología sigue siendo un privilegio para millones de estudiantes. Donar tu computador es una de las formas más directas de cambiar esa realidad y abrir oportunidades de aprendizaje."
+        spanTitle={"IMPACTO EN LA EDUCACIóN"}
+        spanTitleCollassName={"bg-stone-100"} or={"text-stone-800"} />
+      <ReciclyItems />
+      <OdsComponent />
+      <AboutComponent cards={cards3} title="Beneficios de donar tus computadores con Reciclando Unidos"
+        text="Tu donación genera valor en varias direcciones: apoya la educación de estudiantes y colegios, le da a las empresas una gestión responsable de sus equipos y protege el medio ambiente con la disposición correcta de los residuos electrónicos."
+        spanTitle={"BENEFICIOS"}
+        spanTitleColor={"text-stone-800"}
+        id={"beneficios"}
+        className={"bg-stone-100"} />
+      <ServicesComponent sections={cards4} spanTitle={"NUEVAS INICIATIVAS"}/>
       <ImpactComponent />
-      <AboutComponent className="green-ru-div" cards={cards} title="¿Quiénes somos y hacia dónde vamos?" text="En Reciclando Unidos damos una segunda vida a la tecnología en desuso. Recuperamos equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital." />
-      <LatestPosts limit={12} cat={"reciclaje-electronico"} title={"Fundacion Reciclando Unidos y el reciclaje electrónico"} desc={`En Reciclando Unidos damos una segunda vida a la tecnología en desuso. Recuperamos equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital`} />
+      <AboutComponent cards={cards} title="¿Quiénes somos y hacia dónde vamos?" text="En Reciclando Unidos damos una segunda vida a la tecnología en desuso. Recuperamos equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital."
+        spanTitle={"OBJETIVO, MISIóN Y VISIóN"}
+        spanTitleColor={"text-stone-800"} />
+
+      <LatestPosts limit={6} cat={"reciclaje-electronico"} title={"Fundacion Reciclando Unidos y el reciclaje electrónico"} desc={`En Reciclando Unidos damos una segunda vida a la tecnología en desuso. s equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital`} spanTitle={"LECTURAS DE INTERÉS"} spanTextColor={"text-stone-800"} />
+      <LatestPosts limit={3} cat={"proyectos"} title={"Fundacion Reciclando Unidos y el reciclaje electrónico"} desc={`En Reciclando Unidos damos una segunda vida a la tecnología en desuso. s equipos de empresas, entidades y particulares, los reacondicionamos y los entregamos a colegios y fundaciones, reduciendo los residuos electrónicos y cerrando la brecha digital`} spanTitle={"LECTURAS RECOMENDADAS"} spanTextColor={"text-stone-800"} />
       <FaqSeo
         sections={FAQ_SECTIONS}
         heading="Preguntas frecuentes sobre reciclaje electrónico"
         title="Resolvemos tus dudas sobre reciclaje electrónico y disposición final responsable de tu tecnología."
+        spanTitle={"FAQ"}
       />
     </div>
   );

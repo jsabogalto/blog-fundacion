@@ -1,3 +1,5 @@
+import SpanTextComponent from "./SpanTextComponent";
+
 function buildFaqJsonLd(sections) {
   return {
     "@context": "https://schema.org",
@@ -16,7 +18,10 @@ const ChevronIcon = () => (
   <svg
     aria-hidden="true"
     viewBox="0 0 24 24"
-    className="h-5 w-5 shrink-0 text-gray-400 transition-transform duration-300 group-open:rotate-180 group-open:text-emerald-600"
+    // El stroke de un SVG usa currentColor: no se le puede aplicar el degradado
+    // (bg-clip-text + text-transparent lo volvería invisible), así que al abrir
+    // usamos uno de los dos colores del degradado como sólido.
+    className="h-5 w-5 shrink-0 text-gray-400 transition-transform duration-300 group-open:rotate-180 group-open:text-[#139fa7]"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -33,6 +38,7 @@ export default function FaqSeo({
   heading = "Preguntas frecuentes",
   title,
   className = "",
+  spanTitle,
 }) {
   // 1) Filtra por `only` si se pasó; si no, usa todas las secciones recibidas.
   const visibleSections = only?.length
@@ -45,8 +51,13 @@ export default function FaqSeo({
 
   const jsonLd = buildFaqJsonLd(visibleSections);
 
+  // Un solo título global (sin títulos por sección): todas las preguntas de
+  // todas las secciones visibles se aplanan en una sola lista, igual a
+  // Aramco -> un título a la izquierda, una lista completa a la derecha.
+  const allItems = visibleSections.flatMap((s) => s.items ?? []);
+
   return (
-    <section id="preguntas-frecuentes" className={`py-4 md:py-8 ${className}`}>
+    <section id="preguntas-frecuentes sections-py" className={`py-4 md:py-8 ${className}`}>
       {/* Datos estructurados: JSON.stringify + escape de "<" para evitar
           que un "</script>" en el contenido rompa la página (XSS/robustez) */}
       <script
@@ -57,61 +68,47 @@ export default function FaqSeo({
       />
 
       <div className="mx-auto w-full max-w-layer px-5 md:px-12">
-        {/* Encabezado general: eyebrow genérico + H2 con la keyword */}
-        <div className="mb-12 max-w-2xl">
-          <span className="text-sm font-semibold uppercase tracking-wide text-emerald-700">
-            Preguntas frecuentes
-          </span>
-          <h2 className="subtitle mt-3">{heading}</h2>
-          {title && <p className="paragraph mt-4">{title}</p>}
-        </div>
+                    <SpanTextComponent title={spanTitle} textColor={"text-stone-800"} />
+        {/* Layout estilo Aramco: título fijo a la izquierda, lista completa
+            a la derecha en desktop; apilado (título arriba, lista abajo) en móvil */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">
+          {/* Columna izquierda: el ÚNICO título de toda la sección */}
+          <div className="mb-4 max-w-2xl md:mb-0">
 
-        {/* Paneles tipo tabla, uno por categoría */}
-        <div className="flex flex-col gap-8">
-          {visibleSections.map((section) => (
-            <div
-              key={section.id}
-              className="overflow-hidden border border-gray-200 bg-white shadow-sm rounded-2xl"
-            >
-              {/* Cabecera del panel */}
-              <div className="border-b border-gray-200 bg-gray-50/70 px-6 py-8 md:px-8">
-                {section.eyebrow && (
-                  <span className="text-xs font-semibold uppercase tracking-wide text-emerald-600">
-                    {section.eyebrow}
+            <h2 className="subtitle">{heading}</h2>
+            {title && <p className="paragraph mt-4 max-w-[60ch]">{title}</p>}
+          </div>
+
+          {/* Columna derecha: lista plana de TODAS las preguntas, sin
+              card/borde/sombra, solo líneas divisorias finas -> igual a Aramco */}
+          <div className="divide-y divide-gray-200 border-t border-gray-200">
+            {allItems.map((it) => (
+              <details key={it.q} className="group">
+                <summary className="grid cursor-pointer list-none grid-cols-[1fr_auto] items-center gap-4 py-6 [&::-webkit-details-marker]:hidden">
+                  {/* span en vez de h4: summary tiene rol de botón y un
+                      heading adentro rompe la semántica para lectores
+                      de pantalla; el schema ya marca esto como pregunta */}
+                  <span className="paragraph relative inline-block font-medium md:text-lg">
+                    {/* Capa 1: texto negro normal, visible por defecto */}
+                    <span className="text-gray-900 transition-opacity duration-300 group-open:opacity-0">
+                      {it.q}
+                    </span>
+                    {/* Capa 2: mismo texto, con degradado, superpuesto encima, invisible por defecto */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-r from-[#139fa7] to-[#6dd063] bg-clip-text text-transparent opacity-0 transition-opacity duration-300 group-open:opacity-100"
+                    >
+                      {it.q}
+                    </span>
                   </span>
-                )}
-                <h3 className="paragraph mt-2 font-semibold">
-                  {section.title}
-                </h3>
-                {section.intro && (
-                  <p className="mt-4 paragraph">{section.intro}</p>
-                )}
-              </div>
-
-              {/* Filas: cada pregunta es una fila tipo tabla */}
-              <div className="divide-y divide-gray-100">
-                {(section.items ?? []).map((it, i) => (
-                  <details key={it.q} className="group">
-                    <summary className="grid cursor-pointer list-none grid-cols-[auto_1fr_auto] items-center gap-4 px-6 py-6 transition-colors hover:bg-gray-50 [&::-webkit-details-marker]:hidden md:px-8">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-emerald-50 text-xs font-semibold text-emerald-700">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      {/* span en vez de h4: summary tiene rol de botón y un
-                          heading adentro rompe la semántica para lectores
-                          de pantalla; el schema ya marca esto como pregunta */}
-                      <span className="paragraph font-medium text-gray-900 group-open:text-green-ru md:text-lg">
-                        {it.q}
-                      </span>
-                      <ChevronIcon />
-                    </summary>
-                    <div className="px-6 pb-6 md:px-8 md:pl-[4.5rem]">
-                      <p className="paragraph">{it.a}</p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-          ))}
+                  <ChevronIcon />
+                </summary>
+                <div className="pb-6">
+                  <p className="paragraph ">{it.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -16,6 +16,7 @@ import {
   Upload,
   ImageIcon,
   X,
+  Check,
   CheckCircle2,
   MapPin,
   ChevronDown
@@ -26,14 +27,15 @@ import { ITEMS, CHARGERS, SOURCES } from "@/lib/formConfig";
 
 export function StepHeading({ eyebrow, title, subtitle }) {
   return (
-    <div className="mb-4">
+    <div className="mb-6">
       {eyebrow && (
-        <p className="py-4 text-sm font-semibold uppercase tracking-[0.18em] text-leaf">
+        <span className="mb-2.5 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
+          <span className="h-px w-8 bg-gradient-ru" />
           {eyebrow}
-        </p>
+        </span>
       )}
       <h2 className="subtitle">{title}</h2>
-      {subtitle && <p className="py-2 max-w-md paragraph">{subtitle}</p>}
+      {subtitle && <p className="mt-2 max-w-md paragraph">{subtitle}</p>}
     </div>
   );
 }
@@ -41,8 +43,13 @@ export function StepHeading({ eyebrow, title, subtitle }) {
 function TextField({ label, value, onChange, ...rest }) {
   return (
     <label className="block">
-      <span className="label">{label}</span>
-      <input className="field" value={value} onChange={(e) => onChange(e.target.value)} {...rest} />
+      <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">{label}</span>
+      <input
+        className="field mt-1.5 transition focus:border-pine focus:ring-4 focus:ring-pine/10"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        {...rest}
+      />
     </label>
   );
 }
@@ -64,16 +71,16 @@ function SelectField({ label, value, onChange, options, placeholder }) {
 
   return (
     <div className="block h-[25vh]" ref={ref}>
-      <span className="label">{label}</span>
+      <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">{label}</span>
 
-      <div className="relative">
+      <div className="relative mt-1.5">
         {/* Disparador */}
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-haspopup="listbox"
           aria-expanded={open}
-          className="flex w-full items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-left text-ink outline-none transition focus:border-leaf focus:ring-4 focus:ring-leaf/15"
+          className="flex w-full items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-left text-ink outline-none transition focus:border-pine focus:ring-4 focus:ring-pine/10"
         >
           <span className={selected ? "text-ink" : "text-muted"}>
             {selected ? selected.label : placeholder || "Selecciona una opción"}
@@ -102,10 +109,11 @@ function SelectField({ label, value, onChange, options, placeholder }) {
                       onChange(o.value);
                       setOpen(false);
                     }}
-                    className={`block w-full px-4 py-2.5 text-left text-sm transition hover:bg-mint ${active ? "bg-leaf/10 font-medium text-pine" : "text-ink"
+                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition hover:bg-mint ${active ? "bg-pine/5 font-medium text-pine" : "text-ink"
                       }`}
                   >
                     {o.label}
+                    {active && <Check size={14} className="text-pine" />}
                   </button>
                 </li>
               );
@@ -128,15 +136,26 @@ const ITEM_ICONS = {
   servidores: Server,
 };
 
+/* Pequeña insignia de selección, reutilizada en tarjetas seleccionables */
+function CheckBadge() {
+  return (
+    <span className="absolute right-2 top-2 grid h-5 w-5 place-items-center rounded-full bg-pine text-white shadow-sm">
+      <Check size={12} strokeWidth={3} />
+    </span>
+  );
+}
+
 /* ───────────────────────────── Paso: Intro ───────────────────────────── */
 
 export function IntroStep() {
   return (
-    <div className="text-center">
-      <p className="py-6 text-sm font-semibold uppercase tracking-[0.18em] text-leaf">
+    <div className="py-2 text-center">
+      <span className="mx-auto mb-4 flex w-fit items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
+        <span className="h-px w-8 bg-gradient-ru" />
         Formulario de donación de equipos
-      </p>
-      <h2 className="subtitle leading-tight">
+        <span className="h-px w-8 bg-gradient-ru" />
+      </span>
+      <h2 className="subtitle font-light leading-tight">
         Donar Computadores es Rápido y Gratis: Hazlo en 1 Minuto
       </h2>
     </div>
@@ -166,15 +185,16 @@ export function TypeStep({ form, set }) {
               type="button"
               onClick={() => set("tipo", value)}
               className={[
-                "flex items-start gap-3 rounded-xl border p-4 text-left transition",
+                "relative flex items-start gap-3 rounded-xl border p-4 text-left transition",
                 active
-                  ? "border-leaf bg-leaf/10 ring-4 ring-leaf/15"
-                  : "border-line bg-white hover:border-leaf/60",
+                  ? "border-pine bg-pine/5 shadow-sm"
+                  : "border-line bg-white hover:border-pine/40 hover:shadow-sm",
               ].join(" ")}
             >
+              {active && <CheckBadge />}
               <span
                 className={[
-                  "grid h-10 w-10 shrink-0 place-items-center rounded-lg",
+                  "grid h-10 w-10 shrink-0 place-items-center rounded-lg transition",
                   active ? "bg-pine text-leaf-soft" : "bg-mint text-pine",
                 ].join(" ")}
               >
@@ -182,7 +202,7 @@ export function TypeStep({ form, set }) {
               </span>
               <span>
                 <span className="block font-display font-semibold text-pine">{label}</span>
-                <span className="text-sm ">{desc}</span>
+                <span className="text-sm text-muted">{desc}</span>
               </span>
             </button>
           );
@@ -258,15 +278,16 @@ export function ItemsStep({ form, set }) {
               type="button"
               onClick={() => toggle(id)}
               className={[
-                "flex flex-col items-center gap-2 rounded-xl border p-3 text-center transition sm:p-4",
+                "relative flex flex-col items-center gap-2 rounded-xl border p-3 text-center transition sm:p-4",
                 active
-                  ? "border-leaf bg-leaf/10 ring-4 ring-leaf/15"
-                  : "border-line bg-white hover:border-leaf/60",
+                  ? "border-pine bg-pine/5 shadow-sm"
+                  : "border-line bg-white hover:border-pine/40 hover:shadow-sm",
               ].join(" ")}
             >
+              {active && <CheckBadge />}
               <span
                 className={[
-                  "grid h-9 w-9 place-items-center rounded-lg sm:h-11 sm:w-11",
+                  "grid h-9 w-9 place-items-center rounded-lg transition sm:h-11 sm:w-11",
                   active ? "bg-pine text-leaf-soft" : "bg-mint text-pine",
                 ].join(" ")}
               >
@@ -296,20 +317,20 @@ export function QuantitiesStep({ form, set }) {
           const Icon = ITEM_ICONS[id];
           const qty = Number(form.cantidades[id]) || 1;
           return (
-            <div key={id} className="flex items-center gap-3 rounded-xl border border-line bg-white p-3">
+            <div key={id} className="flex items-center gap-3 rounded-xl border border-line bg-white p-3 transition hover:border-pine/30">
               <span className="grid h-9 w-9 place-items-center rounded-lg bg-mint text-pine">
                 <Icon size={18} />
               </span>
               <span className="flex-1 text-sm font-medium text-ink">{label}</span>
               <div className="flex items-center gap-1">
-                <button type="button" onClick={() => setQty(id, qty - 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine hover:bg-mint">−</button>
+                <button type="button" onClick={() => setQty(id, qty - 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine transition hover:border-pine hover:bg-mint">−</button>
                 <input
                   className="h-8 w-12 rounded-lg border border-line text-center text-sm"
                   value={qty}
                   onChange={(e) => setQty(id, parseInt(e.target.value) || 1)}
                   inputMode="numeric"
                 />
-                <button type="button" onClick={() => setQty(id, qty + 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine hover:bg-mint">+</button>
+                <button type="button" onClick={() => setQty(id, qty + 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine transition hover:border-pine hover:bg-mint">+</button>
               </div>
             </div>
           );
@@ -365,7 +386,7 @@ export function PhotoStep({ form, set }) {
           <button
             type="button"
             onClick={() => set("foto", null)}
-            className="absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-pine shadow"
+            className="absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-pine shadow transition hover:bg-white"
             aria-label="Quitar foto"
           >
             <X size={16} />
@@ -375,13 +396,13 @@ export function PhotoStep({ form, set }) {
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed border-line bg-white px-4 py-10 text-center transition hover:border-leaf"
+          className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed border-line bg-white px-4 py-10 text-center transition hover:border-pine hover:bg-mint/30"
         >
           <span className="grid h-12 w-12 place-items-center rounded-full bg-mint text-pine">
             <Upload size={22} />
           </span>
           <span className="font-medium text-pine">Toca para subir una foto</span>
-          <span className="flex items-center gap-1 text-xs text-muted">
+          <span className="flex items-center gap-1 text-xs uppercase tracking-[0.1em] text-muted">
             <ImageIcon size={12} /> JPG o PNG · máx. 5 MB
           </span>
         </button>
@@ -407,11 +428,11 @@ export function LocationStep({ form, set }) {
       <div className="grid gap-4">
         <TextField label="Ciudad" value={form.ciudad} onChange={(v) => set("ciudad", v)} placeholder="Ej. Bogotá" />
         <label className="block">
-          <span className="label">Dirección</span>
-          <div className="relative">
+          <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">Dirección</span>
+          <div className="relative mt-1.5">
             <MapPin size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input
-              className="field pl-9"
+              className="field pl-9 transition focus:border-pine focus:ring-4 focus:ring-pine/10"
               value={form.direccion}
               onChange={(e) => set("direccion", e.target.value)}
               placeholder="Calle, número, barrio…"
@@ -445,10 +466,15 @@ export function SourceStep({ form, set }) {
 export function SuccessStep() {
   return (
     <div className="py-6 text-center">
-      <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full bg-leaf/15">
-        <CheckCircle2 size={56} className="text-pine" strokeWidth={1.75} />
+      <span className="mx-auto mb-4 flex w-fit items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
+        <span className="h-px w-8 bg-gradient-ru" />
+        Donación registrada
+        <span className="h-px w-8 bg-gradient-ru" />
+      </span>
+      <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full border-2 border-pine/20 bg-pine/5">
+        <CheckCircle2 size={48} className="text-pine" strokeWidth={1.5} />
       </div>
-      <h2 className="font-display text-2xl font-bold text-pine sm:text-3xl">
+      <h2 className="font-display text-2xl font-semibold text-pine sm:text-3xl">
         ¡Gracias por tu donación!
       </h2>
       <p className="mx-auto mt-3 max-w-sm text-sm sm:text-base">

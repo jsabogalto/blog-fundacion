@@ -38,14 +38,14 @@ function LogoItem({ donor, hidden }) {
       width={180}
       height={100}
       loading="lazy"
-      className="h-24 w-auto max-w-[240px] object-contain grayscale brightness-[0.65] contrast-[0.9] transition md:h-28"
+      className="h-20 w-auto max-w-70 object-contain grayscale brightness-[0.65] contrast-[0.9] transition md:h-40"
     />
   );
 
   return (
     <div
       aria-hidden={hidden}
-      className="mr-16 flex h-28 flex-none items-center justify-center opacity-75 transition-opacity duration-200 hover:opacity-100 md:mr-28"
+      className="mr-12 flex h-full flex-none items-center justify-center opacity-75 transition-opacity duration-200 hover:opacity-100 md:mr-20"
     >
       {donor.url ? (
         <a
@@ -128,7 +128,7 @@ export default function CarrouselProvidersComponent({
   });
 
   return (
-    <section aria-label="Logos de donadores" className="w-full overflow-hidden">
+    <section aria-label="Logos de donadores" className="w-full overflow-hidden sections-py flex flex-col justify-between">
       <h2 className="mx-auto mb-8 flex h-full max-w-[1400px] flex-col justify-center px-6 text-center paragraph md:mb-12 md:px-12 md:text-2xl">
         {title}
       </h2>

@@ -71,7 +71,7 @@ export default function TalleresPage() {
         alt={"Talleres gratuitos de alfabetización digital en Bogotá"}
         title={"Talleres de alfabetización digital"}
       />
-      <MaterialsComponent materials={materials} title="Voluntariado en alfabetización digital" text="Ofertamos un voluntariado con profesionales y estudiantes para apoyar la educacion tecnologica de adultos mayores, estudiantes de secundaria y bachillerato aprender a programar, arquitectura de computadores, habilidades ditales, uso de herramientas de inteligencia artificial." classNameHeadSection="p-8 green-ru-div rounded-3xl" link={"/donar-computadores"}
+      <MaterialsComponent materials={materials} title="Voluntariado en alfabetización digital" text="Ofertamos un voluntariado con profesionales y estudiantes para apoyar la educacion tecnologica de adultos mayores, estudiantes de secundaria y bachillerato aprender a programar, arquitectura de computadores, habilidades ditales, uso de herramientas de inteligencia artificial." classNameHeadSection="p-8 green-ru-div rounded-3xl" link={"/"}
         textLink={"Dona tus computadores y apoya los talleres"} />
       <LatestPosts limit={9} cat="cursos" />
     </div>

@@ -48,7 +48,7 @@
 
   /* ── Tus utilidades de marca ── */
   .title {
-    @apply text-2xl md:text-4xl font-semibold leading-tight tracking-tight;
+    @apply text-2xl md:text-4xl font-light leading-tight tracking-tight;
   }
 
   .paragraph {
@@ -56,7 +56,7 @@
   }
 
   .subtitle {
-    @apply text-2xl md:text-3xl font-medium leading-tight text-[#053215];
+    @apply text-2xl md:text-3xl font-medium leading-tight bg-gradient-to-r from-[#139fa7] to-[#6dd063] bg-clip-text text-transparent;
   }
 
   .bg-green-ru {
@@ -81,6 +81,24 @@
 
   .green-ru-div {
     @apply bg-green-ru/20
+  }
+
+  .sections-py {
+    @apply py-12 md:py-16
+  }
+
+  .bg-gradient-ru {
+    @apply bg-gradient-to-r from-[#139fa7] to-[#6dd063]
+  }
+
+  .text-gradient-ru {
+    @apply bg-gradient-to-r from-[#139fa7] to-[#6dd063] bg-clip-text text-transparent;
+  }
+
+  .bg-neutral-brand {
+    background:
+      radial-gradient(80% 60% at 20% 0%, rgba(5, 50, 21, 0.05), transparent 60%),
+      #E7EBE4;
   }
 
   .post-body :is(ul, ol) {
