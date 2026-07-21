@@ -45,16 +45,16 @@ export default function DigitalEquity() {
   const urlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
   return (
-    <section id="proceso-donacion " className="bg-white">
-      <div className="mx-auto w-full max-w-layer px-5 md:px-12 sections-py">
-        <SpanTextComponent title={"proceso de donación"} textColor={"text-stone-800"}/>
+    <section id="proceso-donacion" className="bg-stone-100">
+      <div className="mx-auto w-full max-w-layer px-4 md:px-12 sections-py flex flex-col items-center">
         <HeadSectionComponent
-          title="Donar computadores en Bogotá: transforma el futuro de quienes más lo necesitan"
+          title="El futuro se abre camino gracias a la tecnología,
+          pero empieza por ti."
           text="Cuando donas tus computadores usados ayudas a dotar de tecnología aulas escolares, fundaciones y familias en Bogotá y Cundinamarca. Nosotros los recogemos gratis en tu casa u oficina y te entregamos tu certificado de donación."
         />
 
         {/* Videos / proceso en 4 pasos */}
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 py-4 md:py-8">
+        <div className="grid pt-4 w-full grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 lg:grid-cols-4 md:py-8">
           {videos.map((v, i) => (
             <motion.div
               key={i}
@@ -65,7 +65,7 @@ export default function DigitalEquity() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
             >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-neutral-950 sm:rounded-3xl">
+              <div className="relative aspect-[3/5] overflow-hidden bg-neutral-950">
                 <Video
                   urlEndpoint={urlEndpoint}
                   src={v.src}
@@ -95,9 +95,9 @@ export default function DigitalEquity() {
                 {/* Texto inferior */}
                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                   <div className="mb-3 h-[2px] w-8 bg-gradient-ru transition-all duration-500 ease-out group-hover:w-14" />
-                  <p className="text-sm font-light leading-snug text-white sm:text-[15px]">
+                  <h3 className="text-sm font-light leading-snug text-white sm:text-[15px]">
                     {v.caption}
-                  </p>
+                  </h3>
                 </div>
               </div>
             </motion.div>

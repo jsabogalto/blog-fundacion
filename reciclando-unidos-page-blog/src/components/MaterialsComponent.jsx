@@ -21,13 +21,12 @@ const cardVariants = {
 
 export default function MaterialsComponent({ materials, id, title, text, classNameHeadSection, link, textLink }) {
   return (
-    <section id={id} className="scroll-mb-30 bg-stone-100">
+    <section id={id} className="scroll-mb-30">
       <div className="mx-auto w-full max-w-layer px-5 md:px-12 sections-py">
-        <SpanTextComponent title="¿Dónde terminan tus computadores?" textColor="text-stone-800"/>
         <HeadSectionComponent title={title} text={text} classNameHeadSection={classNameHeadSection} />
 
         {/* Grilla: 2 col en móvil, 4 col escalonadas en desktop */}
-        <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:mt-8 md:grid-cols-4 md:gap-x-8 md:gap-y-0 lg:grid-cols-4 py-8">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-6 md:mt-8 md:grid-cols-4 md:gap-x-8 md:gap-y-0 lg:grid-cols-4">
           {materials.map((m, i) => (
             <motion.div
               key={m.id}
@@ -39,7 +38,7 @@ export default function MaterialsComponent({ materials, id, title, text, classNa
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
             >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-neutral-950 sm:rounded-3xl">
+              <div className="relative aspect-[3/4] overflow-hidden bg-neutral-950">
                 <ImageComponent
                   src={`${urlEndpoint}/${m.image}`}
                   width={600}

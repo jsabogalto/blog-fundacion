@@ -19,7 +19,7 @@ import {
   Check,
   CheckCircle2,
   MapPin,
-  ChevronDown
+  ChevronDown,
 } from "lucide-react";
 import { ITEMS, CHARGERS, SOURCES } from "@/lib/formConfig";
 
@@ -27,10 +27,10 @@ import { ITEMS, CHARGERS, SOURCES } from "@/lib/formConfig";
 
 export function StepHeading({ eyebrow, title, subtitle }) {
   return (
-    <div className="mb-6">
+    <div className="mb-7 border-b border-stone-200 pb-5">
       {eyebrow && (
-        <span className="mb-2.5 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
-          <span className="h-px w-8 bg-gradient-ru" />
+        <span className="mb-3 flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-pine">
+          <span className="h-2 w-2 bg-pine" />
           {eyebrow}
         </span>
       )}
@@ -43,9 +43,9 @@ export function StepHeading({ eyebrow, title, subtitle }) {
 function TextField({ label, value, onChange, ...rest }) {
   return (
     <label className="block">
-      <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">{label}</span>
+      <span className="label text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">{label}</span>
       <input
-        className="field mt-1.5 transition focus:border-pine focus:ring-4 focus:ring-pine/10"
+        className="field mt-2 rounded-none border-stone-300 transition focus:border-pine focus:ring-2 focus:ring-pine/15"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         {...rest}
@@ -71,16 +71,16 @@ function SelectField({ label, value, onChange, options, placeholder }) {
 
   return (
     <div className="block h-[25vh]" ref={ref}>
-      <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">{label}</span>
+      <span className="label text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">{label}</span>
 
-      <div className="relative mt-1.5">
+      <div className="relative mt-2">
         {/* Disparador */}
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-haspopup="listbox"
           aria-expanded={open}
-          className="flex w-full items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-left text-ink outline-none transition focus:border-pine focus:ring-4 focus:ring-pine/10"
+          className="flex w-full items-center justify-between border border-stone-300 bg-white px-4 py-3 text-left text-ink outline-none transition focus:border-pine focus:ring-2 focus:ring-pine/15"
         >
           <span className={selected ? "text-ink" : "text-muted"}>
             {selected ? selected.label : placeholder || "Selecciona una opción"}
@@ -95,7 +95,7 @@ function SelectField({ label, value, onChange, options, placeholder }) {
         {open && (
           <ul
             role="listbox"
-            className="absolute left-0 right-0 top-full z-30 mt-1 max-h-60 overflow-auto rounded-xl border border-line bg-white py-1 shadow-lg"
+            className="absolute left-0 right-0 top-full z-30 mt-1 max-h-60 overflow-auto border border-stone-300 bg-white py-1 shadow-md"
           >
             {options.map((o) => {
               const active = o.value === value;
@@ -109,8 +109,9 @@ function SelectField({ label, value, onChange, options, placeholder }) {
                       onChange(o.value);
                       setOpen(false);
                     }}
-                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition hover:bg-mint ${active ? "bg-pine/5 font-medium text-pine" : "text-ink"
-                      }`}
+                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition hover:bg-stone-50 ${
+                      active ? "bg-stone-50 font-medium text-pine" : "text-ink"
+                    }`}
                   >
                     {o.label}
                     {active && <Check size={14} className="text-pine" />}
@@ -139,7 +140,7 @@ const ITEM_ICONS = {
 /* Pequeña insignia de selección, reutilizada en tarjetas seleccionables */
 function CheckBadge() {
   return (
-    <span className="absolute right-2 top-2 grid h-5 w-5 place-items-center rounded-full bg-pine text-white shadow-sm">
+    <span className="absolute right-0 top-0 grid h-5 w-5 place-items-center bg-pine text-white">
       <Check size={12} strokeWidth={3} />
     </span>
   );
@@ -150,10 +151,10 @@ function CheckBadge() {
 export function IntroStep() {
   return (
     <div className="py-2 text-center">
-      <span className="mx-auto mb-4 flex w-fit items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
-        <span className="h-px w-8 bg-gradient-ru" />
+      <span className="mx-auto mb-4 flex w-fit items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-pine">
+        <span className="h-px w-8 bg-pine/40" />
         Formulario de donación de equipos
-        <span className="h-px w-8 bg-gradient-ru" />
+        <span className="h-px w-8 bg-pine/40" />
       </span>
       <h2 className="subtitle font-light leading-tight">
         Donar Computadores es Rápido y Gratis: Hazlo en 1 Minuto
@@ -185,23 +186,23 @@ export function TypeStep({ form, set }) {
               type="button"
               onClick={() => set("tipo", value)}
               className={[
-                "relative flex items-start gap-3 rounded-xl border p-4 text-left transition",
+                "relative flex items-start gap-3 border p-4 text-left transition",
                 active
-                  ? "border-pine bg-pine/5 shadow-sm"
-                  : "border-line bg-white hover:border-pine/40 hover:shadow-sm",
+                  ? "border-pine bg-stone-50"
+                  : "border-stone-200 bg-white hover:border-stone-400",
               ].join(" ")}
             >
               {active && <CheckBadge />}
               <span
                 className={[
-                  "grid h-10 w-10 shrink-0 place-items-center rounded-lg transition",
-                  active ? "bg-pine text-leaf-soft" : "bg-mint text-pine",
+                  "grid h-10 w-10 shrink-0 place-items-center border transition",
+                  active ? "border-pine text-pine" : "border-stone-300 text-stone-500",
                 ].join(" ")}
               >
-                <Icon size={20} />
+                <Icon size={20} strokeWidth={1.75} />
               </span>
               <span>
-                <span className="block font-display font-semibold text-pine">{label}</span>
+                <span className="block font-display font-semibold text-ink">{label}</span>
                 <span className="text-sm text-muted">{desc}</span>
               </span>
             </button>
@@ -278,20 +279,20 @@ export function ItemsStep({ form, set }) {
               type="button"
               onClick={() => toggle(id)}
               className={[
-                "relative flex flex-col items-center gap-2 rounded-xl border p-3 text-center transition sm:p-4",
+                "relative flex flex-col items-center gap-2 border p-3 text-center transition sm:p-4",
                 active
-                  ? "border-pine bg-pine/5 shadow-sm"
-                  : "border-line bg-white hover:border-pine/40 hover:shadow-sm",
+                  ? "border-pine bg-stone-50"
+                  : "border-stone-200 bg-white hover:border-stone-400",
               ].join(" ")}
             >
               {active && <CheckBadge />}
               <span
                 className={[
-                  "grid h-9 w-9 place-items-center rounded-lg transition sm:h-11 sm:w-11",
-                  active ? "bg-pine text-leaf-soft" : "bg-mint text-pine",
+                  "grid h-9 w-9 place-items-center border transition sm:h-11 sm:w-11",
+                  active ? "border-pine text-pine" : "border-stone-300 text-stone-500",
                 ].join(" ")}
               >
-                <Icon size={20} />
+                <Icon size={20} strokeWidth={1.75} />
               </span>
               <span className="text-xs font-medium leading-tight text-ink">{label}</span>
             </button>
@@ -317,20 +318,20 @@ export function QuantitiesStep({ form, set }) {
           const Icon = ITEM_ICONS[id];
           const qty = Number(form.cantidades[id]) || 1;
           return (
-            <div key={id} className="flex items-center gap-3 rounded-xl border border-line bg-white p-3 transition hover:border-pine/30">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-mint text-pine">
-                <Icon size={18} />
+            <div key={id} className="flex items-center gap-3 border border-stone-200 bg-white p-3 transition hover:border-stone-400">
+              <span className="grid h-9 w-9 place-items-center border border-stone-300 text-stone-500">
+                <Icon size={18} strokeWidth={1.75} />
               </span>
               <span className="flex-1 text-sm font-medium text-ink">{label}</span>
               <div className="flex items-center gap-1">
-                <button type="button" onClick={() => setQty(id, qty - 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine transition hover:border-pine hover:bg-mint">−</button>
+                <button type="button" onClick={() => setQty(id, qty - 1)} className="h-8 w-8 border border-stone-300 text-lg leading-none text-pine transition hover:border-pine hover:bg-stone-50">−</button>
                 <input
-                  className="h-8 w-12 rounded-lg border border-line text-center text-sm"
+                  className="h-8 w-12 border border-stone-300 text-center text-sm"
                   value={qty}
                   onChange={(e) => setQty(id, parseInt(e.target.value) || 1)}
                   inputMode="numeric"
                 />
-                <button type="button" onClick={() => setQty(id, qty + 1)} className="h-8 w-8 rounded-lg border border-line text-lg leading-none text-pine transition hover:border-pine hover:bg-mint">+</button>
+                <button type="button" onClick={() => setQty(id, qty + 1)} className="h-8 w-8 border border-stone-300 text-lg leading-none text-pine transition hover:border-pine hover:bg-stone-50">+</button>
               </div>
             </div>
           );
@@ -364,7 +365,6 @@ export function PhotoStep({ form, set }) {
 
   const onFile = (file) => {
     if (!file) return;
-    // ❌ Quita el bloque que hacía: if (file.size > 5 * 1024 * 1024) { ... return; }
     const reader = new FileReader();
     reader.onload = () =>
       set("foto", { name: file.name, type: file.type, dataUrl: reader.result });
@@ -380,13 +380,13 @@ export function PhotoStep({ form, set }) {
       />
 
       {form.foto ? (
-        <div className="relative overflow-hidden rounded-xl border border-line bg-white">
+        <div className="relative overflow-hidden border border-stone-300 bg-white">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={form.foto.dataUrl} alt="Vista previa" className="max-h-64 w-full object-cover" />
           <button
             type="button"
             onClick={() => set("foto", null)}
-            className="absolute right-2 top-2 grid h-8 w-8 place-items-center rounded-full bg-white/90 text-pine shadow transition hover:bg-white"
+            className="absolute right-2 top-2 grid h-8 w-8 place-items-center bg-white/90 text-pine shadow transition hover:bg-white"
             aria-label="Quitar foto"
           >
             <X size={16} />
@@ -396,10 +396,10 @@ export function PhotoStep({ form, set }) {
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed border-line bg-white px-4 py-10 text-center transition hover:border-pine hover:bg-mint/30"
+          className="flex w-full flex-col items-center gap-2 border-2 border-dashed border-stone-300 bg-white px-4 py-10 text-center transition hover:border-pine hover:bg-stone-50"
         >
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-mint text-pine">
-            <Upload size={22} />
+          <span className="grid h-12 w-12 place-items-center border border-stone-300 text-stone-500">
+            <Upload size={22} strokeWidth={1.75} />
           </span>
           <span className="font-medium text-pine">Toca para subir una foto</span>
           <span className="flex items-center gap-1 text-xs uppercase tracking-[0.1em] text-muted">
@@ -428,11 +428,11 @@ export function LocationStep({ form, set }) {
       <div className="grid gap-4">
         <TextField label="Ciudad" value={form.ciudad} onChange={(v) => set("ciudad", v)} placeholder="Ej. Bogotá" />
         <label className="block">
-          <span className="label text-xs uppercase tracking-[0.12em] text-gray-500">Dirección</span>
-          <div className="relative mt-1.5">
+          <span className="label text-[11px] font-semibold uppercase tracking-[0.14em] text-stone-500">Dirección</span>
+          <div className="relative mt-2">
             <MapPin size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
             <input
-              className="field pl-9 transition focus:border-pine focus:ring-4 focus:ring-pine/10"
+              className="field pl-9 rounded-none border-stone-300 transition focus:border-pine focus:ring-2 focus:ring-pine/15"
               value={form.direccion}
               onChange={(e) => set("direccion", e.target.value)}
               placeholder="Calle, número, barrio…"
@@ -466,15 +466,15 @@ export function SourceStep({ form, set }) {
 export function SuccessStep() {
   return (
     <div className="py-6 text-center">
-      <span className="mx-auto mb-4 flex w-fit items-center gap-3 text-xs font-medium uppercase tracking-[0.22em] text-gray-500">
-        <span className="h-px w-8 bg-gradient-ru" />
+      <span className="mx-auto mb-4 flex w-fit items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-pine">
+        <span className="h-px w-8 bg-pine/40" />
         Donación registrada
-        <span className="h-px w-8 bg-gradient-ru" />
+        <span className="h-px w-8 bg-pine/40" />
       </span>
-      <div className="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-full border-2 border-pine/20 bg-pine/5">
+      <div className="mx-auto mb-5 grid h-20 w-20 place-items-center border border-pine/30 text-pine">
         <CheckCircle2 size={48} className="text-pine" strokeWidth={1.5} />
       </div>
-      <h2 className="font-display text-2xl font-semibold text-pine sm:text-3xl">
+      <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
         ¡Gracias por tu donación!
       </h2>
       <p className="mx-auto mt-3 max-w-sm text-sm sm:text-base">

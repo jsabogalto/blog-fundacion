@@ -78,8 +78,8 @@ export default function ({
   const alignedSet = new Set(aligned);
 
   return (
-    <section className="mx-auto w-full max-w-layer px-5 p-5 sm:p-6 md:px-12 pt-18 md:pt-20 h-full sections-py" >
-      <SpanTextComponent title={"OBJETIVOS DE DESARROLLO SOSTENIBLE"} textColor={"text-stone-800"}/>
+    <section className="mx-auto w-full max-w-layer px-5 p-5 sm:p-6 md:px-12 h-full sections-py" >
+
       <HeadSectionComponent
         title={title}
         text={subtitle}
@@ -100,9 +100,8 @@ export default function ({
               <div
                 aria-label={`ODS ${sdg.n}: ${sdg.name}. ${on ? "Alineado" : "No alineado"}`}
                 title={`ODS ${sdg.n} - ${sdg.name}`}
-                className={`group relative block aspect-square w-full overflow-hidden border border-transparent bg-neutral-50 shadow-sm transition duration-300 ease-out dark:bg-neutral-800 ${
-                  on ? "border-black/5" : ""
-                }`}
+                className={`group relative block aspect-square w-full overflow-hidden border border-transparent bg-neutral-50 shadow-sm transition duration-300 ease-out dark:bg-neutral-800 ${on ? "border-black/5" : ""
+                  }`}
               >
                 <img
                   src={iconUrl(sdg.n)}
@@ -110,11 +109,10 @@ export default function ({
                   loading="lazy"
                   width={256}
                   height={256}
-                  className={`h-full w-full object-cover transition duration-300 ease-out ${
-                    on ? "opacity-100" : "opacity-40 grayscale"
-                  }`}
+                  className={`h-full w-full object-cover transition duration-300 ease-out ${on ? "opacity-100" : "opacity-40 grayscale"
+                    }`}
                 />
-lassName={"bg-stone-100"} 
+                lassName={"bg-stone-100"}
                 {/* Nombre del ODS, revelado sobre un degradado negro al hover */}
                 <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <span className="p-1.5 text-[9px] font-medium uppercase leading-tight tracking-wide text-white sm:p-2 sm:text-[10px]">

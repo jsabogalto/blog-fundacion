@@ -15,15 +15,14 @@ const imageVariants = {
 
 export default function ServicesComponent({ sections, className, spanTitle}) {
   return (
-    <section id="servicios" className={`w-full sections-py overflow-x-clip ${className}`}>
-      <div className="mx-auto flex max-w-layer flex-col px-5 md:px-12">
-        <SpanTextComponent title={spanTitle} textColor={"text-stone-800"}/>
+    <section id="servicios" className={`w-full md:sections-py overflow-x-clip ${className}`}>
+      <div className="mx-auto flex max-w-layer flex-col px-4 md:px-12 py-14">
         {sections.map((s, i) => (
-          <div key={s.id} className="py-2 md:py-12">
+          <div key={s.id} className="md:py-10">
             <div className="grid grid-cols-1 items-start md:grid-cols-2 md:gap-12">
               {/* ----- IMAGEN ----- */}
               <motion.div
-                className={`group relative h-72 overflow-hidden rounded-3xl sm:h-80 md:h-[420px] ${s.reverse ? "md:order-2" : "md:order-1"
+                className={`group relative h-60 overflow-hidden sm:h-80 md:h-[380px] ${s.reverse ? "md:order-2" : "md:order-1"
                   }`}
                 variants={imageVariants}
                 initial="hidden"

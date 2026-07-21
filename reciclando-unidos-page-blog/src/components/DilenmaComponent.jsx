@@ -24,7 +24,6 @@ export default function DilemmaComponent({
   return (
     <section id="dilemas" className={`w-full sections-py overflow-x-clip  ${className}`}>
       <div className="mx-auto flex max-w-layer flex-col px-5 md:px-12">
-        <SpanTextComponent title={spanTitle} textColor="text-stone-800" />
 
         {/* Título centrado con línea de gradiente debajo, como la referencia */}
         {title && (

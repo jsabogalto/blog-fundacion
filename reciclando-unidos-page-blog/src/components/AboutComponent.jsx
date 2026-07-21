@@ -17,7 +17,6 @@ export default function AboutComponent({ cards, title, text, className, classNam
   return (
     <section id={id} className={`w-full ${className} scroll`}>
       <div className="max-w-layer px-5 sections-py md:px-12 mx-auto">
-        <SpanTextComponent title={spanTitle} textColor={spanTitleColor}/>
         <HeadSectionComponent
           title={title}
           text={text}
@@ -36,7 +35,7 @@ export default function AboutComponent({ cards, title, text, className, classNam
               viewport={{ once: true, amount: 0.3 }}
               className="group"
             >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-950">
+              <div className="relative aspect-[4/3] overflow-hidden bg-neutral-950">
                 <ImageComponent
                   src={c.image}
                   width={600}
@@ -54,10 +53,10 @@ export default function AboutComponent({ cards, title, text, className, classNam
 
               <div className="mt-5">
                 <div className="mb-2 h-[2px] w-8 bg-gradient-to-r from-emerald-400 to-sky-400 transition-all duration-500 ease-out group-hover:w-12" />
-                <h3 className="text-xl font-medium tracking-tight text-[#053215]">
+                <h3 className="text-sm font-medium tracking-tight text-[#053215]">
                   {c.title}
                 </h3>
-                <p className="mt-2 max-w-[38ch] text-sm leading-relaxed text-gray-600">
+                <p className="mt-2 max-w-[38ch] text-xs leading-relaxed text-gray-600">
                   {c.text}
                 </p>
               </div>

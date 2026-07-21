@@ -1,66 +1,58 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ImageComponent from "./ImageComponent";
 import SpanTextComponent from "./SpanTextComponent";
 
-const AUTOPLAY_MS = 6000;
-
 /**
- * ImageGallery
- * Carrusel/galería estilo "Aramco" con:
- * - Transiciones con Framer Motion
- * - Overlay negro degradado + título/descripción en blanco
- * - Flechas de navegación estilo Apple: la derecha siempre visible,
- *   la izquierda aparece solo después de que el usuario interactúa
- * - Barra de progreso inferior por pestaña (auto-avance) como el hero de Aramco
- * - Barra de carga superior tipo "loading line" al montar el componente
- *
- * Props:
- * - images: array de { id, url, title, description, category } (por defecto usa galleryData)
- * - autoPlay: boolean (por defecto true)
- * 
- * 
- * 
+ * MomentsGallery (estilo FIFA)
+ * - Un solo ImageComponent por card (object-cover + crop inteligente de ImageKit)
+ * - Móvil: swipe nativo con snap, sin flechas
+ * - Desktop (md+): las flechas avanzan una PÁGINA completa (todas las cards
+ *   visibles). Al hacer click, las cards nuevas entran "girando" (rotateY)
+ *   en cascada, y la galería queda posicionada en la siguiente tanda:
+ *   si se ven 4 cards, la card 5 pasa a ser la primera y desde ahí
+ *   continúa el resto del array.
  */
 
-// galleryData.js
-// Objeto/array de datos que consume el componente <ImageGallery />
-// Cada item representa una diapositiva del carrusel.
-// "url" es la ruta relativa que se pasa a ImageKit (urlEndpoint + url).
-// Reemplaza estas rutas por las que subas a tu cuenta de ImageKit.
-
-const galleryData = [
+const momentsData = [
   {
     id: "colegio-manuela-beltran",
-    url: "/1777396020675.jpeg",
+    url: "/donarcomputadoresaestudiantes.webp",
     category: "Colegios",
-    title: "Donación de computadores en el colegio Manuela Beltrán en Soacha",
+    caption: "Esperanza que enciende aulas 💡",
+    title: "Donación de computadores a estudiantes de bachillerato en Bogotá",
     description:
       "Como parte de nuestra donación de computadores, entregamos 12 equipos que impulsarán las clases de electrónica y programación de los estudiantes.",
+    isNew: true,
   },
   {
     id: "colegio-san-mateo",
     url: "/centro-educativo_Lyua9kP4q.webp",
     category: "Colegios",
+    caption: "Sueños con segunda oportunidad ✨",
     title: "Donar computadores usados en el colegio San Mateo en Soacha",
     description:
       "Gracias a quienes decidieron donar computadores usados, entregamos 8 equipos reacondicionados que impulsarán las clases de electrónica y programación.",
+    isNew: true,
   },
   {
     id: "fundacion-talleres-creativos",
     url: "/portada-solicitar-computador.webp",
-    category: "FUNDACIONES",
+    category: "Fundaciones",
+    caption: "Donar computadores transforma Bosa 💛",
     title: "Donar computadores en Bogotá: fundación beneficiada en Bosa",
     description:
       "Entregamos 5 computadores portátiles a la fundación Talleres Creativos en Bosa, Bogotá, gracias a personas y empresas que decidieron donar computadores en Bogotá.",
+    isNew: true,
   },
   {
     id: "emanuel-manizales",
     url: "/donacion-emanuel_KOxpCa8Bt.webp",
-    category: "estudiantes universitarios",
+    category: "Estudiantes universitarios",
+    caption: "Talento imparable: Emanuel 🏆",
     title: "Emanuel, el mejor ICFES de Caldas en Manizales, ya tiene su computador",
     description:
       "Emanuel no tenía un portátil para comenzar su nueva etapa universitaria. Gracias a la donación de computadores de nuestra fundación, hoy puede continuar sus estudios con la herramienta que necesitaba.",
@@ -68,7 +60,8 @@ const galleryData = [
   {
     id: "jose-viota",
     url: "/donacion-jose__xZTMyp7A.webp",
-    category: "estudiantes rurales",
+    category: "Estudiantes rurales",
+    caption: "Alegría en el campo: José 🌱",
     title: "José disfrutó de su primer computador gracias a donar computadores usados",
     description:
       "Invertimos en las comunidades donde operamos, apoyando educación, sostenibilidad y desarrollo local a través de la donación de computadores.",
@@ -76,7 +69,8 @@ const galleryData = [
   {
     id: "valery-don-matias-antioquia",
     url: "/donacion-valery_o7psDeNCU.webp",
-    category: "estudiantes rurales",
+    category: "Estudiantes rurales",
+    caption: "Futuro digital para Valery 💻",
     title: "Valery ahora podrá estudiar ingeniería multimedia",
     description:
       "Gracias a donar computadores usados, Valery, de Don Matías (Antioquia), recibió el equipo que necesitaba para iniciar su carrera de ingeniería multimedia.",
@@ -84,246 +78,307 @@ const galleryData = [
   {
     id: "karen-don-matias",
     url: "/karen-don-matias.webp",
-    category: "estudiantes rurales",
+    category: "Estudiantes rurales",
+    caption: "Ilusión que estudia: Karen 📚",
     title: "Donar computadores cambia vidas: la historia de Karen en Don Matías",
     description:
       "Karen, de Don Matías (Antioquia), recibió un computador reacondicionado para continuar sus estudios, otro ejemplo de cómo la donación de computadores transforma comunidades rurales.",
   },
   {
-    id: "camilo-viota",
-    url: "/donacion-camilo_3xg5_j18xN.webp",
-    category: "estudiantes rurales",
-    title: "Camilo, uno de los mejores estudiantes del colegio de Liberia",
+    id: "colegio-viota",
+    url: "/colegio-viota.jpg",
+    category: "Colegios",
+    caption: "Tecnología que llega al campo 🚜",
+    title: "Donación de computadores para el colegio de Viotá, Cundinamarca",
     description:
-      "Donamos un computador a Camilo, uno de los mejores estudiantes del colegio de Liberia (Viotá), como parte de nuestro programa de donación de computadores para estudiantes rurales.",
+      "Llevamos equipos reacondicionados al colegio de Viotá para que más estudiantes rurales tengan acceso a herramientas digitales en sus clases.",
   },
   {
-    id: "sofia-ciudad-bolivar",
-    url: "/portada-sofial_9wTT_JF3B.webp",
-    category: "estudiantes vulnerables",
-    title: "Donar computadores en Bogotá: la historia de Sofía en Ciudad Bolívar",
+    id: "david-donacion",
+    url: "/david-donacion-computador_y2-DGrHDq.webp",
+    category: "Estudiantes",
+    caption: "Un nuevo comienzo para David 🌟",
+    title: "David recibió su computador gracias a la donación de computadores usados",
     description:
-      "Donamos un computador a Sofía, una joven de Ciudad Bolívar que no tenía los recursos para costear esta herramienta y necesitaba un equipo para su tecnólogo del SENA.",
+      "David necesitaba un equipo para continuar su formación. Hoy tiene su primer computador gracias a quienes decidieron donar computadores usados.",
   },
   {
     id: "samuel-puerto-brasil",
     url: "/samuel_2ITyReFn7.webp",
-    category: "estudiantes rurales",
+    category: "Estudiantes rurales",
+    caption: "Primer computador de Samuel 🎁",
     title: "Donar computadores usados: un portátil para Samuel",
     description:
       "Donamos un computador a Samuel, quien nunca había podido tener uno y hoy puede aprender y estudiar gracias a la donación de computadores.",
   },
   {
-    id: "simon-ciudad-bolivar",
-    url: "/donacion-simon_6MHysN6yZn.webp",
-    category: "estudiantes vulnerables",
-    title: "Donar computadores en Bogotá: Simón inicia sus cursos de inglés",
+    id: "gerardo-donacion",
+    url: "/gerardo-donacion_4otPsZtk0.webp",
+    category: "Comunidad",
+    caption: "Gratitud que inspira: Gerardo 🙏",
+    title: "Gerardo recibió un computador reacondicionado de nuestra fundación",
     description:
-      "Donamos un computador a Simón, quien necesitaba esta herramienta para comenzar sus cursos de inglés, otro caso de personas que deciden donar computadores en Bogotá.",
+      "Gerardo hace parte de las personas beneficiadas por quienes deciden donar computadores en Bogotá y Cundinamarca.",
   },
   {
-    id: "liberia-daniela",
+    id: "daniela-liberia",
     url: "/hermana-andres_U6YHP91gr.webp",
-    category: "estudiantes rurales",
+    category: "Estudiantes rurales",
+    caption: "Daniela estrena su primer equipo 💚",
     title: "Donamos un computador a Daniela, quien nunca había tenido uno",
     description:
-      "Donamos un computador a Daniela, una joven que está cursando su bachillerato en el colegio de Liberia (Viotá), gracias a la donación de computadores de nuestra fundación.",
+      "Daniela cursa su bachillerato en el colegio de Liberia (Viotá) y hoy estudia con su primer computador gracias a la donación de computadores.",
   },
   {
-    id: "estudiantes-liberia",
+    id: "andres-fabian-liberia",
     url: "/estudiantes-rurales_velqXRFFp.webp",
-    category: "estudiantes rurales",
-    title: "Donamos un computador a Andrés y Fabián",
+    category: "Estudiantes rurales",
+    caption: "Andrés y Fabián, juntos aprenden 🤝",
+    title: "Donamos un computador a Andrés y Fabián en Liberia, Viotá",
     description:
-      "Donamos un computador a Andrés y Fabián, estudiantes del colegio de Liberia (Viotá), para que puedan continuar su educación gracias a donar computadores usados.",
+      "Andrés y Fabián, estudiantes del colegio de Liberia (Viotá), pueden continuar su educación gracias a donar computadores usados.",
   },
   {
-    id: "jardin-bogota",
-    url: "/donacion-jardin_fcMdErKqxk.webp",
-    category: "jardines",
-    title: "Donar computadores en Bogotá: tecnología que inspira en el Jardín Ji Waldorf",
+    id: "jardin-ji-waldorf",
+    url: "/donacion-jardin_rlY6EJyRm.webp",
+    category: "Jardines",
+    caption: "Aprendizaje que florece 🌸",
+    title: "Donar computadores en Bogotá: tecnología para el Jardín Ji Waldorf",
     description:
-      "Donamos 12 computadores al Jardín Ji Waldorf en Bogotá. En Reciclando Unidos creemos que donar computadores es mucho más que entregar equipos: es abrir caminos para que el aprendizaje florezca.",
+      "Donamos 12 computadores al Jardín Ji Waldorf en Bogotá: donar computadores es abrir caminos para que el aprendizaje florezca desde la primera infancia.",
+  },
+  {
+    id: "sofia-ciudad-bolivar",
+    url: "/portada-sofial_9wTT_JF3B.webp",
+    category: "Estudiantes vulnerables",
+    caption: "Sofía cumple su meta del SENA 🎓",
+    title: "Donar computadores en Bogotá: la historia de Sofía en Ciudad Bolívar",
+    description:
+      "Sofía, de Ciudad Bolívar, necesitaba un equipo para su tecnólogo del SENA y hoy lo tiene gracias a la donación de computadores.",
+  },
+  {
+    id: "simon-cursos-ingles",
+    url: "/donacion-simon_6MHysN6yZn.webp",
+    category: "Estudiantes vulnerables",
+    caption: "Simón dice hello al futuro 🇬🇧",
+    title: "Donar computadores en Bogotá: Simón inicia sus cursos de inglés",
+    description:
+      "Simón necesitaba un computador para comenzar sus cursos de inglés, otro logro de quienes deciden donar computadores en Bogotá.",
+  },
+  {
+    id: "camilo-liberia",
+    url: "/donacion-camilo_3xg5_j18xN.webp",
+    category: "Estudiantes rurales",
+    caption: "Excelencia premiada: Camilo 🥇",
+    title: "Camilo, uno de los mejores estudiantes del colegio de Liberia",
+    description:
+      "Donamos un computador a Camilo, uno de los mejores estudiantes del colegio de Liberia (Viotá), como parte de nuestro programa para estudiantes rurales.",
+  },
+  {
+    id: "manuela-beltran-entrega",
+    url: "/1-manuela-beltran_Ux5OywN0Hi.webp",
+    category: "Colegios",
+    caption: "Aulas conectadas en Soacha 🖥️",
+    title: "Entrega de computadores donados en el colegio Manuela Beltrán",
+    description:
+      "Registro de la jornada de entrega de equipos reacondicionados que fortalecen las clases de tecnología del colegio.",
+  },
+  // ——— TODO: confirma el contexto real de las siguientes imágenes ———
+  {
+    id: "jornada-entrega-1",
+    url: "/holasoyportada_HRJ-llO9RD.webp",
+    category: "Comunidad",
+    caption: "Cada entrega, una historia 💫", // TODO: ajusta al contexto real
+    title: "Jornada de donación de computadores de la Fundación Reciclando Unidos",
+    description:
+      "Momentos de nuestras jornadas de entrega de computadores reacondicionados a comunidades de Bogotá y Cundinamarca.",
+  },
+  {
+    id: "jornada-entrega-3",
+    url: "/3_kQv_ss_L4.webp",
+    category: "Comunidad",
+    caption: "Tecnología con propósito 🎯", // TODO: ajusta al contexto real
+    title: "Entrega de computadores reacondicionados a beneficiarios",
+    description:
+      "La donación de computadores conecta a empresas y personas con comunidades que necesitan herramientas para aprender.",
+  },
+  {
+    id: "cursos-comunidad",
+    url: "/bg-cursos_DimDavR0f.webp",
+    category: "Formación",
+    caption: "Aprender también se dona 📖", // TODO: ajusta al contexto real
+    title: "Cursos y formación digital con computadores donados",
+    description:
+      "Los equipos que recibimos al donar computadores también impulsan espacios de formación digital para la comunidad.",
+  },
+  {
+    id: "jornada-entrega-4",
+    url: "/3_OwdeL5Q5i.webp",
+    category: "Comunidad",
+    caption: "Un equipo, mil posibilidades 🚀", // TODO: ajusta al contexto real
+    title: "Beneficiarios de la donación de computadores usados",
+    description:
+      "Cada computador reacondicionado abre posibilidades de estudio y trabajo para su nuevo dueño.",
+  },
+  {
+    id: "jornada-entrega-5",
+    url: "/4_Uc1rNNoDO.webp",
+    category: "Comunidad",
+    caption: "Historias que apenas comienzan 🌅", // TODO: ajusta al contexto real
+    title: "Entrega de equipos de la Fundación Reciclando Unidos",
+    description:
+      "Registro de nuestras entregas de computadores donados en Bogotá y Cundinamarca.",
+  },
+  {
+    id: "solicita-computador",
+    url: "/portada-pagina-solicita_Y-G-ScTmIm.webp",
+    category: "Comunidad",
+    caption: "Tu donación encuentra destino 🧭", // TODO: ajusta al contexto real
+    title: "Personas y comunidades que solicitan computadores donados",
+    description:
+      "Conectamos a quienes quieren donar computadores con estudiantes, colegios y fundaciones que los necesitan.",
+  },
+  {
+    id: "que-recibimos",
+    url: "/que-recibimos_icCcVVLxsa.webp",
+    category: "Reciclaje",
+    caption: "Todo equipo cuenta ♻️", // TODO: ajusta al contexto real
+    title: "Equipos que recibimos al donar computadores usados",
+    description:
+      "Recibimos computadores, portátiles y periféricos: lo que funciona se reacondiciona y lo demás entra a reciclaje electrónico responsable.",
   },
 ];
 
-export default function ImageGalleryComponent({ images = galleryData, autoPlay = true }) {
-  const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [progressKey, setProgressKey] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  // Se activa la primera vez que el usuario (o el auto-avance) cambia de slide;
-  // controla que la flecha izquierda solo aparezca después de esa interacción.
+const TRACK_GAP = 22;
+
+export default function ImageGalleryComponent({
+  items = momentsData,
+  heading = "Momentos que inspiran a donar computadores",
+}) {
+  const scrollerRef = useRef(null);
+  const cardRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const [interacted, setInteracted] = useState(false);
-  const total = images.length;
-  const current = images[index];
+  // Cada click en las flechas incrementa flipKey: eso re-monta el contenido
+  // de las cards y dispara la animación de giro en cascada.
+  const [flipKey, setFlipKey] = useState(0);
 
-  // Línea de carga inicial estilo Aramco (una sola vez al montar)
-  useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 900);
-    return () => clearTimeout(t);
+  const updateArrows = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    setCanScrollLeft(el.scrollLeft > 8);
+    setCanScrollRight(el.scrollLeft < maxScroll - 8);
   }, []);
 
-  // Detecta si estamos en pantalla mediana o más grande (breakpoint "md" de Tailwind: 768px).
-  // En móvil el contenedor es alto y angosto (h-[80vh]), así que pedimos la imagen recortada
-  // en vertical (500x1000). En md+ el contenedor es ancho y bajo (h-[70vh]), así que pedimos
-  // el recorte horizontal (1200x700). El recorte lo hace ImageKit según width/height.
-  const [isMdUp, setIsMdUp] = useState(false);
-
   useEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    const update = () => setIsMdUp(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
+    updateArrows();
+    window.addEventListener("resize", updateArrows);
+    return () => window.removeEventListener("resize", updateArrows);
+  }, [updateArrows]);
+
+  // Avanza/retrocede una PÁGINA: tantas cards como quepan completas en el
+  // viewport del carrusel. Con 4 visibles, la card 5 queda de primera.
+  const scrollByPage = useCallback((dir) => {
+    const el = scrollerRef.current;
+    const card = cardRef.current;
+    if (!el || !card) return;
+    const cardWidth = card.offsetWidth + TRACK_GAP;
+    const visibleCount = Math.max(1, Math.floor(el.clientWidth / cardWidth));
+    el.scrollBy({ left: dir * cardWidth * visibleCount, behavior: "smooth" });
+    setFlipKey((k) => k + 1);
+    setInteracted(true);
   }, []);
-
-const imageWidth = isMdUp ? 1600 : 800;
-const imageHeight = isMdUp ? 900 : 1400;
-
-  const goTo = useCallback(
-    (newIndex, dir) => {
-      setDirection(dir);
-      setIndex(((newIndex % total) + total) % total);
-      setProgressKey((k) => k + 1);
-      setInteracted(true);
-    },
-    [total]
-  );
-
-  const next = useCallback(() => goTo(index + 1, 1), [index, goTo]);
-  const prev = useCallback(() => goTo(index - 1, -1), [index, goTo]);
-
-  // El auto-avance depende únicamente de autoPlay/isLoading.
-  // Importante: NO se pausa con onMouseEnter/onMouseLeave a propósito,
-  // así el carrusel sigue avanzando aunque el puntero esté sobre la card.
-  const playing = autoPlay && !isLoading;
-
-  const variants = {
-    enter: { opacity: 0, scale: 1.03 },
-    center: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.98 },
-  };
 
   return (
-    <section className="w-full sections-py" id="proyectos">
-      <div className="max-w-layer mx-auto px-4 md:px-12">
-        <SpanTextComponent title={"Donaciones recientes de computadores en Bogotá y Cundinamarca"} textColor={"text-stone-800"}/>
+    <section className="w-full sections-py" id="momentos">
+      <div className="mx-auto w-full max-w-layer px-4 md:px-12">
+        <SpanTextComponent title={heading} textColor={"text-stone-800"} />
+      </div>
+
+      {/* Wrapper relativo para posicionar las flechas respecto al viewport
+          del carrusel, no respecto a cada card */}
+      <div className="relative mx-auto w-full max-w-layer md:py-12">
         <div
-          className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-950 shadow-xl shadow-black/20 ring-1 ring-black/5
-          h-[80vh] md:h-[70vh]"
-        >
-          {/* Indicadores de progreso tipo "stories" */}
-          {!isLoading && (
-            <div className="absolute left-3 right-3 top-3 z-30 flex gap-1.5 sm:left-5 sm:right-5 sm:top-5">
-              {images.map((img, i) => (
-                <button
-                  key={img.id}
-                  onClick={() => goTo(i, i > index ? 1 : -1)}
-                  aria-label={`Ir a ${img.title}`}
-                  className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/25"
-                >
-                  {i < index && <div className="absolute inset-0 bg-gradient-ru" />}
-                  {i === index &&
-                    (playing ? (
-                      <motion.div
-                        key={progressKey}
-                        className="absolute inset-y-0 left-0 bg-gradient-ru"
-                        initial={{ width: "0%" }}
-                        animate={{ width: "100%" }}
-                        transition={{ duration: AUTOPLAY_MS / 1000, ease: "linear" }}
-                        onAnimationComplete={() => {
-                          if (playing) next();
-                        }}
-                      />
-                    ) : (
-                      <div className="absolute inset-0 w-full bg-white" />
-                    ))}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Imagen + overlay */}
-          <AnimatePresence custom={direction} mode="wait">
-            <motion.div
-              key={current.id}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.7, ease: [0.43, 0.13, 0.23, 0.96] }}
-              className="absolute inset-0"
-            >
-              <ImageComponent
-                src={current.url}
-                width={imageWidth}
-                height={imageHeight}
-                sizes="100vw"
-                alt={current.title}
-                priority={index === 0}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Texto: título + descripción */}
-          <div className="absolute inset-x-0 bottom-0 z-20 p-4 sm:p-6 md:p-8 pointer-events-none">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`text-${current.id}`}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.45, delay: 0.1 }}
-                className="max-w-[88%] sm:max-w-md"
-              >
-                {current.category && (
-                  <span className="mb-1.5 block text-[10px] sm:text-xs uppercase tracking-[0.18em] text-white/70">
-                    {current.category}
-                  </span>
-                )}
-                <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light leading-tight text-white">
-                  {current.title}
-                </h3>
-                {current.description && (
-                  <p className="mt-1.5 sm:mt-2 line-clamp-2 text-xs sm:text-sm text-white/80">
-                    {current.description}
-                  </p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Control izquierdo: estilo Apple, oculto hasta la primera interacción */}
-          <AnimatePresence>
-            {interacted && (
-              <motion.button
-                key="prev-btn"
-                onClick={prev}
-                aria-label="Imagen anterior"
-                initial={{ opacity: 0, scale: 0.7 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.7 }}
-                transition={{ duration: 0.25, ease: [0.43, 0.13, 0.23, 0.96] }}
-                className="absolute left-2 top-1/2 z-20 flex h-15 w-15 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg backdrop-blur-sm transition-transform duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:left-4 sm:h-14 sm:w-14"
-              >
-                <ChevronLeft size={40} strokeWidth={2.5} className="mr-1" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-
-          {/* Control derecho: estilo Apple, siempre visible */}
-          <button
-            onClick={next}
-            aria-label="Siguiente imagen"
-            className="absolute right-2 top-1/2 z-20 flex h-15 w-15 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-lg backdrop-blur-sm transition-transform duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:right-4 sm:h-14 sm:w-14"
+          ref={scrollerRef}
+          onScroll={updateArrows}
+          className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 pb-2 pl-4 md:scroll-px-12 md:pl-12
+          [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >   {items.map((item, i) => (
+          <motion.article
+            key={item.id}
+            ref={i === 0 ? cardRef : null}
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.5,
+              delay: Math.min(i * 0.08, 0.4),
+              ease: [0.43, 0.13, 0.23, 0.96],
+            }}
+            className="group relative aspect-[2/3] w-[40vw] shrink-0 snap-start overflow-hidden sm:w-[260px] md:w-[300px]"
           >
-            <ChevronRight size={40} strokeWidth={2.5} className="ml-1" />
-          </button>
+            <ImageComponent
+              src={item.url}
+              width={600}
+              height={900}
+              transformation={[{ width: 600, height: 900, focus: "auto" }]}
+              sizes="(min-width: 768px) 300px, 62vw"
+              alt={item.title}
+              className="h-full w-full object-cover"
+            />
+
+            {/* Degradado sutil solo en la base, como FIFA */}
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
+
+            {/* Badge NUEVO */}
+            {item.isNew && (
+              <span className="absolute right-3 top-3 rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-stone-800">
+                Nuevo
+              </span>
+            )}
+
+            <h3 className="absolute inset-x-3 bottom-3 line-clamp-2 text-xs font-light text-white sm:text-sm">
+              {item.title}
+            </h3>
+          </motion.article>
+
+        ))}
+
+          <div className="w-0 shrink-0 pr-4 md:pr-12" aria-hidden="true" />
+
         </div>
+
+        {/* Flecha izquierda: solo desktop, aparece tras la primera interacción */}
+        {interacted && canScrollLeft && (
+          <motion.button
+            key="moments-prev"
+            onClick={() => scrollByPage(-1)}
+            aria-label="Ver momentos anteriores"
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.25, ease: [0.43, 0.13, 0.23, 0.96] }}
+            className="absolute left-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center
+            justify-center rounded-full bg-white/95 text-gray-700 shadow-lg backdrop-blur-sm
+            transition-transform duration-200 hover:scale-105 hover:bg-white active:scale-95 md:flex"
+          >
+            <ChevronLeft size={28} strokeWidth={2.5} />
+          </motion.button>
+        )}
+
+        {/* Flecha derecha: solo desktop, visible mientras haya más contenido */}
+        {canScrollRight && (
+          <button
+            onClick={() => scrollByPage(1)}
+            aria-label="Ver más momentos"
+            className="absolute right-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center
+            justify-center rounded-full bg-white/95 text-gray-700 shadow-lg backdrop-blur-sm
+            transition-transform duration-200 hover:scale-105 hover:bg-white active:scale-95 md:flex"
+          >
+            <ChevronRight size={28} strokeWidth={2.5} />
+          </button>
+        )}
       </div>
     </section>
   );

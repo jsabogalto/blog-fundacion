@@ -4,24 +4,64 @@ import LinkComponent from "./LinkComponent";
 
 /**
  * PostListItem
- * variant="featured": tarjeta grande (columna izquierda/derecha del bloque),
- *   ocupa toda la altura de su celda de grid, solo imagen + título (sin "Leer más"),
- *   igual al post grande de la sección "Explore the latest from Elements magazine" de Aramco.
+ * variant="featured": tarjeta grande (columna destacada del bloque FIFA),
+ *   con alto fijo en desktop (lg:h-[560px]), imagen + eyebrow + título.
+ * variant="list": fila horizontal (thumbnail lateral + eyebrow + título),
+ *   para la columna derecha del bloque "Historias destacadas" estilo FIFA.
  * variant="compact" (por defecto): tarjeta pequeña, imagen + título + "Leer más".
  */
 const PostListItem = ({ post, variant = "compact" }) => {
-  if (!post || !post.slug) return null; // 👈 sin slug, no renderizamos (evita href="#")
+  if (!post || !post.slug) return null; // sin slug, no renderizamos (evita href="#")
 
   const { title, slug, img, category } = post;
   const href = `/posts/${slug}`;
   const isFeatured = variant === "featured";
+  const isList = variant === "list";
 
+  // ===== Variante LIST: fila horizontal estilo FIFA =====
+  if (isList) {
+    return (
+      <article className="group">
+        <a
+          href={href}
+          className="grid grid-cols-[104px_1fr] items-center gap-4 sm:grid-cols-[128px_1fr]"
+        >
+          <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+            {img && (
+              <ImageComponent
+                src={img}
+                alt={title ? `${title} - Fundación Reciclando Unidos` : "Publicación de Reciclando Unidos"}
+                width={256}
+                height={192}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            )}
+          </div>
+
+          <div>
+            {category && (
+              <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.1em] text-green-ru">
+                {category}
+              </span>
+            )}
+            <h3 className="line-clamp-2 text-sm font-medium leading-snug text-stone-800 transition-colors group-hover:text-green-ru sm:text-base">
+              {title}
+            </h3>
+          </div>
+        </a>
+      </article>
+    );
+  }
+
+  // ===== Variantes FEATURED y COMPACT (tu markup original) =====
   return (
     <article className={`group flex flex-col ${isFeatured ? "h-full" : ""}`}>
       <a
         href={href}
-        className={`relative block w-full overflow-hidden rounded-2xl ${
-          isFeatured ? "flex-1 min-h-[280px]" : "aspect-[420/260]"
+        className={`relative block w-full overflow-hidden ${
+          isFeatured
+            ? "aspect-[3/4] lg:aspect-auto lg:h-[560px]"
+            : "aspect-[420/260]"
         }`}
       >
         {img && (

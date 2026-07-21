@@ -57,7 +57,7 @@ export default function FaqSeo({
   const allItems = visibleSections.flatMap((s) => s.items ?? []);
 
   return (
-    <section id="preguntas-frecuentes sections-py" className={`py-4 md:py-8 ${className}`}>
+    <section id="preguntas-frecuentes sections-py" className={`py-8 md:py-22 ${className}`}>
       {/* Datos estructurados: JSON.stringify + escape de "<" para evitar
           que un "</script>" en el contenido rompa la página (XSS/robustez) */}
       <script
@@ -68,7 +68,6 @@ export default function FaqSeo({
       />
 
       <div className="mx-auto w-full max-w-layer px-5 md:px-12">
-                    <SpanTextComponent title={spanTitle} textColor={"text-stone-800"} />
         {/* Layout estilo Aramco: título fijo a la izquierda, lista completa
             a la derecha en desktop; apilado (título arriba, lista abajo) en móvil */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-16">

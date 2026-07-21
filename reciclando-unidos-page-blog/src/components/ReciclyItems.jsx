@@ -6,15 +6,6 @@ import SpanTextComponent from "./SpanTextComponent";
 
 const items = [
   {
-    id: "portatiles",
-    title: "Portátiles",
-    inf: "Usados o dañados",
-    tag: "Reacondicionamiento o reciclaje",
-    desc: "Al donar computadores portátiles ayudas a estudiantes rurales: pueden llevarlos consigo y estudiar cómodamente pese a los largos desplazamientos.",
-    image: "objetivo.jpeg",
-    alt: "Computador portátil usado apto para donación",
-  },
-  {
     id: "cpu",
     title: "Computadores de escritorio (CPU)",
     inf: "Usados o dañados",
@@ -33,15 +24,6 @@ const items = [
     alt: "Computador todo en uno usado para donación",
   },
   {
-    id: "tablets",
-    title: "Tablets",
-    inf: "Usadas o dañadas",
-    tag: "Reacondicionamiento",
-    desc: "Acercan la lectura y las herramientas digitales a niños y adultos mayores que dan sus primeros pasos en tecnología.",
-    image: "persona-mayor-2.webp",
-    alt: "Tablet usada apta para donación",
-  },
-  {
     id: "monitores",
     title: "Monitores",
     inf: "Usados o dañados",
@@ -49,6 +31,24 @@ const items = [
     desc: "Complementan las torres donadas para armar puestos de estudio completos en escuelas y hogares.",
     image: "1777396020675.jpeg",
     alt: "Monitores de computador usados para donar",
+  },
+  {
+    id: "portatiles",
+    title: "Portátiles",
+    inf: "Usados o dañados",
+    tag: "Reacondicionamiento o reciclaje",
+    desc: "Al donar computadores portátiles ayudas a estudiantes rurales: pueden llevarlos consigo y estudiar cómodamente pese a los largos desplazamientos.",
+    image: "objetivo.jpeg",
+    alt: "Computador portátil usado apto para donación",
+  },
+  {
+    id: "tablets",
+    title: "Tablets",
+    inf: "Usadas o dañadas",
+    tag: "Reacondicionamiento",
+    desc: "Acercan la lectura y las herramientas digitales a niños y adultos mayores que dan sus primeros pasos en tecnología.",
+    image: "persona-mayor-2.webp",
+    alt: "Tablet usada apta para donación",
   },
   {
     id: "servidores",
@@ -71,7 +71,7 @@ const items = [
 ];
 
 export default function ReciclyItems() {
-  const [active, setActive] = useState(items[0]?.id);
+  const [active, setActive] = useState(items[3]?.id);
   const viewportRef = useRef(null);
   const cardRefs = useRef({});
 
@@ -97,39 +97,22 @@ export default function ReciclyItems() {
     });
   };
 
-  /* ---------- 2. Al desplazarse, marcar la categoría más visible ---------- */
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport) return;
+useEffect(() => {
+  const viewport = viewportRef.current;
+  const card = cardRefs.current[active];
+  if (!viewport || !card) return;
 
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const center = viewport.scrollLeft + viewport.clientWidth / 2;
-        let closest = null;
-        let min = Infinity;
-        for (const item of items) {
-          const el = cardRefs.current[item.id];
-          if (!el) continue;
-          const cardCenter = el.offsetLeft + el.offsetWidth / 2;
-          const dist = Math.abs(cardCenter - center);
-          if (dist < min) {
-            min = dist;
-            closest = item.id;
-          }
-        }
-        if (closest) setActive(closest);
-      });
-    };
+  const target =
+    card.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2;
+  const max = viewport.scrollWidth - viewport.clientWidth;
 
-    viewport.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      viewport.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
+  // Sin animación en el montaje inicial (salto directo, no scroll suave)
+  viewport.scrollTo({
+    left: Math.max(0, Math.min(target, max)),
+    behavior: "auto",
+  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
   /* ---------- 3. Arrastre con mouse en desktop ---------- */
   const onPointerDown = (e) => {
     // Solo mouse: en táctil el navegador ya hace el scroll con el dedo
@@ -175,7 +158,6 @@ export default function ReciclyItems() {
 
         {/* Encabezado: respeta el ancho del layout */}
         <div className="max-w-layer px-5 md:px-12 mx-auto">
-          <SpanTextComponent title="tipos de donaciones" textColor="text-stone-800" />
           <HeadSectionComponent
             title="¿Qué computadores y equipos puedes donar?"
             text="Recibimos tus equipos funcionen o no: lo que sirve se reacondiciona y lo que no, recibe disposición final ambientalmente responsable."
@@ -196,7 +178,7 @@ export default function ReciclyItems() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => goTo(item.id)}
-                className={`flex-none rounded-lg px-2 py-2 text-sm font-medium transition-all duration-200 md:text-base ${isActive
+                className={`flex-none px-2 py-2 text-sm font-medium transition-all duration-200 md:text-base ${isActive
                     ? "border border-neutral-900 bg-white text-neutral-900 shadow-sm"
                     : "border border-transparent bg-neutral-200/70 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-900"
                   }`}
@@ -228,7 +210,7 @@ export default function ReciclyItems() {
             <div
               key={item.id}
               ref={(el) => (cardRefs.current[item.id] = el)}
-              className="group relative w-[300px] flex-none snap-center overflow-hidden rounded-2xl shadow-sm md:w-[340px]"
+              className="group relative w-[300px] flex-none snap-center overflow-hidden  shadow-sm md:w-[340px]"
             >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <ImageComponent

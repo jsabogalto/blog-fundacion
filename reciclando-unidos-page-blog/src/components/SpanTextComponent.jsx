@@ -1,10 +1,9 @@
-const SpanTextComponent = ({title, textColor}) => {
-    return (
-        <span className={`mb-4 flex items-center gap-3 text-sm uppercase tracking-[0.25em] ${textColor}`}>
-            <span className="h-px w-8 bg-gradient-ru" />
-            {title}
-        </span>
-    )
-}
+const SpanTextComponent = ({ title, textColor = "text-stone-800" }) => {
+  return (
+    <span className={`mb-6 flex items-center gap-3 text-2xl font-medium ${textColor}`}>
+      <span className="line-clamp-5">{title}</span>
+    </span>
+  );
+};
 
-export default SpanTextComponent
+export default SpanTextComponent;

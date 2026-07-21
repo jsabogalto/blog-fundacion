@@ -35,12 +35,10 @@ export default function ImpactComponent() {
   return (
     <section
       id="impacto"
-      className="mx-auto w-full max-w-layer px-5 sections-py"
-    >
-      <SpanTextComponent title={"la fundación"} textColor={"text-stone-800"} />
-      {/* ===== TARJETA ===== */}
-      <div className="py-4 md:py-8">
-        <div className="relative overflow-hidden rounded-4xl py-8">
+      className="mx-auto w-full max-w-layer px-5 md:px-12"
+    >      {/* ===== TARJETA ===== */}
+      <div className="">
+        <div className="relative overflow-hidden rounded-4xl">
           {/* Imagen de fondo */}
           <ImageComponent
             src="https://thumbs.dreamstime.com/b/vista-a%C3%A9rea-superior-ecosistema-de-bosque-r%C3%ADo-y-lago-en-prado-valle-textura-desde-arriba-212814274.jpg"

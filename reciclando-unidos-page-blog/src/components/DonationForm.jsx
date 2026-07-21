@@ -1,11 +1,9 @@
 "use client";
 
-import ImageComponent from "./ImageComponent";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Send, Loader2, RotateCcw } from "lucide-react";
-import NavbarForm from "./NavbarForm";
-import SpanTextComponent from "./SpanTextComponent";
+import ImageComponent from "./ImageComponent";
 import {
   IntroStep,
   TypeStep,
@@ -126,49 +124,73 @@ export default function DonationForm() {
   };
 
   return (
-    <section
-      className="relative flex h-screen flex-col scroll-margin-top"
-      id="formulario-donacion"
-    >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="sticky top-0 h-screen w-full">
-          <ImageComponent
-            src="/apoya-talento-ru_pWfC-MFol.webp"
-            alt="Solicitar computador — Reciclando Unidos"
-            width={4032}
-            height={3024}
-            className="absolute inset-0 h-full w-full object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-linear-to-b from-black via-[#053215]/20 to-transparent" />
-          <div className="absolute inset-0 bg-black/30" />
+    <section className="w-full scroll-margin-top md:py-8" id="formulario-donacion">
+      <div className="mx-auto flex w-full max-w-layer flex-col gap-2 px-4 md:px-12 lg:flex-row lg:items-start lg:gap-6">
+
+        {/* ===== Imagen: izquierda en desktop, abajo en móvil ===== */}
+        <div className="order-2 w-full lg:order-1 lg:w-1/2 lg:sticky lg:top-24 pt-4 md:pt-0">
+          <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[3/4] lg:aspect-auto lg:h-[640px]">
+            <ImageComponent
+              src="/1777396020675.jpeg"
+              alt="Dona tu computador y transforma una historia — Reciclando Unidos"
+              width={1200}
+              height={1500}
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              priority
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Eyebrow + heading estilo Aramco sobre la imagen */}
-      <div className="relative z-10 mx-auto hidden w-full max-w-layer px-8 pt-10 md:block lg:px-16">
-        <SpanTextComponent title={"Dona tu computador y transforma una historia"} textColor={"text-white"}/>
-      </div>
+        {/* ===== Columna derecha: tarjeta de encabezado + formulario ===== */}
+        <div className="order-1 w-full lg:order-2 lg:w-1/2">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
+            className="relative mb-6 overflow-hidden rounded-3xl bg-gradient-ru p-8 text-white"
+          >
+            {/* Zona superior: ilustraciones flotantes */}
+            <div className="flex justify-center">
+              <ImageComponent
+                src="/card-componente.png"
+                alt="Dona tu computador y transforma una historia — Reciclando Unidos"
+                width={500}
+                height={300}
+                className="h-50 w-200 object-contain drop-shadow-xl"
+                priority
+              />
+            </div>
 
-      <div className="relative z-10 flex flex-1 items-center justify-center py-8">
-        <div className="w-full max-w-xl px-4">
+            {/* Texto: alineado a la izquierda como la referencia */}
+            <div className="mt-2">
+              <h2 className="text-2xl text-white font-semibold leading-tight">
+                ¿Dónde recogemos tu computador? En Bogotá, sin costo
+              </h2>
+              <p className="mt-2 max-w-md text-lg leading-relaxed text-white/90">
+                Nos acercamos hasta tu casa u oficina. Tú solo indica cuándo te viene bien.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Formulario wizard */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] }}
-            className="relative overflow-hidden rounded-[28px] border border-white/50 bg-white/90 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-7"
+            className="border border-stone-200 bg-white p-6 sm:p-8 pt-4"
           >
-            {/* Barra de progreso tipo "stories" */}
+            {/* Barra de progreso tipo "stories" — cuadrada */}
             {!isIntro && !isSuccess && (
               <div className="mb-6">
                 <div className="flex gap-1.5">
                   {Array.from({ length: totalMiddleSteps }).map((_, i) => (
                     <div
                       key={i}
-                      className="h-[3px] flex-1 overflow-hidden rounded-full bg-gray-200"
+                      className="h-[3px] flex-1 overflow-hidden bg-stone-200"
                     >
                       <motion.div
-                        className="h-full bg-gradient-to-r bg-gradient-ru"
+                        className="h-full bg-gradient-ru"
                         initial={false}
                         animate={{ width: i < step ? "100%" : "0%" }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
@@ -176,7 +198,7 @@ export default function DonationForm() {
                     </div>
                   ))}
                 </div>
-                <p className="mt-2.5 text-[11px] uppercase tracking-[0.18em] text-gray-400">
+                <p className="mt-2.5 text-[11px] uppercase tracking-[0.18em] text-stone-400">
                   Paso {step} de {totalMiddleSteps}
                 </p>
               </div>
@@ -198,7 +220,7 @@ export default function DonationForm() {
             </AnimatePresence>
 
             {error && (
-              <p className="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <p className="mt-4 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
               </p>
             )}
@@ -211,9 +233,9 @@ export default function DonationForm() {
                     type="button"
                     onClick={goBack}
                     aria-label="Paso anterior"
-                    className="group inline-flex items-center gap-3 text-sm font-medium text-gray-500 transition hover:text-pine"
+                    className="group inline-flex items-center gap-3 text-sm font-medium text-stone-500 transition hover:text-pine"
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 transition group-hover:border-pine group-hover:text-pine">
+                    <span className="flex h-10 w-10 items-center justify-center border border-stone-300 transition group-hover:border-pine group-hover:text-pine">
                       <ArrowLeft size={16} />
                     </span>
                     <span className="hidden uppercase tracking-[0.15em] text-xs sm:inline">
@@ -234,7 +256,7 @@ export default function DonationForm() {
                     <span className="uppercase tracking-[0.15em] text-xs sm:text-sm">
                       {sending ? "Enviando…" : "Enviar donación"}
                     </span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green-ru text-white transition group-enabled:group-hover:bg-pine">
+                    <span className="flex h-11 w-11 items-center justify-center bg-green-ru text-white transition group-enabled:group-hover:bg-pine">
                       {sending ? (
                         <Loader2 size={16} className="animate-spin" />
                       ) : (
@@ -252,7 +274,7 @@ export default function DonationForm() {
                     <span className="uppercase tracking-[0.15em] text-xs sm:text-sm">
                       {isIntro ? "Comenzar donación" : "Continuar"}
                     </span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green-ru text-white transition group-enabled:group-hover:bg-pine">
+                    <span className="flex h-11 w-11 items-center justify-center bg-green-ru text-white transition group-enabled:group-hover:bg-pine">
                       <ArrowRight size={16} />
                     </span>
                   </button>
@@ -270,7 +292,7 @@ export default function DonationForm() {
                   <span className="uppercase tracking-[0.15em] text-xs sm:text-sm">
                     Hacer otra donación
                   </span>
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-green-ru text-white transition group-hover:bg-pine">
+                  <span className="flex h-11 w-11 items-center justify-center bg-green-ru text-white transition group-hover:bg-pine">
                     <RotateCcw size={15} />
                   </span>
                 </button>
